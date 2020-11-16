@@ -1,9 +1,18 @@
 package gr.alexc.idelearn;
 
+import javax.inject.Inject;
+
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.Plugin;
+import org.eclipse.equinox.log.Logger;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.BundleListener;
 
 public class IDELearnPlugin extends AbstractUIPlugin {
 	
@@ -11,6 +20,8 @@ public class IDELearnPlugin extends AbstractUIPlugin {
 	public static final String PLUGIN_ID = "gr.alexc.idelearn";
 	
 	private static IDELearnPlugin plugin;
+	
+	@Inject Logger logger;
 
 	public IDELearnPlugin() {
 		super();
@@ -27,6 +38,30 @@ public class IDELearnPlugin extends AbstractUIPlugin {
 				"Plugin Started");
 		
 		System.out.println("Plugin Started");
+		
+		final IWorkbench workbench = PlatformUI.getWorkbench();
+		
+		workbench.getDisplay().asyncExec(new Runnable() {
+			
+			@Override
+			public void run() {
+				
+				IProject[] projects = ResourcesPlugin.getWorkspace().getRoot().getProjects();
+				
+				for (IProject project : projects) {
+					logger.debug(project.getName());
+				}
+				
+			}
+		});
+		
+		
+		
+		
+		
+		
+		
+		
 	}
 	
 	
