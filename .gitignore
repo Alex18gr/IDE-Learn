@@ -1,0 +1,15 @@
+IntelliJ IDEA   
+# Compiled class file
+*.class
+
+.metadata
+bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.settings/
+.loadpath
+.recommenders
