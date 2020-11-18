@@ -187,5 +187,12 @@
             file="contexts.xml">
       </contexts>
    </extension>
+   <extension
+         point="org.eclipse.core.runtime.preferences">
+      <scope
+            class="org.eclipse.core.internal.resources.ProjectPreferences"
+            name="project">
+      </scope>
+   </extension>
 
 </plugin>
