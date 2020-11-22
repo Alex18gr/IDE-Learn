@@ -44,8 +44,8 @@
       </category>
       <command
             categoryId="IDELearn.commands.category"
-            name="Sample Command"
-            id="IDELearn.commands.sampleCommand">
+            name="Open Exercise"
+            id="IDELearn.commands.exercise.openexercise">
       </command>
    </extension>
    <extension
@@ -105,11 +105,11 @@
             locationURI="menu:org.eclipse.ui.main.menu?after=additions">
          <menu
                id="IDELearn.menus.sampleMenu"
-               label="Sample Menu"
+               label="IDE Learn"
                mnemonic="M">
             <command
-                  commandId="IDELearn.commands.sampleCommand"
-                  id="IDELearn.menus.sampleCommand"
+                  commandId="IDELearn.commands.exercise.openexercise"
+                  id="IDELearn.menus.exercise.openexercise"
                   mnemonic="S">
             </command>
          </menu>
@@ -119,8 +119,8 @@
          <toolbar
                id="IDELearn.toolbars.sampleToolbar">
             <command
-                  id="IDELearn.toolbars.sampleCommand"
-                  commandId="IDELearn.commands.sampleCommand"
+                  id="IDELearn.toolbars.exercise.openexercise"
+                  commandId="IDELearn.commands.exercise.openexercise"
                   icon="icons/sample.png"
                   tooltip="Say hello world">
             </command>
@@ -141,8 +141,8 @@
    <extension
          point="org.eclipse.ui.handlers">
       <handler
-            class="gr.alexc.idelearn.handlers.SampleHandler"
-            commandId="IDELearn.commands.sampleCommand">
+            class="gr.alexc.idelearn.handlers.OpenExerciseHandler"
+            commandId="IDELearn.commands.exercise.openexercise">
       </handler>
    </extension>
    <extension

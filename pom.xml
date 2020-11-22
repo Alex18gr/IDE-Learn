@@ -4,6 +4,15 @@
   <artifactId>IDELearn</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <name>IDE Learn</name>
+  
+  <dependencies>
+    <dependency>
+      <groupId>com.github.javaparser</groupId>
+      <artifactId>javaparser-core</artifactId>
+      <version>3.17.0</version>
+    </dependency>
+  </dependencies>
+  
   <build>
     <sourceDirectory>src</sourceDirectory>
     <plugins>

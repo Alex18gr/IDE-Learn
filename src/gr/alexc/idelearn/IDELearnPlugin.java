@@ -1,12 +1,20 @@
 package gr.alexc.idelearn;
 
-import javax.inject.Inject;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.StringWriter;
+import java.nio.charset.Charset;
+import java.util.Scanner;
 
+import org.eclipse.core.resources.IContainer;
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ProjectScope;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.preferences.IScopeContext;
-import org.eclipse.equinox.log.Logger;
+import org.eclipse.e4.core.services.log.Logger;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
@@ -22,7 +30,8 @@ public class IDELearnPlugin extends AbstractUIPlugin {
 	
 	private static IDELearnPlugin plugin;
 	
-	@Inject Logger logger;
+	private Logger logger;
+	
 
 	public IDELearnPlugin() {
 		super();
@@ -32,6 +41,9 @@ public class IDELearnPlugin extends AbstractUIPlugin {
 	@Override
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
+		
+		logger = PlatformUI.getWorkbench().getService(Logger.class);
+		logger.info("Using the eclipse logger");
 		
 		MessageDialog.openInformation(
 				null,
@@ -64,6 +76,27 @@ public class IDELearnPlugin extends AbstractUIPlugin {
 							e.printStackTrace();
 						}
 					}
+					
+					logger.info("Hello World!!!");
+					
+					try {
+						processContainer(project);
+					} catch (CoreException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					
+					
+					IFile file = project.getFile(".exercise");
+					if (file.exists()) {
+						try {
+							logger.info(inputStreamToString(file.getContents()));
+							System.out.println(file.getContents().readAllBytes().toString());
+						} catch (IOException | CoreException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
 				}
 				
 			}
@@ -75,7 +108,29 @@ public class IDELearnPlugin extends AbstractUIPlugin {
 		
 		
 		
-		
+	}
+	
+	private String inputStreamToString(InputStream inputStream) {
+		Scanner s = new Scanner(inputStream).useDelimiter("\\A");
+		String result = s.hasNext() ? s.next() : "";
+		return result;
+	}
+	
+	private void processContainer(IContainer container) throws CoreException
+	{
+	   IResource [] members = container.members();
+
+	   for (IResource member : members)
+	    {
+	      if (member instanceof IContainer) 
+	       {
+	         processContainer((IContainer)member);
+	       }
+	      else if (member instanceof IFile)
+	       {
+	    	  logger.info(member.getName());
+	       }
+	    }
 	}
 	
 	
