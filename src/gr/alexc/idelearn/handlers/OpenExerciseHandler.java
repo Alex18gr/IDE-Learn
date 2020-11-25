@@ -9,6 +9,8 @@ import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.handlers.HandlerUtil;
 
+import gr.alexc.idelearn.job.LoadExerciseJob;
+
 public class OpenExerciseHandler extends AbstractHandler {
 
 	@Override
@@ -23,9 +25,14 @@ public class OpenExerciseHandler extends AbstractHandler {
 		// check if the project exists in the workspace
 		
 		
-		// start the import project procedure
+		// start the import project job
+		
+		LoadExerciseJob loadExerciseJob = new LoadExerciseJob(result, "Open Exercise Job");
 
+		loadExerciseJob.schedule();
+		
 		MessageDialog.openInformation(window.getShell(), "IDELearn", result);
+		
 
 		return null;
 	}

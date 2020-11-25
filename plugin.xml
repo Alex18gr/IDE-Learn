@@ -194,5 +194,22 @@
             name="project">
       </scope>
    </extension>
+   <extension
+         point="org.eclipse.ui.importWizards">
+      <category
+            id="idelearn.importWizards.sampleCategory"
+            name="Sample File Import">
+      </category>
+      <wizard
+            category="idelearn.importWizards.sampleCategory"
+            class="idelearn.importWizards.ImportWizard"
+            icon="icons/sample.png"
+            id="idelearn.importWizards.ImportWizard"
+            name="Import File">
+         <description>
+            Import a file from the local file system into the workspace.
+         </description>
+      </wizard>
+   </extension>
 
 </plugin>
