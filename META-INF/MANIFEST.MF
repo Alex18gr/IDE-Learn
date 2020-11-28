@@ -1,8 +1,8 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: IDELearn
-Bundle-SymbolicName: IDELearn;singleton:=true
-Bundle-Version: 1.0.0.qualifier
+Bundle-SymbolicName: gr.alexc.idelearn;singleton:=true
+Bundle-Version: 1.0.0
 Bundle-Vendor: alexc
 Require-Bundle: org.eclipse.core.resources,
  org.eclipse.core.runtime,
@@ -12,10 +12,16 @@ Require-Bundle: org.eclipse.core.resources,
  org.eclipse.jdt.ui;bundle-version="3.21.200",
  org.eclipse.jface.text;bundle-version="3.16.400",
  org.eclipse.e4.core.services,
- org.eclipse.ui.ide
+ org.eclipse.ui.ide,
+ com.fasterxml.jackson.core.jackson-annotations
 Bundle-RequiredExecutionEnvironment: JavaSE-11,
  JavaSE-1.8
 Import-Package: javax.inject
 Automatic-Module-Name: IDELearn
 Bundle-Activator: gr.alexc.idelearn.IDELearnPlugin
 Bundle-ActivationPolicy: lazy
+Bundle-ClassPath: lib/jackson-core-2.11.3.jar,
+ lib/javaparser-core-3.17.0.jar,
+ lib/jackson-databind-2.11.3.jar,
+ lib/lombok.jar,
+ .

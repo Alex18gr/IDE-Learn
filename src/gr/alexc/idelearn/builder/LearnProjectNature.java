@@ -11,7 +11,7 @@ public class LearnProjectNature implements IProjectNature {
 	/**
 	 * ID of this project nature
 	 */
-	public static final String NATURE_ID = "IDELearn.learnProjectNature";
+	public static final String NATURE_ID = "gr.alexc.idelearn.learnProjectNature";
 
 	private IProject project;
 
@@ -61,5 +61,4 @@ public class LearnProjectNature implements IProjectNature {
 	public void setProject(IProject project) {
 		this.project = project;
 	}
-
 }

@@ -34,10 +34,15 @@ import org.eclipse.core.runtime.preferences.IScopeContext;
 import org.eclipse.ui.dialogs.IOverwriteQuery;
 import org.eclipse.ui.internal.wizards.datatransfer.ZipLeveledStructureProvider;
 import org.eclipse.ui.wizards.datatransfer.ImportOperation;
+import org.osgi.service.prefs.BackingStoreException;
 import org.osgi.service.prefs.Preferences;
 
 import gr.alexc.idelearn.IDELearnPlugin;
 import gr.alexc.idelearn.Utils.ZipUtils;
+import gr.alexc.idelearn.builder.LearnProjectNature;
+import gr.alexc.idelearn.classanalysis.exercise.ExerciseParser;
+import gr.alexc.idelearn.classanalysis.exercise.domain.Exercise;
+import gr.alexc.idelearn.learn.LearnPlugin;
 
 public class LoadExerciseJob extends WorkspaceJob {
 	
@@ -53,7 +58,7 @@ public class LoadExerciseJob extends WorkspaceJob {
 		
 		IWorkspace workspace = ResourcesPlugin.getWorkspace();
 		
-		
+		// here we check if the nature is valid
 		
 		try {
 			File file = new File(exerciseFilePath);
@@ -71,33 +76,84 @@ public class LoadExerciseJob extends WorkspaceJob {
 			    System.out.println(entries.nextElement().getName());
 			}
 			
+			
+			
 			ZipEntry exerciseJSON = exerciseFile.getEntry("exercise.json");
 			InputStream exerciseJsonInputStream = exerciseFile.getInputStream(exerciseJSON);
-			String text = new BufferedReader(new InputStreamReader(exerciseJsonInputStream, StandardCharsets.UTF_8))
-					.lines()
-					.collect(Collectors.joining("\n"));
-			System.out.println(text);
+//			String text = new BufferedReader(new InputStreamReader(exerciseJsonInputStream, StandardCharsets.UTF_8))
+//					.lines()
+//					.collect(Collectors.joining("\n"));
+//			System.out.println(text);
 			
-			ZipFile projectZipFile = new ZipFile(new File(tmpPath + "/project.zip"));
+			ExerciseParser exerciseJsonParser = new ExerciseParser();
+			Exercise exercise = exerciseJsonParser.parseExercise(exerciseJsonInputStream);
+			exerciseJsonInputStream.close();
 			
-			IProjectDescription newProjectDescription = workspace.newProjectDescription("Execise Project");
-			IProject newProject = workspace.getRoot().getProject("Execise Project");
-			newProject.create(newProjectDescription, null);
-			newProject.open(null);
-
-			IOverwriteQuery overwriteQuery = new IOverwriteQuery() {
-			    public String queryOverwrite(String file) { return ALL; }
-			};
-			ZipLeveledStructureProvider provider = new ZipLeveledStructureProvider(projectZipFile);
-			List<Object> fileSystemObjects = new ArrayList<Object>();
-			Enumeration<? extends ZipEntry> exerciseZipEntries = projectZipFile.entries();
-			while (exerciseZipEntries.hasMoreElements()) {
-			    fileSystemObjects.add((Object)exerciseZipEntries.nextElement());
+//			if (exercise == null) {
+//				
+//			}
+			
+			LearnPlugin plugin = LearnPlugin.getInstance();
+			
+			// here we check if the project still exists in the workspace
+			if (!plugin.checkExerciseExists(exercise.getId())) {
+				
+				ZipFile projectZipFile = new ZipFile(new File(tmpPath + "/project.zip"));
+				
+	 			IProjectDescription newProjectDescription = workspace.newProjectDescription("Execise Project");
+				
+			    IProject newProject = workspace.getRoot().getProject("Execise Project");
+				newProject.create(newProjectDescription, monitor);
+				newProject.open(monitor);
+				
+				IOverwriteQuery overwriteQuery = new IOverwriteQuery() {
+				    public String queryOverwrite(String file) { return ALL; }
+				};
+				ZipLeveledStructureProvider provider = new ZipLeveledStructureProvider(projectZipFile);
+				List<Object> fileSystemObjects = new ArrayList<Object>();
+				Enumeration<? extends ZipEntry> exerciseZipEntries = projectZipFile.entries();
+				while (exerciseZipEntries.hasMoreElements()) {
+				    fileSystemObjects.add((Object)exerciseZipEntries.nextElement());
+				}
+				
+				ImportOperation importOperation = new ImportOperation(newProject.getFullPath(), new ZipEntry("Execise Project"), provider, overwriteQuery, fileSystemObjects);
+				importOperation.setCreateContainerStructure(false);
+				importOperation.run(new NullProgressMonitor());
+				
+				newProjectDescription = newProject.getDescription();
+				
+				String[] natures = newProjectDescription.getNatureIds();
+				String[] newNatures = new String[natures.length + 1];
+				System.arraycopy(natures, 0, newNatures, 0, natures.length);
+				newNatures[natures.length] = LearnProjectNature.NATURE_ID;
+				
+				newProjectDescription.setNatureIds(newNatures);
+				newProject.setDescription(newProjectDescription, monitor);
+				
+				// set the exercise id variable in this project
+				IScopeContext projectScope = new ProjectScope(newProject);
+				Preferences projectNode = projectScope.getNode(IDELearnPlugin.PLUGIN_ID);
+				if (projectNode != null) {
+					projectNode.put("exersiceId", exercise.getId());
+					try {
+						projectNode.flush();
+					} catch (BackingStoreException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace(); 
+					}
+				}
+				
+				
+				plugin.addExercise(exercise);
+				
+				
 			}
 			
-			ImportOperation importOperation = new ImportOperation(newProject.getFullPath(), new ZipEntry("Execise Project"), provider, overwriteQuery, fileSystemObjects);
-			importOperation.setCreateContainerStructure(false);
-			importOperation.run(new NullProgressMonitor());		
+			
+			
+			
+//			IStatus status = workspace.validateNatureSet(newNatures);
+		
 			
 			
 			// get the exercise file and parse it

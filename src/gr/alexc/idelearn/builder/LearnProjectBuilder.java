@@ -1,11 +1,13 @@
 package gr.alexc.idelearn.builder;
 
+import java.net.URI;
 import java.util.Map;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
+import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IProject;
@@ -19,6 +21,8 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 import org.xml.sax.helpers.DefaultHandler;
+
+import gr.alexc.idelearn.job.AuditExerciseJob;
 
 public class LearnProjectBuilder extends IncrementalProjectBuilder {
 
@@ -39,7 +43,7 @@ public class LearnProjectBuilder extends IncrementalProjectBuilder {
 				checkXML(resource);
 				break;
 			}
-			//return true to continue visiting children.
+			// return true to continue visiting children.
 			return true;
 		}
 	}
@@ -47,13 +51,13 @@ public class LearnProjectBuilder extends IncrementalProjectBuilder {
 	class SampleResourceVisitor implements IResourceVisitor {
 		public boolean visit(IResource resource) {
 			checkXML(resource);
-			//return true to continue visiting children.
+			// return true to continue visiting children.
 			return true;
 		}
 	}
 
 	class XMLErrorHandler extends DefaultHandler {
-		
+
 		private IFile file;
 
 		public XMLErrorHandler(IFile file) {
@@ -61,8 +65,7 @@ public class LearnProjectBuilder extends IncrementalProjectBuilder {
 		}
 
 		private void addMarker(SAXParseException e, int severity) {
-			LearnProjectBuilder.this.addMarker(file, e.getMessage(), e
-					.getLineNumber(), severity);
+			LearnProjectBuilder.this.addMarker(file, e.getMessage(), e.getLineNumber(), severity);
 		}
 
 		public void error(SAXParseException exception) throws SAXException {
@@ -84,8 +87,7 @@ public class LearnProjectBuilder extends IncrementalProjectBuilder {
 
 	private SAXParserFactory parserFactory;
 
-	private void addMarker(IFile file, String message, int lineNumber,
-			int severity) {
+	private void addMarker(IFile file, String message, int lineNumber, int severity) {
 		try {
 			IMarker marker = file.createMarker(MARKER_TYPE);
 			marker.setAttribute(IMarker.MESSAGE, message);
@@ -99,18 +101,29 @@ public class LearnProjectBuilder extends IncrementalProjectBuilder {
 	}
 
 	@Override
-	protected IProject[] build(int kind, Map<String, String> args, IProgressMonitor monitor)
-			throws CoreException {
-		if (kind == FULL_BUILD) {
-			fullBuild(monitor);
-		} else {
-			IResourceDelta delta = getDelta(getProject());
-			if (delta == null) {
-				fullBuild(monitor);
-			} else {
-				incrementalBuild(delta, monitor);
-			}
+	protected IProject[] build(int kind, Map<String, String> args, IProgressMonitor monitor) throws CoreException {
+
+		IProject project = getProject();
+
+		if (project.hasNature(LearnProjectNature.NATURE_ID)) {
+
+			AuditExerciseJob job = new AuditExerciseJob(project, "Check Exercise Job");
+			job.schedule();
+
 		}
+
+		// We have to check all the classes for now, there is no implementation yet for
+		// delta builds
+//		if (kind == FULL_BUILD) {
+//			fullBuild(monitor);
+//		} else {
+//			IResourceDelta delta = getDelta(getProject());
+//			if (delta == null) {
+//				fullBuild(monitor);
+//			} else {
+//				incrementalBuild(delta, monitor);
+//			}
+//		}
 		return null;
 	}
 
@@ -138,24 +151,21 @@ public class LearnProjectBuilder extends IncrementalProjectBuilder {
 		}
 	}
 
-	protected void fullBuild(final IProgressMonitor monitor)
-			throws CoreException {
+	protected void fullBuild(final IProgressMonitor monitor) throws CoreException {
 		try {
 			getProject().accept(new SampleResourceVisitor());
 		} catch (CoreException e) {
 		}
 	}
 
-	private SAXParser getParser() throws ParserConfigurationException,
-			SAXException {
+	private SAXParser getParser() throws ParserConfigurationException, SAXException {
 		if (parserFactory == null) {
 			parserFactory = SAXParserFactory.newInstance();
 		}
 		return parserFactory.newSAXParser();
 	}
 
-	protected void incrementalBuild(IResourceDelta delta,
-			IProgressMonitor monitor) throws CoreException {
+	protected void incrementalBuild(IResourceDelta delta, IProgressMonitor monitor) throws CoreException {
 		// the visitor does the work.
 		delta.accept(new SampleDeltaVisitor());
 	}

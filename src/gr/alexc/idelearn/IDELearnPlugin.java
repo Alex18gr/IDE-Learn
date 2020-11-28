@@ -73,7 +73,7 @@ public class IDELearnPlugin extends AbstractUIPlugin {
 							projectNode.flush();
 						} catch (BackingStoreException e) {
 							// TODO Auto-generated catch block
-							e.printStackTrace();
+							e.printStackTrace(); 
 						}
 					}
 					
@@ -89,13 +89,15 @@ public class IDELearnPlugin extends AbstractUIPlugin {
 					IFile file = project.getFile(".exercise");
 					if (file.exists()) {
 						try {
+							InputStream inputStream = file.getContents();
 							logger.info(inputStreamToString(file.getContents()));
 							System.out.println(file.getContents().readAllBytes().toString());
+							inputStream.close();
 						} catch (IOException | CoreException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 					}
+					
 				}
 				
 			}

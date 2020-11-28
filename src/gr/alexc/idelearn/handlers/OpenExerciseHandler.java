@@ -19,20 +19,18 @@ public class OpenExerciseHandler extends AbstractHandler {
 
 		FileDialog dialog = new FileDialog(window.getShell(), SWT.OPEN);
 		dialog.setFilterExtensions(new String[] { "*.exercisepackage" });
-		dialog.setFilterPath("c:\\temp");
 		String result = dialog.open();
 		
 		// check if the project exists in the workspace
-		
+		if (result != null) {
+			LoadExerciseJob loadExerciseJob = new LoadExerciseJob(result, "Open Exercise Job");
+
+			loadExerciseJob.schedule();
+			
+//			MessageDialog.openInformation(window.getShell(), "IDELearn", result);
+		}
 		
 		// start the import project job
-		
-		LoadExerciseJob loadExerciseJob = new LoadExerciseJob(result, "Open Exercise Job");
-
-		loadExerciseJob.schedule();
-		
-		MessageDialog.openInformation(window.getShell(), "IDELearn", result);
-		
 
 		return null;
 	}
