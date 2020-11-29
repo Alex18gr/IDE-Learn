@@ -1,16 +1,37 @@
 package gr.alexc.idelearn.views;
 
 
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.ui.part.*;
-import org.eclipse.jface.viewers.*;
-import org.eclipse.swt.graphics.Image;
-import org.eclipse.jface.action.*;
-import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.ui.*;
-import org.eclipse.swt.widgets.Menu;
-import org.eclipse.swt.SWT;
 import javax.inject.Inject;
+
+import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.IMenuListener;
+import org.eclipse.jface.action.IMenuManager;
+import org.eclipse.jface.action.IToolBarManager;
+import org.eclipse.jface.action.MenuManager;
+import org.eclipse.jface.action.Separator;
+import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.viewers.DoubleClickEvent;
+import org.eclipse.jface.viewers.IDoubleClickListener;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.ITableLabelProvider;
+import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Combo;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.ProgressBar;
+import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.IActionBars;
+import org.eclipse.ui.ISharedImages;
+import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.IWorkbenchActionConstants;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.part.ViewPart;
 
 
 /**
@@ -44,6 +65,11 @@ public class ExerciseOverviewView extends ViewPart {
 	private Action action1;
 	private Action action2;
 	private Action doubleClickAction;
+	
+	private Combo exercisesListCombo;
+	private Text descriptionText;
+	private Label statusLabel;
+	private ProgressBar statusProgressBar;
 	 
 
 	class ViewLabelProvider extends LabelProvider implements ITableLabelProvider {
@@ -63,19 +89,72 @@ public class ExerciseOverviewView extends ViewPart {
 
 	@Override
 	public void createPartControl(Composite parent) {
-		viewer = new TableViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
 		
-		viewer.setContentProvider(ArrayContentProvider.getInstance());
-		viewer.setInput(new String[] { "One", "Two", "Three" });
-	viewer.setLabelProvider(new ViewLabelProvider());
-
-		// Create the help context id for the viewer's control
-		workbench.getHelpSystem().setHelp(viewer.getControl(), "gr.alexc.idelearn.viewer");
-		getSite().setSelectionProvider(viewer);
-		makeActions();
-		hookContextMenu();
-		hookDoubleClickAction();
-		contributeToActionBars();
+		GridLayout mainLayout = new GridLayout();
+		parent.setLayout(mainLayout);
+		
+//		Composite mainComposite = new Composite(parent, SWT.BORDER);
+//		RowLayout rowLayout = new RowLayout();
+//		mainComposite.setLayout(rowLayout);
+//		rowLayout.fill = true;
+//		rowLayout.type = SWT.VERTICAL;
+		
+//		GridLayout mainLayout = new GridLayout();
+//		parent.setLayout(mainLayout);
+		
+		exercisesListCombo = new Combo(parent, SWT.READ_ONLY);
+		exercisesListCombo.setItems("Exercise 1", "Exercise 2", "Exercise 3", "Exercise 4", "Exercise 5");
+		GridData comboBoxData = new GridData(SWT.FILL, SWT.FILL, true, false);
+		comboBoxData.widthHint = 150;
+//		comboBoxData.heightHint = 150;
+		comboBoxData.minimumWidth = 1;
+		comboBoxData.minimumHeight = 1;
+		exercisesListCombo.setLayoutData(comboBoxData);
+		
+		descriptionText = new Text(parent, SWT.MULTI | SWT.BORDER | SWT.WRAP | SWT.READ_ONLY | SWT.V_SCROLL);
+		descriptionText.setText("This is a very large exercise description text...");
+		GridData descriptionTextGridData = new GridData(SWT.FILL, SWT.FILL, true, true);
+//		descriptionTextGridData.heightHint = 250;
+		descriptionTextGridData.minimumHeight = 1;
+		descriptionText.setLayoutData(descriptionTextGridData);
+		
+		// Status Composite
+		
+		Composite statusComposite = createStatsComposite(parent);
+		GridData statusCompositeGridData = new GridData(SWT.FILL, SWT.FILL, true, true);
+		statusComposite.setLayoutData(statusCompositeGridData);
+		
+		
+		
+		
+		
+//		viewer = new TableViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
+//		
+//		viewer.setContentProvider(ArrayContentProvider.getInstance());
+//		viewer.setInput(new String[] { "One", "Two", "Three" });
+//	viewer.setLabelProvider(new ViewLabelProvider());
+//
+//		// Create the help context id for the viewer's control
+//		workbench.getHelpSystem().setHelp(viewer.getControl(), "gr.alexc.idelearn.viewer");
+//		getSite().setSelectionProvider(viewer);
+//		makeActions();
+//		hookContextMenu();
+//		hookDoubleClickAction();
+//		contributeToActionBars();
+	}
+	
+	private Composite createStatsComposite(Composite parent) {
+		Composite statusComposite = new Composite(parent, SWT.NONE);
+		GridLayout layout = new GridLayout();
+		layout.numColumns = 2;
+		statusComposite.setLayout(layout);
+		
+		statusLabel = new Label(statusComposite, SWT.BORDER);
+		statusLabel.setText("20% of the exercise completed");
+		
+		statusProgressBar = new ProgressBar(statusComposite, SWT.SMOOTH);
+		
+		return statusComposite;
 	}
 
 	private void hookContextMenu() {
@@ -161,5 +240,9 @@ public class ExerciseOverviewView extends ViewPart {
 	@Override
 	public void setFocus() {
 		viewer.getControl().setFocus();
+	}
+	
+	public void updateView() {
+		// get the exercises data and update the view accordingly
 	}
 }
