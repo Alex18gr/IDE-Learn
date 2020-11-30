@@ -20,7 +20,7 @@ public class ExerciseAnalyser {
 
     public ExerciseCheckReport analyseExerciseRequirements(Exercise exercise, ClassChecker checker) {
 
-        ExerciseCheckReport report = new ExerciseCheckReport();
+        ExerciseCheckReport report = new ExerciseCheckReport(exercise);
         Map<String, ClassEntity> classEntityMap = checker.getVisitedClasses();
         List<AbstractRequirement> requirements = exercise.getRequirements();
 

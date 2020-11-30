@@ -43,4 +43,9 @@ public class ClassRequirement extends AbstractRequirement {
     public boolean checkRequirement(ClassEntity classEntity) {
         return classEntity.getClassName().equals(name);
     }
+
+	@Override
+	public Integer getSubrequirements() {
+		return relatedRequirements.size();
+	}
 }

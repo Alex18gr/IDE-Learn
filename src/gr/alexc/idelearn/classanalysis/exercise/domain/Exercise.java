@@ -37,12 +37,9 @@ public class Exercise {
     }
 
     public void checkExercise(Map<String, ClassEntity> classEntityMap) {
-
         Set<String> classNames = classEntityMap.keySet();
-
         for (AbstractRequirement requirement : requirements) {
             if (requirement instanceof ClassRequirement) {
-
                 Optional<ClassEntity> classEntityOptional = Optional.ofNullable(classEntityMap.get(((ClassRequirement) requirement).getName()));
 
                 if (classEntityOptional.isPresent()) {
@@ -55,10 +52,17 @@ public class Exercise {
                 } else {
                     System.out.println(((ClassRequirement) requirement).getName() + " -> false");
                 }
-
             }
         }
-
+    }
+    
+    public Integer getTotalRequirements() {
+    	int totalRequirements = 0;
+    	for (AbstractRequirement req : requirements) {
+    		totalRequirements++;
+    		totalRequirements += req.getSubrequirements();
+    	}
+    	return totalRequirements;
     }
 
 }

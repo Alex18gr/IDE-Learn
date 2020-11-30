@@ -1,36 +1,64 @@
 package gr.alexc.idelearn.learn;
 
-import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import gr.alexc.idelearn.classanalysis.exercise.domain.Exercise;
+import gr.alexc.idelearn.learn.listener.MultiChangeType;
+import gr.alexc.idelearn.learn.listener.MultiExerciseChangedEvent;
+import gr.alexc.idelearn.learn.listener.MultiExerciseChangedListener;
+import gr.alexc.idelearn.learn.listener.SingleChangeType;
+import gr.alexc.idelearn.learn.listener.SingleExerciseChangeEvent;
+import gr.alexc.idelearn.learn.listener.SingleExerciseChangedListener;
 
 public class LearnPlugin {
-	
+
 	private PropertyChangeSupport support;
 	private List<Exercise> workspaceExercises = new ArrayList<>();
 	
+	private List<MultiExerciseChangedListener> multiExerciseEventObservers = new ArrayList<>();
+	private List<SingleExerciseChangedListener> singleExerciseEventObservers = new ArrayList<>();
+
 	private static LearnPlugin instance = null;
-	
+
 	public static LearnPlugin getInstance() {
 		if (instance == null) {
 			instance = new LearnPlugin();
 		}
 		return instance;
 	}
-		
+
 	private LearnPlugin() {
 		// support = new PropertyChangeSupport(this);
 	}
-	
+
 	public void addExercise(Exercise exercise) {
 		if (!checkExerciseExists(exercise.getId())) {
 			this.workspaceExercises.add(exercise);
+			// TODO: notify all the exercises resource observers
 		}
 	}
-	
+
+	/**
+	 * return all opened workspace exercises
+	 * 
+	 * @return the exercises list
+	 */
+	public List<Exercise> getWorkspaceExercises() {
+		return this.workspaceExercises;
+	}
+
+	public Exercise getExerciseById(String exerciseId) {
+		for (Exercise exercise : workspaceExercises) {
+			if (exercise.getId().equals(exerciseId)) {
+				return exercise;
+			}
+		}
+		return null;
+	}
+
 	public boolean checkExerciseExists(String exerciseId) {
 		for (Exercise exercise : workspaceExercises) {
 			if (exercise.getId().equals(exerciseId)) {
@@ -39,13 +67,38 @@ public class LearnPlugin {
 		}
 		return false;
 	}
-	
-	public void addPropertyChangeListener(PropertyChangeListener pcl) {
-        support.addPropertyChangeListener(pcl);
-    }
- 
-    public void removePropertyChangeListener(PropertyChangeListener pcl) {
-        support.removePropertyChangeListener(pcl);
-    }
 
+	// Listeners methods
+	
+	public void addSingleExerciseChangedListener(SingleExerciseChangedListener listener) {
+		this.singleExerciseEventObservers.add(listener);
+	}
+	
+	public void addMultiExerciseChangedListener(MultiExerciseChangedListener listener) {
+		this.multiExerciseEventObservers.add(listener);
+	}
+	
+	public void removeSingleExerciseChangedListener(SingleExerciseChangedListener listener) {
+		this.singleExerciseEventObservers.remove(listener);
+	}
+	
+	public void removeMultiExerciseChangedListener(MultiExerciseChangedListener listener) {
+		this.multiExerciseEventObservers.remove(listener);
+	}
+	
+	private void notifySingleExerciseObservers(SingleChangeType type, Exercise exercise) {
+		SingleExerciseChangeEvent event = new SingleExerciseChangeEvent(type, exercise);
+		for (SingleExerciseChangedListener listener : singleExerciseEventObservers) {
+			listener.exerciseChanged(event);
+		}
+	}
+	
+	private void notifyMultiExerciseObservers(MultiChangeType type, Collection<Exercise> exercises) {
+		MultiExerciseChangedEvent event = new MultiExerciseChangedEvent(type, exercises);
+		for (MultiExerciseChangedListener listener : multiExerciseEventObservers) {
+			listener.exerciseChanged(event);
+		}
+	}
+	
+	// -----------------------------
 }

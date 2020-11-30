@@ -17,4 +17,6 @@ public abstract class AbstractRequirement {
     public abstract String getDescription();
 
     public abstract boolean checkRequirement(ClassEntity classEntity);
+    
+    public abstract Integer getSubrequirements();
 }

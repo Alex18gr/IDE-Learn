@@ -17,6 +17,8 @@ import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -32,6 +34,9 @@ import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
+
+import gr.alexc.idelearn.classanalysis.exercise.domain.Exercise;
+import gr.alexc.idelearn.learn.LearnPlugin;
 
 
 /**
@@ -70,6 +75,8 @@ public class ExerciseOverviewView extends ViewPart {
 	private Text descriptionText;
 	private Label statusLabel;
 	private ProgressBar statusProgressBar;
+	
+	private Exercise selectedExercise;
 	 
 
 	class ViewLabelProvider extends LabelProvider implements ITableLabelProvider {
@@ -103,6 +110,22 @@ public class ExerciseOverviewView extends ViewPart {
 //		parent.setLayout(mainLayout);
 		
 		exercisesListCombo = new Combo(parent, SWT.READ_ONLY);
+		exercisesListCombo.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				
+				LearnPlugin learnPlugin = LearnPlugin.getInstance();
+				
+				
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 		exercisesListCombo.setItems("Exercise 1", "Exercise 2", "Exercise 3", "Exercise 4", "Exercise 5");
 		GridData comboBoxData = new GridData(SWT.FILL, SWT.FILL, true, false);
 		comboBoxData.widthHint = 150;
