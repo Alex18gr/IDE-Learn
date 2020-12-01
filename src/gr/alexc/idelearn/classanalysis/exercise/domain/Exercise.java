@@ -5,6 +5,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import gr.alexc.idelearn.classanalysis.exercise.domain.requirement.AbstractRequirement;
 import gr.alexc.idelearn.classanalysis.exercise.domain.requirement.AbstractSubRequirement;
 import gr.alexc.idelearn.classanalysis.exercise.domain.requirement.ClassRequirement;
@@ -21,6 +23,8 @@ public class Exercise {
     private String id;
     private String name;
     private List<String> targets;
+    @JsonProperty("exercise_project_info")
+    private ExerciseProjectInfo exerciseProjectInfo;
     private List<AbstractRequirement> requirements;
 
     public String getRequirementsDescription() {

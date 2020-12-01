@@ -27,6 +27,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.ProgressBar;
@@ -185,7 +186,12 @@ public class ExerciseOverviewView extends ViewPart {
 				if (event.getChangeType().equals(SingleChangeType.ADDED_EXERCISE)) {
 //					exercisesListCombo.add(event.getExercise().getName());
 //					exercisesListCombo.setData(event.getExercise().getName(), event.getExercise());
-					comboViewer.add(event.getExercise());
+					Display.getDefault().syncExec(new Runnable() {
+						@Override
+						public void run() {
+							comboViewer.add(event.getExercise());
+						}
+					});
 				}
 			}
 		});
