@@ -2,26 +2,25 @@ package gr.alexc.idelearn;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.StringWriter;
-import java.nio.charset.Charset;
 import java.util.Scanner;
 
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
-import org.eclipse.core.resources.ProjectScope;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.preferences.IScopeContext;
 import org.eclipse.e4.core.services.log.Logger;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
-import org.osgi.service.prefs.BackingStoreException;
-import org.osgi.service.prefs.Preferences;
+
+import gr.alexc.idelearn.builder.LearnProjectNature;
+import gr.alexc.idelearn.classanalysis.exercise.ExerciseParser;
+import gr.alexc.idelearn.classanalysis.exercise.domain.Exercise;
+import gr.alexc.idelearn.learn.LearnPlugin;
 
 public class IDELearnPlugin extends AbstractUIPlugin {
 	
@@ -65,50 +64,39 @@ public class IDELearnPlugin extends AbstractUIPlugin {
 					// logger.debug(project.getName());
 					
 					
-					IScopeContext projectScope = new ProjectScope(project);
-					Preferences projectNode = projectScope.getNode(PLUGIN_ID);
-					if (projectNode != null) {
-						projectNode.put("exersiceId", "001");
-						try {
-							projectNode.flush();
-						} catch (BackingStoreException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace(); 
-						}
-					}
-					
-					logger.info("Hello World!!!");
+//					IScopeContext projectScope = new ProjectScope(project);
+//					Preferences projectNode = projectScope.getNode(PLUGIN_ID);
+//					if (projectNode != null) {
+//						projectNode.put("exersiceId", "001");
+//						try {
+//							projectNode.flush();
+//						} catch (BackingStoreException e) {
+//							// TODO Auto-generated catch block
+//							e.printStackTrace(); 
+//						}
+//					}
 					
 					try {
-						processContainer(project);
-					} catch (CoreException e1) {
-						e1.printStackTrace();
-					}
-					
-					
-					IFile file = project.getFile(".exercise");
-					if (file.exists()) {
-						try {
-							InputStream inputStream = file.getContents();
-							logger.info(inputStreamToString(file.getContents()));
-							System.out.println(file.getContents().readAllBytes().toString());
-							inputStream.close();
-						} catch (IOException | CoreException e) {
-							e.printStackTrace();
+						if (project.hasNature(LearnProjectNature.NATURE_ID)) {
+//							processContainer(project);
+							IFile file = project.getFile(".exercise");
+							if (file.exists()) {
+								InputStream inputStream = file.getContents();
+								ExerciseParser exerciseJsonParser = new ExerciseParser();
+								Exercise exercise = exerciseJsonParser.parseExercise(inputStream);
+								LearnPlugin plugin = LearnPlugin.getInstance();
+								plugin.addExercise(exercise);
+//								logger.info(inputStreamToString(file.getContents()));
+//								System.out.println(file.getContents().readAllBytes().toString());
+								inputStream.close();
+							}
 						}
+					} catch (CoreException | IOException e2) {
+						e2.printStackTrace();
 					}
-					
 				}
-				
 			}
 		});
-		
-		
-		
-		
-		
-		
-		
 	}
 	
 	private String inputStreamToString(InputStream inputStream) {

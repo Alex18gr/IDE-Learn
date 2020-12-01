@@ -37,7 +37,7 @@ public class LearnPlugin {
 	public void addExercise(Exercise exercise) {
 		if (!checkExerciseExists(exercise.getId())) {
 			this.workspaceExercises.add(exercise);
-			// TODO: notify all the exercises resource observers
+			this.notifySingleExerciseObservers(SingleChangeType.ADDED_EXERCISE, exercise);
 		}
 	}
 
