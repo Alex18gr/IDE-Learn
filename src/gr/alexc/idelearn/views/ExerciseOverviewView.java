@@ -131,11 +131,16 @@ public class ExerciseOverviewView extends ViewPart {
 			}
 		});
 		comboViewer.addSelectionChangedListener(new ISelectionChangedListener() {
-			
+
 			@Override
 			public void selectionChanged(SelectionChangedEvent event) {
-				descriptionText.setText(((Exercise) event.getStructuredSelection().getFirstElement()).getRequirementsDescription());
-				
+				IStructuredSelection selection = event.getStructuredSelection();
+				if (selection.getFirstElement() == null) {
+					descriptionText.setText("");
+				} else {
+					descriptionText.setText(
+							((Exercise) event.getStructuredSelection().getFirstElement()).getRequirementsDescription());
+				}
 			}
 		});
 
@@ -190,6 +195,17 @@ public class ExerciseOverviewView extends ViewPart {
 						@Override
 						public void run() {
 							comboViewer.add(event.getExercise());
+						}
+					});
+				}
+				if (event.getChangeType().equals(SingleChangeType.REMOVED_EXERCISE)) {
+					Display.getDefault().syncExec(new Runnable() {
+						@Override
+						public void run() {
+							if (comboViewer.getSelection().equals(event.getExercise())) {
+								comboViewer.setSelection(null);
+							}
+							comboViewer.remove(event.getExercise());
 						}
 					});
 				}

@@ -17,7 +17,7 @@ public class LearnPlugin {
 
 	private PropertyChangeSupport support;
 	private List<Exercise> workspaceExercises = new ArrayList<>();
-	
+
 	private List<MultiExerciseChangedListener> multiExerciseEventObservers = new ArrayList<>();
 	private List<SingleExerciseChangedListener> singleExerciseEventObservers = new ArrayList<>();
 
@@ -38,6 +38,20 @@ public class LearnPlugin {
 		if (!checkExerciseExists(exercise.getId())) {
 			this.workspaceExercises.add(exercise);
 			this.notifySingleExerciseObservers(SingleChangeType.ADDED_EXERCISE, exercise);
+		}
+	}
+
+	public void removeExercise(Exercise exercise) {
+		if (checkExerciseExists(exercise.getId())) {
+			this.workspaceExercises.remove(exercise);
+			this.notifySingleExerciseObservers(SingleChangeType.REMOVED_EXERCISE, exercise);
+		}
+	}
+
+	public void removeExerciseById(String exerciseId) {
+		Exercise deleteExercise = getExerciseById(exerciseId);
+		if (deleteExercise != null) {
+			removeExercise(deleteExercise);
 		}
 	}
 
@@ -69,36 +83,36 @@ public class LearnPlugin {
 	}
 
 	// Listeners methods
-	
+
 	public void addSingleExerciseChangedListener(SingleExerciseChangedListener listener) {
 		this.singleExerciseEventObservers.add(listener);
 	}
-	
+
 	public void addMultiExerciseChangedListener(MultiExerciseChangedListener listener) {
 		this.multiExerciseEventObservers.add(listener);
 	}
-	
+
 	public void removeSingleExerciseChangedListener(SingleExerciseChangedListener listener) {
 		this.singleExerciseEventObservers.remove(listener);
 	}
-	
+
 	public void removeMultiExerciseChangedListener(MultiExerciseChangedListener listener) {
 		this.multiExerciseEventObservers.remove(listener);
 	}
-	
+
 	private void notifySingleExerciseObservers(SingleChangeType type, Exercise exercise) {
 		SingleExerciseChangeEvent event = new SingleExerciseChangeEvent(type, exercise);
 		for (SingleExerciseChangedListener listener : singleExerciseEventObservers) {
 			listener.exerciseChanged(event);
 		}
 	}
-	
+
 	private void notifyMultiExerciseObservers(MultiChangeType type, Collection<Exercise> exercises) {
 		MultiExerciseChangedEvent event = new MultiExerciseChangedEvent(type, exercises);
 		for (MultiExerciseChangedListener listener : multiExerciseEventObservers) {
 			listener.exerciseChanged(event);
 		}
 	}
-	
+
 	// -----------------------------
 }

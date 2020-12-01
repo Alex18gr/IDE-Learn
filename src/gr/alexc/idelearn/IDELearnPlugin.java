@@ -8,14 +8,20 @@ import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IResourceChangeEvent;
+import org.eclipse.core.resources.IResourceChangeListener;
+import org.eclipse.core.resources.IWorkspace;
+import org.eclipse.core.resources.ProjectScope;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.preferences.IScopeContext;
 import org.eclipse.e4.core.services.log.Logger;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
+import org.osgi.service.prefs.Preferences;
 
 import gr.alexc.idelearn.builder.LearnProjectNature;
 import gr.alexc.idelearn.classanalysis.exercise.ExerciseParser;
@@ -23,47 +29,42 @@ import gr.alexc.idelearn.classanalysis.exercise.domain.Exercise;
 import gr.alexc.idelearn.learn.LearnPlugin;
 
 public class IDELearnPlugin extends AbstractUIPlugin {
-	
+
 	/** Identifier of the plugin. */
 	public static final String PLUGIN_ID = "gr.alexc.idelearn";
-	
+
 	private static IDELearnPlugin plugin;
-	
+
 	private Logger logger;
-	
 
 	public IDELearnPlugin() {
 		super();
 		plugin = this;
 	}
-	
+
 	@Override
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
-		
+
 		logger = PlatformUI.getWorkbench().getService(Logger.class);
 		logger.info("Using the eclipse logger");
-		
-		MessageDialog.openInformation(
-				null,
-				"Exercise Task Status View",
-				"Plugin Started");
-		
+
+		MessageDialog.openInformation(null, "Exercise Task Status View", "Plugin Started");
+
 		System.out.println("Plugin Started");
-		
+
 		final IWorkbench workbench = PlatformUI.getWorkbench();
-		
+
 		workbench.getDisplay().asyncExec(new Runnable() {
-			
+
 			@Override
 			public void run() {
-				
+
 				IProject[] projects = ResourcesPlugin.getWorkspace().getRoot().getProjects();
-				
+
 				for (IProject project : projects) {
 					// logger.debug(project.getName());
-					
-					
+
 //					IScopeContext projectScope = new ProjectScope(project);
 //					Preferences projectNode = projectScope.getNode(PLUGIN_ID);
 //					if (projectNode != null) {
@@ -75,7 +76,7 @@ public class IDELearnPlugin extends AbstractUIPlugin {
 //							e.printStackTrace(); 
 //						}
 //					}
-					
+
 					try {
 						if (project.hasNature(LearnProjectNature.NATURE_ID)) {
 //							processContainer(project);
@@ -97,33 +98,47 @@ public class IDELearnPlugin extends AbstractUIPlugin {
 				}
 			}
 		});
+
+		// subscribe to resources changes
+		addRemoveExerciseProjectListener();
 	}
-	
+
+	private void addRemoveExerciseProjectListener() {
+		IWorkspace workspace = ResourcesPlugin.getWorkspace();
+		IResourceChangeListener rcl = new IResourceChangeListener() {
+			public void resourceChanged(IResourceChangeEvent event) {
+				if (event.getType() == IResourceChangeEvent.PRE_DELETE) {
+					IProject deleteProject = (IProject) event.getResource();
+					IScopeContext projectScope = new ProjectScope(deleteProject);
+					Preferences projectNode = projectScope.getNode(PLUGIN_ID);
+					if (projectNode != null) {
+						String deleteProjectId = projectNode.get("exersiceId", "");
+						if (!deleteProjectId.equals("")) {
+							LearnPlugin.getInstance().removeExerciseById(deleteProjectId);
+						}
+					}
+				}
+			}
+		};
+		workspace.addResourceChangeListener(rcl);
+	}
+
 	private String inputStreamToString(InputStream inputStream) {
 		Scanner s = new Scanner(inputStream).useDelimiter("\\A");
 		String result = s.hasNext() ? s.next() : "";
 		return result;
 	}
-	
-	private void processContainer(IContainer container) throws CoreException
-	{
-	   IResource [] members = container.members();
 
-	   for (IResource member : members)
-	    {
-	      if (member instanceof IContainer) 
-	       {
-	         processContainer((IContainer)member);
-	       }
-	      else if (member instanceof IFile)
-	       {
-	    	  logger.info(member.getName());
-	       }
-	    }
+	private void processContainer(IContainer container) throws CoreException {
+		IResource[] members = container.members();
+
+		for (IResource member : members) {
+			if (member instanceof IContainer) {
+				processContainer((IContainer) member);
+			} else if (member instanceof IFile) {
+				logger.info(member.getName());
+			}
+		}
 	}
-	
-	
-	
-	
-	
+
 }
