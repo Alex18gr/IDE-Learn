@@ -1,8 +1,12 @@
 package gr.alexc.idelearn.views;
 
+import java.net.URL;
+import java.util.Arrays;
 
 import javax.inject.Inject;
 
+import org.eclipse.core.runtime.FileLocator;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
@@ -10,13 +14,19 @@ import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jface.resource.JFaceResources;
+import org.eclipse.jface.resource.LocalResourceManager;
+import org.eclipse.jface.resource.ResourceManager;
 import org.eclipse.jface.viewers.ArrayContentProvider;
+import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
@@ -29,23 +39,28 @@ import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
+import gr.alexc.idelearn.classanalysis.exercise.domain.Exercise;
+import gr.alexc.idelearn.classanalysis.exercise.domain.requirement.Requirement;
+import gr.alexc.idelearn.learn.LearnPlugin;
+import gr.alexc.idelearn.learn.listener.SingleChangeType;
+import gr.alexc.idelearn.learn.listener.SingleExerciseChangeEvent;
+import gr.alexc.idelearn.learn.listener.SingleExerciseChangedListener;
 
 /**
- * This sample class demonstrates how to plug-in a new
- * workbench view. The view shows data obtained from the
- * model. The sample creates a dummy model on the fly,
- * but a real implementation would connect to the model
- * available either in this or another plug-in (e.g. the workspace).
- * The view is connected to the model using a content provider.
+ * This sample class demonstrates how to plug-in a new workbench view. The view
+ * shows data obtained from the model. The sample creates a dummy model on the
+ * fly, but a real implementation would connect to the model available either in
+ * this or another plug-in (e.g. the workspace). The view is connected to the
+ * model using a content provider.
  * <p>
- * The view uses a label provider to define how model
- * objects should be presented in the view. Each
- * view can present the same model objects using
- * different labels and icons, if needed. Alternatively,
- * a single label provider can be shared between views
- * in order to ensure that objects of the same type are
- * presented in the same way everywhere.
+ * The view uses a label provider to define how model objects should be
+ * presented in the view. Each view can present the same model objects using
+ * different labels and icons, if needed. Alternatively, a single label provider
+ * can be shared between views in order to ensure that objects of the same type
+ * are presented in the same way everywhere.
  * <p>
  */
 
@@ -56,23 +71,29 @@ public class ExerciseTaskStatusView extends ViewPart {
 	 */
 	public static final String ID = "idelearn.views.ExerciseTaskStatusView";
 
-	@Inject IWorkbench workbench;
-	
+	@Inject
+	IWorkbench workbench;
+
 	private TableViewer viewer;
 	private Action action1;
 	private Action action2;
 	private Action doubleClickAction;
-	 
+	private Exercise selectedExercise;
+	
+	private final ImageDescriptor COMPLETED = getImageDescriptor("tick.gif");
+	private final ImageDescriptor NOT_COMPLETED = getImageDescriptor("error.gif");
 
 	class ViewLabelProvider extends LabelProvider implements ITableLabelProvider {
 		@Override
 		public String getColumnText(Object obj, int index) {
 			return getText(obj);
 		}
+
 		@Override
 		public Image getColumnImage(Object obj, int index) {
 			return getImage(obj);
 		}
+
 		@Override
 		public Image getImage(Object obj) {
 			return workbench.getSharedImages().getImage(ISharedImages.IMG_OBJ_ELEMENT);
@@ -81,30 +102,93 @@ public class ExerciseTaskStatusView extends ViewPart {
 
 	@Override
 	public void createPartControl(Composite parent) {
-		
+
 		setupViewer(parent);
 		// Create the help context id for the viewer's control
 		workbench.getHelpSystem().setHelp(viewer.getControl(), "IDELearn.viewer");
 		getSite().setSelectionProvider(viewer);
-		makeActions();
-		hookContextMenu();
-		hookDoubleClickAction();
-		contributeToActionBars();
+//		makeActions();
+//		hookContextMenu();
+//		hookDoubleClickAction();
+//		contributeToActionBars();
 	}
-	
+
 	private void setupViewer(Composite parent) {
 		viewer = new TableViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
-		
+
 		viewer.setContentProvider(ArrayContentProvider.getInstance());
-		viewer.setInput(new String[] { "One", "Two", "Three", "Four" });
 		viewer.setLabelProvider(new ViewLabelProvider());
-		
+		createColumns(viewer);
+
 		GridData gridData = new GridData(GridData.FILL_BOTH);
 		viewer.getControl().setLayoutData(gridData);
-		
+
 		Table table = viewer.getTable();
 		table.setLinesVisible(true);
 		table.setHeaderVisible(true);
+
+		// add the resource listeners
+		LearnPlugin.getInstance().addSingleExerciseChangedListener(new SingleExerciseChangedListener() {
+
+			@Override
+			public void exerciseChanged(SingleExerciseChangeEvent event) {
+
+				SingleChangeType type = event.getChangeType();
+				if (type.equals(SingleChangeType.SELECTED_EXERCISE)) {
+					selectedExercise = event.getExercise();
+					// initialize array
+					viewer.setInput(selectedExercise.getAllRequirements());
+				}
+				if (type.equals(SingleChangeType.AUDITED_EXERCISE) && event.getExercise().equals(selectedExercise)) {
+					// update array
+					viewer.setInput(selectedExercise.getAllRequirements());
+				}
+
+			}
+		});
+
+	}
+
+	private void createColumns(TableViewer viewer) {
+
+		TableViewerColumn colRequirementCompleted = new TableViewerColumn(viewer, SWT.NONE);
+		colRequirementCompleted.getColumn().setWidth(40);
+		colRequirementCompleted.getColumn().setText("Status");
+		colRequirementCompleted.setLabelProvider(new ColumnLabelProvider() {
+
+			private ResourceManager resourceManager = new LocalResourceManager(JFaceResources.getResources());
+
+			@Override
+			public String getText(Object element) {
+				return null; // no string representation, we only want to display the image
+			}
+
+			@Override
+			public Image getImage(Object element) {
+				if (selectedExercise.getExerciseCheckReport().getRequirementStatus((Requirement) element)) {
+					return resourceManager.createImage(COMPLETED);
+				}
+				return resourceManager.createImage(NOT_COMPLETED);
+			}
+
+			@Override
+			public void dispose() {
+				super.dispose();
+				resourceManager.dispose();
+			}
+		});
+
+		TableViewerColumn colDescription = new TableViewerColumn(viewer, SWT.NONE);
+		colDescription.getColumn().setWidth(400);
+		colDescription.getColumn().setResizable(true);
+		colDescription.getColumn().setText("Description");
+		colDescription.setLabelProvider(new ColumnLabelProvider() {
+			@Override
+			public String getText(Object element) {
+				Requirement p = (Requirement) element;
+				return p.getDescription();
+			}
+		});
 
 	}
 
@@ -139,7 +223,7 @@ public class ExerciseTaskStatusView extends ViewPart {
 		// Other plug-ins can contribute there actions here
 		manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
 	}
-	
+
 	private void fillLocalToolBar(IToolBarManager manager) {
 		manager.add(action1);
 		manager.add(action2);
@@ -153,9 +237,9 @@ public class ExerciseTaskStatusView extends ViewPart {
 		};
 		action1.setText("Action 1");
 		action1.setToolTipText("Action 1 tooltip");
-		action1.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().
-			getImageDescriptor(ISharedImages.IMG_OBJS_INFO_TSK));
-		
+		action1.setImageDescriptor(
+				PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(ISharedImages.IMG_OBJS_INFO_TSK));
+
 		action2 = new Action() {
 			public void run() {
 				showMessage("Action 2 executed");
@@ -163,13 +247,12 @@ public class ExerciseTaskStatusView extends ViewPart {
 		};
 		action2.setText("Action 2");
 		action2.setToolTipText("Action 2 tooltip");
-		action2.setImageDescriptor(workbench.getSharedImages().
-				getImageDescriptor(ISharedImages.IMG_OBJS_INFO_TSK));
+		action2.setImageDescriptor(workbench.getSharedImages().getImageDescriptor(ISharedImages.IMG_OBJS_INFO_TSK));
 		doubleClickAction = new Action() {
 			public void run() {
 				IStructuredSelection selection = viewer.getStructuredSelection();
 				Object obj = selection.getFirstElement();
-				showMessage("Double-click detected on "+obj.toString());
+				showMessage("Double-click detected on " + obj.toString());
 			}
 		};
 	}
@@ -181,15 +264,19 @@ public class ExerciseTaskStatusView extends ViewPart {
 			}
 		});
 	}
+
 	private void showMessage(String message) {
-		MessageDialog.openInformation(
-			viewer.getControl().getShell(),
-			"Exercise Task Status View",
-			message);
+		MessageDialog.openInformation(viewer.getControl().getShell(), "Exercise Task Status View", message);
 	}
 
 	@Override
 	public void setFocus() {
 		viewer.getControl().setFocus();
+	}
+	
+	private static ImageDescriptor getImageDescriptor(String file) {
+	    Bundle bundle = FrameworkUtil.getBundle(ExerciseTaskStatusView.class);
+	    URL url = FileLocator.find(bundle, new Path("icons/" + file), null);
+	    return ImageDescriptor.createFromURL(url);
 	}
 }

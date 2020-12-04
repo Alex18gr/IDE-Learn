@@ -66,6 +66,8 @@ public class ExerciseOverviewView extends ViewPart {
 	 * The ID of the view as specified by the extension.
 	 */
 	public static final String ID = "gr.alexc.idelearn.views.ExerciseOverviewView";
+	
+	private static final String EMPTY_DESCRIPTION_TEXT = "";
 
 	@Inject
 	IWorkbench workbench;
@@ -136,10 +138,12 @@ public class ExerciseOverviewView extends ViewPart {
 			public void selectionChanged(SelectionChangedEvent event) {
 				IStructuredSelection selection = event.getStructuredSelection();
 				if (selection.getFirstElement() == null) {
-					descriptionText.setText("");
+					descriptionText.setText(EMPTY_DESCRIPTION_TEXT);
 				} else {
 					descriptionText.setText(
 							((Exercise) event.getStructuredSelection().getFirstElement()).getRequirementsDescription());
+
+					LearnPlugin.getInstance().exerciseSelected((Exercise) event.getStructuredSelection().getFirstElement());
 				}
 			}
 		});
@@ -171,7 +175,7 @@ public class ExerciseOverviewView extends ViewPart {
 		comboViewer.getCombo().setLayoutData(comboBoxData);
 
 		descriptionText = new Text(parent, SWT.MULTI | SWT.BORDER | SWT.WRAP | SWT.READ_ONLY | SWT.V_SCROLL);
-		descriptionText.setText("This is a very large exercise description text...");
+		descriptionText.setText(EMPTY_DESCRIPTION_TEXT);
 		GridData descriptionTextGridData = new GridData(SWT.FILL, SWT.FILL, true, true);
 //		descriptionTextGridData.heightHint = 250;
 		descriptionTextGridData.minimumHeight = 1;

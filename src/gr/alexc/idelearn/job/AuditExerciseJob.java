@@ -1,19 +1,29 @@
 package gr.alexc.idelearn.job;
 
+import java.io.IOException;
 import java.net.URI;
+import java.nio.file.Path;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ProjectScope;
 import org.eclipse.core.resources.WorkspaceJob;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.preferences.IScopeContext;
 import org.osgi.service.prefs.Preferences;
 
+import com.github.javaparser.utils.SourceRoot;
+
 import gr.alexc.idelearn.IDELearnPlugin;
+import gr.alexc.idelearn.classanalysis.exercise.ExerciseAnalyser;
+import gr.alexc.idelearn.classanalysis.exercise.ExerciseCheckReport;
+import gr.alexc.idelearn.classanalysis.exercise.domain.Exercise;
+import gr.alexc.idelearn.classanalysis.parser.ClassChecker;
+import gr.alexc.idelearn.learn.LearnPlugin;
 
 public class AuditExerciseJob extends WorkspaceJob {
 	
@@ -27,6 +37,8 @@ public class AuditExerciseJob extends WorkspaceJob {
 	@Override
 	public IStatus runInWorkspace(IProgressMonitor monitor) throws CoreException {
 		
+		LearnPlugin learnPlugin = LearnPlugin.getInstance();
+		
 		// check if the exercise object already exists
 		IScopeContext projectScope = new ProjectScope(project);
 		Preferences projectNode = projectScope.getNode(IDELearnPlugin.PLUGIN_ID);
@@ -39,6 +51,13 @@ public class AuditExerciseJob extends WorkspaceJob {
 		if (projectId.equals("")) {
 			return Status.CANCEL_STATUS;
 		}
+		
+		Exercise exercise = learnPlugin.getExerciseById(projectId);
+		
+		if (exercise == null) {
+			return Status.CANCEL_STATUS;
+		}
+		
 		
 		
 		
@@ -59,15 +78,34 @@ public class AuditExerciseJob extends WorkspaceJob {
 		
 			// if it doesen't exist, check the .exercise file and create it
 		
-		// get the project root
+		try {
+			// get the project root
+			project.getLocationURI();
+			IPath projectIPath = project.getLocation();
+			Path projectPath = projectIPath.makeAbsolute().toFile().toPath();
+			SourceRoot sourceRoot = new SourceRoot(projectPath);
+			
+			// run the java parser procedure
+			ClassChecker checker = new ClassChecker();
+			checker.checkClasses(sourceRoot);
+			
+			// after parsing, check the requirements
+			ExerciseAnalyser analyser = new ExerciseAnalyser();
+			ExerciseCheckReport checkReport = analyser.analyseExerciseRequirements(exercise, checker);
+			
+			// get and publish the results of the requirements
+			
+			
+			return Status.OK_STATUS;
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		
-		// run the java parser procedure
+		// 
 		
-		// after parsing, check the requirements
 		
-		// get and publish the results of the requirements
-		
-		return null;
+		return Status.CANCEL_STATUS;
 	}
 
 }

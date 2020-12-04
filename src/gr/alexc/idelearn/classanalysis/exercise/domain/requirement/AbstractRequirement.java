@@ -1,5 +1,7 @@
 package gr.alexc.idelearn.classanalysis.exercise.domain.requirement;
 
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
@@ -12,11 +14,10 @@ import gr.alexc.idelearn.classanalysis.parser.ClassEntity;
 @JsonSubTypes({
         @JsonSubTypes.Type(value = ClassRequirement.class, name = "class")
 })
-public abstract class AbstractRequirement {
+public abstract class AbstractRequirement implements Requirement {
+	
+	public abstract List<AbstractSubRequirement> getSubRequirements();
 
-    public abstract String getDescription();
-
-    public abstract boolean checkRequirement(ClassEntity classEntity);
-    
-    public abstract Integer getSubrequirements();
+	public abstract Integer getTotalSubRequirements();
+	
 }

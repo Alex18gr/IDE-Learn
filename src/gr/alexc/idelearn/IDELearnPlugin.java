@@ -26,6 +26,7 @@ import org.osgi.service.prefs.Preferences;
 import gr.alexc.idelearn.builder.LearnProjectNature;
 import gr.alexc.idelearn.classanalysis.exercise.ExerciseParser;
 import gr.alexc.idelearn.classanalysis.exercise.domain.Exercise;
+import gr.alexc.idelearn.job.AuditExerciseJob;
 import gr.alexc.idelearn.learn.LearnPlugin;
 
 public class IDELearnPlugin extends AbstractUIPlugin {
@@ -90,6 +91,10 @@ public class IDELearnPlugin extends AbstractUIPlugin {
 //								logger.info(inputStreamToString(file.getContents()));
 //								System.out.println(file.getContents().readAllBytes().toString());
 								inputStream.close();
+								
+								// run the audit job for the project
+								AuditExerciseJob job = new AuditExerciseJob(project, "Check Exercise Job");
+								job.schedule();
 							}
 						}
 					} catch (CoreException | IOException e2) {

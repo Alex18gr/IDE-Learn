@@ -54,6 +54,10 @@ public class LearnPlugin {
 			removeExercise(deleteExercise);
 		}
 	}
+	
+	public void exerciseSelected(Exercise exercise) {
+		this.notifySingleExerciseObservers(SingleChangeType.SELECTED_EXERCISE, exercise);
+	}
 
 	/**
 	 * return all opened workspace exercises

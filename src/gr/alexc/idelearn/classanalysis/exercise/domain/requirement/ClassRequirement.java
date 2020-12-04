@@ -29,14 +29,7 @@ public class ClassRequirement extends AbstractRequirement {
 
     @Override
     public String getDescription() {
-        StringBuilder builder = new StringBuilder();
-        builder.append("Must exist a class with the name \"").append(name).append("\".").append(System.lineSeparator());
-
-        relatedRequirements.forEach((rr) -> {
-            builder.append("\t\t").append(rr.getDescription()).append(System.lineSeparator());
-        });
-
-        return builder.toString();
+        return "Must exist a class with the name \"" + name + "\".";
     }
 
     @Override
@@ -45,7 +38,12 @@ public class ClassRequirement extends AbstractRequirement {
     }
 
 	@Override
-	public Integer getSubrequirements() {
+	public Integer getTotalSubRequirements() {
 		return relatedRequirements.size();
+	}
+
+	@Override
+	public List<AbstractSubRequirement> getSubRequirements() {
+		return relatedRequirements;
 	}
 }

@@ -7,13 +7,14 @@ import java.util.Set;
 
 import gr.alexc.idelearn.classanalysis.exercise.domain.Exercise;
 import gr.alexc.idelearn.classanalysis.exercise.domain.requirement.AbstractRequirement;
+import gr.alexc.idelearn.classanalysis.exercise.domain.requirement.Requirement;
 
 public class ExerciseCheckReport {
 
 	private Exercise exercise;
 	private Float completedPercentage;
 	private Integer completedRequirements;
-    private final Map<AbstractRequirement, Boolean> report;
+    private final Map<Requirement, Boolean> report;
 
     public ExerciseCheckReport(Exercise exercise) {
         report = new HashMap<>();
@@ -28,23 +29,25 @@ public class ExerciseCheckReport {
         this.exercise = exercise;
     }
 
-    public void updateRequirementStatus(AbstractRequirement requirement, Boolean status) {
+    public void updateRequirementStatus(Requirement requirement, Boolean status) {
         report.put(requirement, status);
         calculateCompletedPercentage();
     }
 
-    public Boolean getRequirementStatus(AbstractRequirement requirement) {
-        return report.get(requirement);
+    public Boolean getRequirementStatus(Requirement requirement) {
+        Boolean requirementStatus = report.get(requirement);
+        if (requirementStatus == null) return false;
+        return requirementStatus;
     }
 
-    public Set<AbstractRequirement> getAllAnalysedRequirements() {
+    public Set<Requirement> getAllAnalysedRequirements() {
         return report.keySet();
     }
     
     private void calculateCompletedPercentage() {
-    	Set<AbstractRequirement> requirementsSet = report.keySet();
+    	Set<Requirement> requirementsSet = report.keySet();
     	int completedRequirements = 0;
-    	for (AbstractRequirement req : requirementsSet) {
+    	for (Requirement req : requirementsSet) {
     		if (report.get(req)) { // if the requirement status is true (completed)
     			completedRequirements++;
     		}

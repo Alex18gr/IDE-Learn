@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
         @JsonSubTypes.Type(value = ExtendSubRequirement.class, name = "extend"),
         @JsonSubTypes.Type(value = ContainsSubRequirement.class, name = "contains")
 })
-public abstract class AbstractSubRequirement extends AbstractRequirement {
+public abstract class AbstractSubRequirement implements Requirement {
 	
 	public Integer getSubrequirements() {
 		return 0;
