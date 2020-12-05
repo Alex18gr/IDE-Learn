@@ -1,5 +1,7 @@
 package gr.alexc.idelearn.views;
 
+import java.text.DecimalFormat;
+
 import javax.inject.Inject;
 
 import org.eclipse.jface.action.Action;
@@ -20,12 +22,9 @@ import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
@@ -66,7 +65,7 @@ public class ExerciseOverviewView extends ViewPart {
 	 * The ID of the view as specified by the extension.
 	 */
 	public static final String ID = "gr.alexc.idelearn.views.ExerciseOverviewView";
-	
+
 	private static final String EMPTY_DESCRIPTION_TEXT = "";
 
 	@Inject
@@ -140,32 +139,18 @@ public class ExerciseOverviewView extends ViewPart {
 				if (selection.getFirstElement() == null) {
 					descriptionText.setText(EMPTY_DESCRIPTION_TEXT);
 				} else {
-					descriptionText.setText(
-							((Exercise) event.getStructuredSelection().getFirstElement()).getRequirementsDescription());
+					Exercise selectedExercise = (Exercise) event.getStructuredSelection().getFirstElement();
+					DecimalFormat df = new DecimalFormat();
+					df.setMaximumFractionDigits(2);
+					descriptionText.setText(selectedExercise.getRequirementsDescription());
+					statusLabel.setText(df.format(selectedExercise.getExerciseCheckReport().getCompletedPercentage()) + "% of the exercise completed");
 
-					LearnPlugin.getInstance().exerciseSelected((Exercise) event.getStructuredSelection().getFirstElement());
+					LearnPlugin.getInstance()
+							.exerciseSelected((Exercise) event.getStructuredSelection().getFirstElement());
 				}
 			}
 		});
 
-//		exercisesListCombo = new Combo(parent, SWT.READ_ONLY);
-//		exercisesListCombo.addSelectionListener(new SelectionListener() {
-//
-//			@Override
-//			public void widgetSelected(SelectionEvent e) {
-//
-//				LearnPlugin learnPlugin = LearnPlugin.getInstance();
-//				descriptionText.setText(((Exercise) e.data).getRequirementsDescription());
-//
-//			}
-//
-//			@Override
-//			public void widgetDefaultSelected(SelectionEvent e) {
-//				// TODO Auto-generated method stub
-//
-//			}
-//		});
-//		exercisesListCombo.setItems("Exercise 1", "Exercise 2", "Exercise 3", "Exercise 4", "Exercise 5");
 		GridData comboBoxData = new GridData(SWT.FILL, SWT.FILL, true, false);
 		comboBoxData.widthHint = 150;
 //		comboBoxData.heightHint = 150;
@@ -192,27 +177,24 @@ public class ExerciseOverviewView extends ViewPart {
 
 			@Override
 			public void exerciseChanged(SingleExerciseChangeEvent event) {
-				if (event.getChangeType().equals(SingleChangeType.ADDED_EXERCISE)) {
-//					exercisesListCombo.add(event.getExercise().getName());
-//					exercisesListCombo.setData(event.getExercise().getName(), event.getExercise());
-					Display.getDefault().syncExec(new Runnable() {
-						@Override
-						public void run() {
+				Display.getDefault().syncExec(new Runnable() {
+
+					@Override
+					public void run() {
+						if (event.getChangeType().equals(SingleChangeType.ADDED_EXERCISE)) {
+//							exercisesListCombo.add(event.getExercise().getName());
+//							exercisesListCombo.setData(event.getExercise().getName(), event.getExercise());
 							comboViewer.add(event.getExercise());
 						}
-					});
-				}
-				if (event.getChangeType().equals(SingleChangeType.REMOVED_EXERCISE)) {
-					Display.getDefault().syncExec(new Runnable() {
-						@Override
-						public void run() {
+						if (event.getChangeType().equals(SingleChangeType.REMOVED_EXERCISE)) {
 							if (comboViewer.getSelection().equals(event.getExercise())) {
 								comboViewer.setSelection(null);
 							}
 							comboViewer.remove(event.getExercise());
 						}
-					});
-				}
+					}
+				});
+
 			}
 		});
 

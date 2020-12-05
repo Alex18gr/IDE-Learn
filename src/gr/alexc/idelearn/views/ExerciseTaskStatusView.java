@@ -31,6 +31,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.ui.IActionBars;
@@ -42,6 +43,7 @@ import org.eclipse.ui.part.ViewPart;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 
+import gr.alexc.idelearn.IDELearnPlugin;
 import gr.alexc.idelearn.classanalysis.exercise.domain.Exercise;
 import gr.alexc.idelearn.classanalysis.exercise.domain.requirement.Requirement;
 import gr.alexc.idelearn.learn.LearnPlugin;
@@ -80,8 +82,8 @@ public class ExerciseTaskStatusView extends ViewPart {
 	private Action doubleClickAction;
 	private Exercise selectedExercise;
 	
-	private final ImageDescriptor COMPLETED = getImageDescriptor("tick.gif");
-	private final ImageDescriptor NOT_COMPLETED = getImageDescriptor("error.gif");
+	private final ImageDescriptor COMPLETED = IDELearnPlugin.getDefault().getImageDescriptor("icons/tick.gif"); // getImageDescriptor("tick.gif");
+	private final ImageDescriptor NOT_COMPLETED = IDELearnPlugin.getDefault().getImageDescriptor("icons/error.gif"); // getImageDescriptor("error.gif");
 
 	class ViewLabelProvider extends LabelProvider implements ITableLabelProvider {
 		@Override
@@ -132,18 +134,24 @@ public class ExerciseTaskStatusView extends ViewPart {
 
 			@Override
 			public void exerciseChanged(SingleExerciseChangeEvent event) {
-
-				SingleChangeType type = event.getChangeType();
-				if (type.equals(SingleChangeType.SELECTED_EXERCISE)) {
-					selectedExercise = event.getExercise();
-					// initialize array
-					viewer.setInput(selectedExercise.getAllRequirements());
-				}
-				if (type.equals(SingleChangeType.AUDITED_EXERCISE) && event.getExercise().equals(selectedExercise)) {
-					// update array
-					viewer.setInput(selectedExercise.getAllRequirements());
-				}
-
+				
+				Display.getDefault().syncExec(new Runnable() {
+					@Override
+					public void run() {
+						SingleChangeType type = event.getChangeType();
+						if (type.equals(SingleChangeType.SELECTED_EXERCISE)) {
+							selectedExercise = event.getExercise();
+							// initialize array
+							viewer.setInput(selectedExercise.getAllRequirements());
+						}
+						if (type.equals(SingleChangeType.AUDITED_EXERCISE) && event.getExercise().equals(selectedExercise)) {
+							// update array
+							viewer.setInput(selectedExercise.getAllRequirements());
+						}
+						
+						viewer.refresh();
+					}
+				});
 			}
 		});
 

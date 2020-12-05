@@ -94,7 +94,7 @@ public class AuditExerciseJob extends WorkspaceJob {
 			ExerciseCheckReport checkReport = analyser.analyseExerciseRequirements(exercise, checker);
 			
 			// get and publish the results of the requirements
-			
+			learnPlugin.getInstance().exervciseAudited(exercise);
 			
 			return Status.OK_STATUS;
 			

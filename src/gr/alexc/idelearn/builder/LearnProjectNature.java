@@ -17,6 +17,8 @@ public class LearnProjectNature implements IProjectNature {
 
 	@Override
 	public void configure() throws CoreException {
+		
+		// Add the builder to the project
 		IProjectDescription desc = project.getDescription();
 		ICommand[] commands = desc.getBuildSpec();
 

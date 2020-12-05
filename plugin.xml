@@ -23,7 +23,7 @@
          </run>
       </runtime>
       <builder
-            id="IDELearn.learnProjectBuilder">
+            id="gr.alexc.idelearn.learnProjectBuilder">
       </builder>
    </extension>
    <extension

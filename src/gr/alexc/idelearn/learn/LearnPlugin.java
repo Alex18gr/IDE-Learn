@@ -58,6 +58,10 @@ public class LearnPlugin {
 	public void exerciseSelected(Exercise exercise) {
 		this.notifySingleExerciseObservers(SingleChangeType.SELECTED_EXERCISE, exercise);
 	}
+	
+	public void exervciseAudited(Exercise exercise) {
+		this.notifySingleExerciseObservers(SingleChangeType.AUDITED_EXERCISE, exercise);
+	}
 
 	/**
 	 * return all opened workspace exercises

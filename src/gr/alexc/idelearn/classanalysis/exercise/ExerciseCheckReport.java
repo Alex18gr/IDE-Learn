@@ -29,7 +29,15 @@ public class ExerciseCheckReport {
         this.exercise = exercise;
     }
 
-    public void updateRequirementStatus(Requirement requirement, Boolean status) {
+    public Float getCompletedPercentage() {
+		return completedPercentage;
+	}
+
+	public Integer getCompletedRequirements() {
+		return completedRequirements;
+	}
+
+	public void updateRequirementStatus(Requirement requirement, Boolean status) {
         report.put(requirement, status);
         calculateCompletedPercentage();
     }

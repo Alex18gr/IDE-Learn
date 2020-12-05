@@ -81,7 +81,7 @@ public class LearnProjectBuilder extends IncrementalProjectBuilder {
 		}
 	}
 
-	public static final String BUILDER_ID = "IDELearn.learnProjectBuilder";
+	public static final String BUILDER_ID = "gr.alexc.idelearn.learnProjectBuilder";
 
 	private static final String MARKER_TYPE = "IDELearn.xmlProblem";
 
@@ -124,7 +124,7 @@ public class LearnProjectBuilder extends IncrementalProjectBuilder {
 //				incrementalBuild(delta, monitor);
 //			}
 //		}
-		return null;
+		return new IProject[] { project };
 	}
 
 	protected void clean(IProgressMonitor monitor) throws CoreException {

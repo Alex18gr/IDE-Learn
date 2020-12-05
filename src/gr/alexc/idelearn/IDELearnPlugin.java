@@ -16,7 +16,7 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.preferences.IScopeContext;
 import org.eclipse.e4.core.services.log.Logger;
-import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
@@ -50,7 +50,7 @@ public class IDELearnPlugin extends AbstractUIPlugin {
 		logger = PlatformUI.getWorkbench().getService(Logger.class);
 		logger.info("Using the eclipse logger");
 
-		MessageDialog.openInformation(null, "Exercise Task Status View", "Plugin Started");
+//		MessageDialog.openInformation(null, "Exercise Task Status View", "Plugin Started");
 
 		System.out.println("Plugin Started");
 
@@ -144,6 +144,19 @@ public class IDELearnPlugin extends AbstractUIPlugin {
 				logger.info(member.getName());
 			}
 		}
+	}
+	
+	/**
+	 * Returns the shared instance
+	 *
+	 * @return the shared instance
+	 */
+	public static IDELearnPlugin getDefault() {
+		return plugin;
+	}
+	
+	public static ImageDescriptor getImageDescriptor(String path) {
+		return imageDescriptorFromPlugin(PLUGIN_ID, path);
 	}
 
 }
