@@ -23,6 +23,7 @@ import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -139,12 +140,14 @@ public class ExerciseOverviewView extends ViewPart {
 				if (selection.getFirstElement() == null) {
 					descriptionText.setText(EMPTY_DESCRIPTION_TEXT);
 				} else {
-					Exercise selectedExercise = (Exercise) event.getStructuredSelection().getFirstElement();
+					selectedExercise = (Exercise) event.getStructuredSelection().getFirstElement();
 					DecimalFormat df = new DecimalFormat();
 					df.setMaximumFractionDigits(2);
 					descriptionText.setText(selectedExercise.getRequirementsDescription());
-					statusLabel.setText(df.format(selectedExercise.getExerciseCheckReport().getCompletedPercentage()) + "% of the exercise completed");
-
+					statusLabel.setText(df.format(selectedExercise.getExerciseCheckReport().getCompletedPercentage())
+							+ "% of the exercise completed");
+					statusProgressBar.setSelection(
+							Math.round(selectedExercise.getExerciseCheckReport().getCompletedPercentage()));
 					LearnPlugin.getInstance()
 							.exerciseSelected((Exercise) event.getStructuredSelection().getFirstElement());
 				}
@@ -178,23 +181,28 @@ public class ExerciseOverviewView extends ViewPart {
 			@Override
 			public void exerciseChanged(SingleExerciseChangeEvent event) {
 				Display.getDefault().syncExec(new Runnable() {
-
 					@Override
 					public void run() {
 						if (event.getChangeType().equals(SingleChangeType.ADDED_EXERCISE)) {
-//							exercisesListCombo.add(event.getExercise().getName());
-//							exercisesListCombo.setData(event.getExercise().getName(), event.getExercise());
 							comboViewer.add(event.getExercise());
-						}
-						if (event.getChangeType().equals(SingleChangeType.REMOVED_EXERCISE)) {
+						} else if (event.getChangeType().equals(SingleChangeType.REMOVED_EXERCISE)) {
 							if (comboViewer.getSelection().equals(event.getExercise())) {
 								comboViewer.setSelection(null);
 							}
 							comboViewer.remove(event.getExercise());
+						} else if (event.getChangeType().equals(SingleChangeType.AUDITED_EXERCISE)) {
+							if (event.getExercise().equals(selectedExercise)) {
+								DecimalFormat df = new DecimalFormat();
+								df.setMaximumFractionDigits(2);
+								descriptionText.setText(selectedExercise.getRequirementsDescription());
+								statusLabel.setText(df.format(selectedExercise.getExerciseCheckReport().getCompletedPercentage())
+										+ "% of the exercise completed");
+								statusProgressBar.setSelection(
+										Math.round(selectedExercise.getExerciseCheckReport().getCompletedPercentage()));
+							}
 						}
 					}
 				});
-
 			}
 		});
 
@@ -220,9 +228,17 @@ public class ExerciseOverviewView extends ViewPart {
 		statusComposite.setLayout(layout);
 
 		statusLabel = new Label(statusComposite, SWT.BORDER);
-		statusLabel.setText("20% of the exercise completed");
+		GridData statusLabelGridData = new GridData(SWT.FILL, SWT.FILL, true, false);
+		statusLabel.setLayoutData(statusLabelGridData);
+		statusLabel.setText("% completed");
 
 		statusProgressBar = new ProgressBar(statusComposite, SWT.SMOOTH);
+		Rectangle clientArea = parent.getClientArea();
+		statusProgressBar.setBounds(clientArea.x, clientArea.y, 200, 32);
+		statusProgressBar.setMinimum(0);
+		statusProgressBar.setMaximum(100);
+		GridData progressBarGridData = new GridData(SWT.FILL, SWT.FILL, true, false);
+		statusLabel.setLayoutData(progressBarGridData);
 
 		return statusComposite;
 	}

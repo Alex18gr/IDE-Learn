@@ -1,9 +1,9 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: IDELearn
+Bundle-Name: %Bundle-Name
 Bundle-SymbolicName: gr.alexc.idelearn;singleton:=true
 Bundle-Version: 1.0.0
-Bundle-Vendor: alexc
+Bundle-Vendor: %Bundle-Vendor
 Require-Bundle: org.eclipse.core.resources,
  org.eclipse.core.runtime,
  org.eclipse.ui,
@@ -27,7 +27,7 @@ Bundle-ClassPath: lib/jackson-core-2.11.3.jar,
  lib/jackson-databind-2.11.3.jar,
  lib/lombok.jar,
  .
-Export-Package: gr.alexc.idelearn;uses:="org.osgi.framework,org.eclipse.ui.plugin",
+Export-Package: gr.alexc.idelearn;uses:="org.osgi.framework,org.eclipse.jface.resource,org.eclipse.ui.plugin",
  gr.alexc.idelearn.builder;
   uses:="org.eclipse.core.runtime,
    org.xml.sax.helpers,

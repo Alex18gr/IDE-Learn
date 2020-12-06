@@ -4,7 +4,7 @@
 
    <extension
          id="learnProjectBuilder"
-         name="Learn Project Builder"
+         name="%extension.name"
          point="org.eclipse.core.resources.builders">
       <builder
             hasNature="true">
@@ -15,7 +15,7 @@
    </extension>
    <extension
          id="learnProjectNature"
-         name="Learn Project Nature"
+         name="%extension.name.0"
          point="org.eclipse.core.resources.natures">
       <runtime>
          <run
@@ -30,21 +30,21 @@
          point="org.eclipse.ui.commands">
       <category
             id="IDELearn.learnProjectNature.category"
-            name="Learn Project Nature commands">
+            name="%category.name">
       </category>
       <command
             categoryId="IDELearn.learnProjectNature.category"
             defaultHandler="gr.alexc.idelearn.builder.AddRemoveLearnProjectNatureHandler"
             id="IDELearn.addRemoveLearnProjectNature"
-            name="Add/RemoveLearn Project Nature">
+            name="%command.name">
       </command>
       <category
             id="IDELearn.commands.category"
-            name="Sample Category">
+            name="%category.name.0">
       </category>
       <command
             categoryId="IDELearn.commands.category"
-            name="Open Exercise"
+            name="%command.name.0"
             id="IDELearn.commands.exercise.openexercise">
       </command>
    </extension>
@@ -53,7 +53,7 @@
       <menuContribution
             locationURI="popup:org.eclipse.ui.projectConfigure?after=additions">
          <command
-               label="Disable Sample builder"
+               label="%command.label"
                commandId="IDELearn.addRemoveLearnProjectNature"
                style="push">
             <visibleWhen
@@ -76,7 +76,7 @@
             </visibleWhen>
          </command>
          <command
-               label="Enable Sample builder"
+               label="%command.label.0"
                commandId="IDELearn.addRemoveLearnProjectNature"
                style="push">
             <visibleWhen
@@ -105,12 +105,12 @@
             locationURI="menu:org.eclipse.ui.main.menu?after=additions">
          <menu
                id="IDELearn.menus.sampleMenu"
-               label="IDE Learn"
-               mnemonic="M">
+               label="%menu.label"
+               mnemonic="%menu.mnemonic">
             <command
                   commandId="IDELearn.commands.exercise.openexercise"
                   id="IDELearn.menus.exercise.openexercise"
-                  mnemonic="S">
+                  mnemonic="%command.mnemonic">
             </command>
          </menu>
       </menuContribution>
@@ -122,14 +122,14 @@
                   id="IDELearn.toolbars.exercise.openexercise"
                   commandId="IDELearn.commands.exercise.openexercise"
                   icon="icons/sample.png"
-                  tooltip="Say hello world">
+                  tooltip="%command.tooltip">
             </command>
          </toolbar>
       </menuContribution>
    </extension>
    <extension
          id="xmlProblem"
-         name="XML Problem"
+         name="%extension.name.1"
          point="org.eclipse.core.resources.markers">
       <super
             type="org.eclipse.core.resources.problemmarker">
@@ -157,12 +157,12 @@
    <extension
          point="org.eclipse.ui.views">
       <category
-            name="IDE Learn"
+            name="%category.name.1"
             id="gr.alexc.idelearn">
       </category>
       <view
             id="idelearn.views.ExerciseTaskStatusView"
-            name="Exercise Task Status View"
+            name="%view.name"
             icon="icons/sample.png"
             class="gr.alexc.idelearn.views.ExerciseTaskStatusView"
             category="gr.alexc.idelearn"
@@ -174,7 +174,7 @@
             icon="icons/sample.png"
             id="gr.alexc.idelearn.views.ExerciseOverviewView"
             inject="true"
-            name="Exercise OverviewView">
+            name="%view.name.0">
       </view>
    </extension>
    <extension
@@ -218,16 +218,16 @@
          point="org.eclipse.ui.importWizards">
       <category
             id="idelearn.importWizards.sampleCategory"
-            name="Sample File Import">
+            name="%category.name.2">
       </category>
       <wizard
             category="idelearn.importWizards.sampleCategory"
             class="idelearn.importWizards.ImportWizard"
             icon="icons/sample.png"
             id="idelearn.importWizards.ImportWizard"
-            name="Import File">
+            name="%wizard.name">
          <description>
-            Import a file from the local file system into the workspace.
+            %wizard.description
          </description>
       </wizard>
    </extension>

@@ -1,7 +1,7 @@
 package gr.alexc.idelearn.views;
 
 import java.net.URL;
-import java.util.Arrays;
+import java.util.Optional;
 
 import javax.inject.Inject;
 
@@ -75,6 +75,8 @@ public class ExerciseTaskStatusView extends ViewPart {
 
 	@Inject
 	IWorkbench workbench;
+	
+	private LearnPlugin learnPlugin;
 
 	private TableViewer viewer;
 	private Action action1;
@@ -100,6 +102,12 @@ public class ExerciseTaskStatusView extends ViewPart {
 		public Image getImage(Object obj) {
 			return workbench.getSharedImages().getImage(ISharedImages.IMG_OBJ_ELEMENT);
 		}
+	}
+	
+	
+
+	public ExerciseTaskStatusView() {
+		this.learnPlugin = LearnPlugin.getInstance();
 	}
 
 	@Override
@@ -130,7 +138,7 @@ public class ExerciseTaskStatusView extends ViewPart {
 		table.setHeaderVisible(true);
 
 		// add the resource listeners
-		LearnPlugin.getInstance().addSingleExerciseChangedListener(new SingleExerciseChangedListener() {
+		learnPlugin.addSingleExerciseChangedListener(new SingleExerciseChangedListener() {
 
 			@Override
 			public void exerciseChanged(SingleExerciseChangeEvent event) {
@@ -154,13 +162,24 @@ public class ExerciseTaskStatusView extends ViewPart {
 				});
 			}
 		});
-
+		
+		// initialize the data when the view is created
+		initializeColumnData();
+	}
+	
+	private void initializeColumnData() {
+		Optional<Exercise> selectedExerciseOptional = learnPlugin.getSelectedExercise();
+		if (selectedExerciseOptional.isPresent()) {
+			selectedExercise = selectedExerciseOptional.get();
+			// initialize array
+			viewer.setInput(selectedExercise.getAllRequirements());
+		}
 	}
 
 	private void createColumns(TableViewer viewer) {
 
 		TableViewerColumn colRequirementCompleted = new TableViewerColumn(viewer, SWT.NONE);
-		colRequirementCompleted.getColumn().setWidth(40);
+		colRequirementCompleted.getColumn().setWidth(60);
 		colRequirementCompleted.getColumn().setText("Status");
 		colRequirementCompleted.setLabelProvider(new ColumnLabelProvider() {
 

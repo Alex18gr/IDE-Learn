@@ -1,9 +1,9 @@
 package gr.alexc.idelearn.learn;
 
-import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 import gr.alexc.idelearn.classanalysis.exercise.domain.Exercise;
 import gr.alexc.idelearn.learn.listener.MultiChangeType;
@@ -15,9 +15,9 @@ import gr.alexc.idelearn.learn.listener.SingleExerciseChangedListener;
 
 public class LearnPlugin {
 
-	private PropertyChangeSupport support;
 	private List<Exercise> workspaceExercises = new ArrayList<>();
-
+	private Exercise selectedExercise;
+	
 	private List<MultiExerciseChangedListener> multiExerciseEventObservers = new ArrayList<>();
 	private List<SingleExerciseChangedListener> singleExerciseEventObservers = new ArrayList<>();
 
@@ -56,6 +56,7 @@ public class LearnPlugin {
 	}
 	
 	public void exerciseSelected(Exercise exercise) {
+		this.selectedExercise = exercise;
 		this.notifySingleExerciseObservers(SingleChangeType.SELECTED_EXERCISE, exercise);
 	}
 	
@@ -88,6 +89,10 @@ public class LearnPlugin {
 			}
 		}
 		return false;
+	}
+	
+	public Optional<Exercise> getSelectedExercise() {
+		return Optional.ofNullable(selectedExercise);
 	}
 
 	// Listeners methods
