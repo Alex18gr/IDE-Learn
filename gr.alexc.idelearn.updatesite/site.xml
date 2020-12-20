@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature url="features/io.alexc.ide.feature_1.0.0.jar" id="io.alexc.ide.feature" version="1.0.0">
+      <category name="idelearn"/>
+   </feature>
+   <category-def name="idelearn" label="IDE Learn">
+      <description>
+         IDE Learn update sites
+      </description>
+   </category-def>
+</site>
