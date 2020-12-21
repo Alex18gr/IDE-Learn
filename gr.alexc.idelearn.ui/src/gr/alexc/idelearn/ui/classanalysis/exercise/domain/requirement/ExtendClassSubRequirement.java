@@ -10,7 +10,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class ExtendSubRequirement extends AbstractSubRequirement {
+public class ExtendClassSubRequirement extends AbstractSubRequirement {
 
     @JsonProperty("main_class_id")
     private ClassRequirement mainClass;

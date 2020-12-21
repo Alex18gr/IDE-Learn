@@ -22,18 +22,37 @@ public class ClassRequirement extends AbstractRequirement {
 
     @JsonProperty("name")
     private String name;
+    
+    @JsonProperty("is_abstract")
+    private Boolean isAbstract = false;
 
     @JsonProperty("related_requirements")
     private List<AbstractSubRequirement> relatedRequirements;
+    
+    public String getClassRequirementDescription() {
+        StringBuilder builder = new StringBuilder();
+        if (isAbstract) {
+            builder.append("Must exist an abstract class with name \"");
+        } else {
+            builder.append("Must exist a class with the name \"");
+        }
+        builder.append(name).append("\".");
+        return builder.toString();
+    }
 
 
     @Override
     public String getDescription() {
-        return "Must exist a class with the name \"" + name + "\".";
+        return getClassRequirementDescription();
     }
 
     @Override
     public boolean checkRequirement(ClassEntity classEntity) {
+        if (isAbstract) {
+            if (!classEntity.getIsAbstract()) {
+                return false;
+            }
+        }
         return classEntity.getClassName().equals(name);
     }
 

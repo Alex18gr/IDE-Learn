@@ -21,13 +21,21 @@ public class ClassEntity {
     private Boolean isAbstract;
     private Boolean isStatic;
 
+    private List<String> extendClassesName;
+    private List<String> implementClassesName;
     private List<Field> fields;
     private List<Method> methods;
+    private List<ConstructorMethod> constructors;
 
     private ClassOrInterfaceDeclaration classDeclaration;
 
     public ClassEntity() {
         relations = new HashSet<>();
+        this.extendClasses = new HashSet<>();
+        this.implementTypes = new HashSet<>();
+        this.fields = new ArrayList<>();
+        this.methods = new ArrayList<>();
+        this.constructors = new ArrayList<>();
     }
 
     public ClassEntity(String className) {
@@ -37,6 +45,7 @@ public class ClassEntity {
         this.implementTypes = new HashSet<>();
         this.fields = new ArrayList<>();
         this.methods = new ArrayList<>();
+        this.constructors = new ArrayList<>();
     }
 
     public void addRelationToClass(ClassEntity relatedClassEntity, ClassRelation.RelationType relationType) {
