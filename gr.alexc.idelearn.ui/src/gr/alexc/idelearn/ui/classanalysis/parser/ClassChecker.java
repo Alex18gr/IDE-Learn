@@ -1,19 +1,21 @@
 package gr.alexc.idelearn.ui.classanalysis.parser;
 
-import com.github.javaparser.ast.CompilationUnit;
-import com.github.javaparser.ast.NodeList;
-import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
-import com.github.javaparser.ast.type.ClassOrInterfaceType;
-import com.github.javaparser.ast.type.Type;
-import com.github.javaparser.ast.visitor.VoidVisitor;
-import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
-import com.github.javaparser.utils.SourceRoot;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import com.github.javaparser.ast.CompilationUnit;
+import com.github.javaparser.ast.NodeList;
+import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
+import com.github.javaparser.ast.body.FieldDeclaration;
+import com.github.javaparser.ast.body.MethodDeclaration;
+import com.github.javaparser.ast.type.ClassOrInterfaceType;
+import com.github.javaparser.ast.type.Type;
+import com.github.javaparser.ast.visitor.VoidVisitor;
+import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
+import com.github.javaparser.utils.SourceRoot;
 
 public class ClassChecker {
 
@@ -44,6 +46,8 @@ public class ClassChecker {
 
         // check the classes relations
         this.checkClassRelations(classOrInterfaceDeclarations);
+        
+        this.checkClassContents(classOrInterfaceDeclarations);
 
         // print the related classes
 //        for (String className : visitedClasses.keySet()) {
@@ -77,6 +81,47 @@ public class ClassChecker {
 //            System.out.println("Is LabClassroom a Student ? " + this.visitedClasses.get("OOPComputerLabClassroom").isA("Classroom"));
 //        }
     }
+    
+    private void checkClassContents(List<ClassOrInterfaceDeclaration> declarations) {
+        for (ClassOrInterfaceDeclaration declaration : declarations) {
+            String className = declaration.getNameAsString();
+            ClassEntity classEntity = this.visitedClasses.get(className);
+            if (classEntity != null) {
+                classEntity.setFields(this.getFieldsFromFieldDeclarations(declaration.getFields()));
+                classEntity.setMethods(this.getMethodsFromMethodDeclarations(declaration.getMethods()));
+            }
+
+        }
+    }
+
+    private List<Method> getMethodsFromMethodDeclarations(List<MethodDeclaration> methodDeclarations) {
+        List<Method> methods = new ArrayList<>();
+        for (MethodDeclaration declaration : methodDeclarations) {
+            Method method = new Method();
+            method.setModifiers(Modifier.getModifiersFromModifiers(declaration.getModifiers()));
+            method.setName(declaration.getNameAsString());
+            method.setType(gr.alexc.idelearn.ui.classanalysis.parser.Type.getTypeFromClassOrInterfaceType(declaration.getType()));
+            if (declaration.getBody().isPresent()) {
+                method.setBlockStmt(declaration.getBody().get());
+            }
+            method.setParameters(Parameter.getParametersFromParameters(declaration.getParameters()));
+            methods.add(method);
+        }
+        return methods;
+    }
+
+    private List<Field> getFieldsFromFieldDeclarations(List<FieldDeclaration> declarations) {
+        List<Field> fields = new ArrayList<>();
+        for (FieldDeclaration declaration : declarations) {
+            Field field = new Field();
+            field.setModifiers(Modifier.getModifiersFromModifiers(declaration.getModifiers()));
+            field.setName(declaration.getVariable(0).getNameAsString());
+            field.setType(gr.alexc.idelearn.ui.classanalysis.parser.Type.getTypeFromClassOrInterfaceType(declaration.getElementType().asClassOrInterfaceType()));
+            fields.add(field);
+        }
+        return fields;
+    }
+
 
     private void checkClassRelations(List<ClassOrInterfaceDeclaration> declarations) {
 
@@ -173,6 +218,13 @@ public class ClassChecker {
 //            System.out.println("Class Name Printed: " + n.getName());
             ClassEntity classEntity = new ClassEntity();
             classEntity.setClassName(n.getName().asString());
+            classEntity.setClassDeclaration(n);
+            if (n.isInterface()) {
+                classEntity.setIsInterface(true);
+            }
+            if (n.isAbstract()) {
+                n.isAbstract();
+            }
 //            visitedClasses.put(n.getNameAsString(), classEntity);
             declarations.add(n);
 

@@ -1,10 +1,14 @@
 package gr.alexc.idelearn.ui.classanalysis.parser;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
+
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.HashSet;
-import java.util.Set;
 
 @Getter @Setter
 public class ClassEntity {
@@ -13,6 +17,14 @@ public class ClassEntity {
     private Set<ClassEntity> extendClasses;
     private Set<ClassEntity> implementTypes;
     private Set<ClassRelation> relations;
+    private Boolean isInterface;
+    private Boolean isAbstract;
+    private Boolean isStatic;
+
+    private List<Field> fields;
+    private List<Method> methods;
+
+    private ClassOrInterfaceDeclaration classDeclaration;
 
     public ClassEntity() {
         relations = new HashSet<>();
@@ -23,6 +35,8 @@ public class ClassEntity {
         relations = new HashSet<>();
         this.extendClasses = new HashSet<>();
         this.implementTypes = new HashSet<>();
+        this.fields = new ArrayList<>();
+        this.methods = new ArrayList<>();
     }
 
     public void addRelationToClass(ClassEntity relatedClassEntity, ClassRelation.RelationType relationType) {
