@@ -18,7 +18,7 @@ public class ClassHasConstructorRequirement extends AbstractSubRequirement {
     @JsonProperty("main_class_id")
     private ClassRequirement mainClass;
 
-    @JsonProperty("constructor")
+    @JsonProperty("constructor_req")
     private ConstructorRequirement constructor;
 
     @Override
