@@ -24,7 +24,7 @@ public class SuperConstructorCallInsideConstructor extends AbstractSubRequiremen
 	@JsonProperty("main_class_id")
 	private ClassRequirement mainClass;
 
-	@JsonProperty("constructor")
+    @JsonProperty("constructor_method")
 	private ConstructorRequirement constructor;
 
 	@JsonProperty("call_constructor")
