@@ -23,9 +23,10 @@ Bundle-Activator: gr.alexc.idelearn.ui.IDELearnPlugin
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: .,
  lib/jackson-core-2.11.3.jar,
- lib/javaparser-core-3.17.0.jar,
  lib/jackson-databind-2.11.3.jar,
- lib/lombok.jar
+ lib/lombok.jar,
+ lib/javaparser-core-3.18.0.jar,
+ lib/javaparser-symbol-solver-core-3.18.0.jar
 Export-Package: gr.alexc.idelearn.ui;uses:="org.osgi.framework,org.eclipse.jface.resource,org.eclipse.ui.plugin",
  gr.alexc.idelearn.ui.builder;
   uses:="org.eclipse.core.runtime,
