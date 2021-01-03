@@ -116,16 +116,20 @@ public class ClassChecker {
 	private List<ConstructorMethod> getConstructors(List<ConstructorDeclaration> constructors) {
 		List<ConstructorMethod> constructorMethods = new ArrayList<>();
 		for (ConstructorDeclaration c : constructors) {
-			ConstructorMethod method = new ConstructorMethod();
-			method.setModifiers(Modifier.getModifiersFromModifiers(c.getModifiers()));
-			if (c.getBody() != null) {
-				method.setBlockStmt(c.getBody());
-			}
-			method.setParameters(Parameter.getParametersFromParameters(c.getParameters()));
-			constructorMethods.add(method);
+            constructorMethods.add(getConstructorMethodFromConstructorMethodDeclaration(c));
 		}
 		return constructorMethods;
 	}
+	
+    public static ConstructorMethod getConstructorMethodFromConstructorMethodDeclaration(ConstructorDeclaration declaration) {
+        ConstructorMethod method = new ConstructorMethod();
+        method.setModifiers(Modifier.getModifiersFromModifiers(declaration.getModifiers()));
+        if (declaration.getBody() != null) {
+            method.setBlockStmt(declaration.getBody());
+        }
+        method.setParameters(Parameter.getParametersFromParameters(declaration.getParameters()));
+        return method;
+    }
 
 	private List<String> getImplementClassesName(NodeList<ClassOrInterfaceType> implementedTypes) {
 		List<String> implementClassesName = new ArrayList<>();
