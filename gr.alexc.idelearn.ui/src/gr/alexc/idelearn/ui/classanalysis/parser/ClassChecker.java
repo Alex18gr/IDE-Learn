@@ -146,19 +146,22 @@ public class ClassChecker {
 	private List<Method> getMethodsFromMethodDeclarations(List<MethodDeclaration> methodDeclarations) {
 		List<Method> methods = new ArrayList<>();
 		for (MethodDeclaration declaration : methodDeclarations) {
-			Method method = new Method();
-			method.setModifiers(Modifier.getModifiersFromModifiers(declaration.getModifiers()));
-			method.setName(declaration.getNameAsString());
-			method.setType(gr.alexc.idelearn.ui.classanalysis.parser.Type
-					.getTypeFromClassOrInterfaceType(declaration.getType()));
-			if (declaration.getBody().isPresent()) {
-				method.setBlockStmt(declaration.getBody().get());
-			}
-			method.setParameters(Parameter.getParametersFromParameters(declaration.getParameters()));
-			methods.add(method);
+            methods.add(getMethodFromMethodDeclaration(declaration));
 		}
 		return methods;
 	}
+	
+    public static Method getMethodFromMethodDeclaration(MethodDeclaration declaration) {
+        Method method = new Method();
+        method.setModifiers(Modifier.getModifiersFromModifiers(declaration.getModifiers()));
+        method.setName(declaration.getNameAsString());
+        method.setType(gr.alexc.idelearn.ui.classanalysis.parser.Type.getTypeFromClassOrInterfaceType(declaration.getType()));
+        if (declaration.getBody().isPresent()) {
+            method.setBlockStmt(declaration.getBody().get());
+        }
+        method.setParameters(Parameter.getParametersFromParameters(declaration.getParameters()));
+        return method;
+    }
 
 	private List<Field> getFieldsFromFieldDeclarations(List<FieldDeclaration> declarations) {
 		List<Field> fields = new ArrayList<>();

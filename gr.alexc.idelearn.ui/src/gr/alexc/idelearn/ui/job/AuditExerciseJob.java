@@ -14,8 +14,17 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.preferences.IScopeContext;
+import org.eclipse.jdt.core.IJavaProject;
+import org.eclipse.jdt.core.IPackageFragmentRoot;
+import org.eclipse.jdt.core.JavaCore;
 import org.osgi.service.prefs.Preferences;
 
+import com.github.javaparser.ParserConfiguration;
+import com.github.javaparser.symbolsolver.JavaSymbolSolver;
+import com.github.javaparser.symbolsolver.model.resolution.TypeSolver;
+import com.github.javaparser.symbolsolver.resolution.typesolvers.CombinedTypeSolver;
+import com.github.javaparser.symbolsolver.resolution.typesolvers.JavaParserTypeSolver;
+import com.github.javaparser.symbolsolver.resolution.typesolvers.ReflectionTypeSolver;
 import com.github.javaparser.utils.SourceRoot;
 
 import gr.alexc.idelearn.ui.IDELearnPlugin;
@@ -83,7 +92,25 @@ public class AuditExerciseJob extends WorkspaceJob {
 			project.getLocationURI();
 			IPath projectIPath = project.getLocation();
 			Path projectPath = projectIPath.makeAbsolute().toFile().toPath();
+			
+			IJavaProject javaProject = JavaCore.create(project);
+			IPackageFragmentRoot[] packageRoots = javaProject.getAllPackageFragmentRoots();
+
+			
+			
+			// configure the type resolver
+	        TypeSolver reflectionTypeSolver = new ReflectionTypeSolver();
+	        TypeSolver javaParserTypeSolver = new JavaParserTypeSolver(projectIPath.append("src").makeAbsolute().toFile().toPath());
+	        CombinedTypeSolver combinedSolver = new CombinedTypeSolver();
+	        combinedSolver.add(reflectionTypeSolver);
+	        combinedSolver.add(javaParserTypeSolver);
+
+	        ParserConfiguration parserConfiguration = new ParserConfiguration()
+	                .setSymbolResolver(new JavaSymbolSolver(combinedSolver));
+	        
+	        // configure the source root
 			SourceRoot sourceRoot = new SourceRoot(projectPath);
+	        sourceRoot.setParserConfiguration(parserConfiguration);
 			
 			// run the java parser procedure
 			ClassChecker checker = new ClassChecker();
