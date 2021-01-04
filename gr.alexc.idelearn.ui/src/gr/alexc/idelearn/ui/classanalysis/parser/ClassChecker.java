@@ -174,7 +174,7 @@ public class ClassChecker {
 			field.setModifiers(Modifier.getModifiersFromModifiers(declaration.getModifiers()));
 			field.setName(declaration.getVariable(0).getNameAsString());
 			field.setType(gr.alexc.idelearn.ui.classanalysis.parser.Type
-					.getTypeFromClassOrInterfaceType(declaration.getElementType().asClassOrInterfaceType()));
+					.getTypeFromClassOrInterfaceType(declaration.getElementType()));
 			fields.add(field);
 		}
 		return fields;

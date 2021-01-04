@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.eclipse.osgi.util.NLS;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.javaparser.ast.body.ConstructorDeclaration;
 import com.github.javaparser.ast.stmt.ExplicitConstructorInvocationStmt;
@@ -12,6 +14,7 @@ import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 import gr.alexc.idelearn.ui.classanalysis.parser.ClassChecker;
 import gr.alexc.idelearn.ui.classanalysis.parser.ClassEntity;
 import gr.alexc.idelearn.ui.classanalysis.parser.ConstructorMethod;
+import gr.alexc.idelearn.ui.messages.Messages;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -45,8 +48,11 @@ public class SuperConstructorCallInsideConstructor extends AbstractSubRequiremen
 
 	@Override
 	public String getDescription() {
-		return "Constructor \"" + getArgumentsString(constructor) + "\" must have a call to super constructor \""
-				+ getArgumentsString(callConstructor) + "\"";
+//		return "Constructor \"" + getArgumentsString(constructor) + "\" must have a call to super constructor \""
+//				+ getArgumentsString(callConstructor) + "\"";
+		return NLS.bind(Messages.reqConstructorCallConstructor,
+				new Object[] { mainClass.getName(), Messages.getMethodParametersString(constructor.getParameters()),
+						Messages.getMethodParametersString(callConstructor.getParameters()) });
 	}
 
 	@Override

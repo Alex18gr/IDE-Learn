@@ -2,11 +2,14 @@ package gr.alexc.idelearn.ui.classanalysis.exercise.domain.requirement;
 
 import java.util.List;
 
+import org.eclipse.osgi.util.NLS;
+
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import gr.alexc.idelearn.ui.classanalysis.parser.ClassEntity;
+import gr.alexc.idelearn.ui.messages.Messages;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -43,7 +46,11 @@ public class ClassRequirement extends AbstractRequirement {
 
     @Override
     public String getDescription() {
-        return getClassRequirementDescription();
+    	if (isAbstract) {
+            return NLS.bind(Messages.reqClassAbstract, name);
+        } else {
+        	return NLS.bind(Messages.reqClass, name);
+        }
     }
 
     @Override

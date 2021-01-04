@@ -18,9 +18,9 @@ import lombok.Setter;
 public class MethodRequirement {
 
     private String name;
-    private List<String> modifiers;
+    private List<String> modifiers = Collections.emptyList();
     private TypeRequirement type;
-    private List<ParameterRequirement> parameters;
+    private List<ParameterRequirement> parameters = Collections.emptyList();
 
     public List<String> getParameterTypeList() {
         List<String> paramStrings = new ArrayList<>();

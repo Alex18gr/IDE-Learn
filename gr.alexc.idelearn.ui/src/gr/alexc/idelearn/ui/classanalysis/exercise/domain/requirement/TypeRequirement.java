@@ -1,5 +1,6 @@
 package gr.alexc.idelearn.ui.classanalysis.exercise.domain.requirement;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -18,7 +19,7 @@ import lombok.Setter;
 public class TypeRequirement {
     private String name;
     @JsonProperty("type_arguments")
-    private List<TypeRequirement> typeArguments;
+    private List<TypeRequirement> typeArguments = new ArrayList<>();
 
     public static boolean compareTypeRequirementWithType(TypeRequirement typeRequirement, Type type) {
         return typeRequirement.toString().equals(type.toString());
@@ -41,7 +42,7 @@ public class TypeRequirement {
             builder.append("<");
             for (TypeRequirement typeRequirement : typeArguments) {
                 builder.append(typeRequirement.toString());
-                if (typeArguments.indexOf(typeRequirement) != typeArguments.size()) {
+                if ((typeArguments.indexOf(typeRequirement) + 1) != typeArguments.size()) {
                     builder.append(", ");
                 }
             }

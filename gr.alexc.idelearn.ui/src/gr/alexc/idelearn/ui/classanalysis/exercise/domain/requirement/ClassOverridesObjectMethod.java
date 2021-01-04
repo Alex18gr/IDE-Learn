@@ -2,9 +2,12 @@ package gr.alexc.idelearn.ui.classanalysis.exercise.domain.requirement;
 
 import java.util.Collections;
 
+import org.eclipse.osgi.util.NLS;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import gr.alexc.idelearn.ui.classanalysis.parser.ClassEntity;
+import gr.alexc.idelearn.ui.messages.Messages;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -22,7 +25,25 @@ public class ClassOverridesObjectMethod extends AbstractSubRequirement {
 
 	@Override
 	public String getDescription() {
-		return "Class \"" + mainClass.getName() + "\" overrides the Object method " + objectMethod.name() + ".";
+//		return "Class \"" + mainClass.getName() + "\" overrides the Object method " + objectMethod.name() + ".";
+		return NLS.bind(Messages.reqOverrideObjectMethod, mainClass.getName(), getMethodName());
+	}
+	
+	private String getMethodName() {
+		switch (objectMethod) {
+		case CLONE:
+			return "clone";
+		case EQUALS:
+			return "equals";
+		case HASH_CODE:
+			return "hashCode";
+		case TO_STRING:
+			return "toString";
+		case COMPARABLE_COMPARE_TO:
+			return "compareTo";
+		default:
+			return "";
+		}
 	}
 
 	@Override

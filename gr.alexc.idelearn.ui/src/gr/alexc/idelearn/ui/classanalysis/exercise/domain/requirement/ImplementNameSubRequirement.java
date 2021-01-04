@@ -1,8 +1,11 @@
 package gr.alexc.idelearn.ui.classanalysis.exercise.domain.requirement;
 
+import org.eclipse.osgi.util.NLS;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import gr.alexc.idelearn.ui.classanalysis.parser.ClassEntity;
+import gr.alexc.idelearn.ui.messages.Messages;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,7 +23,8 @@ public class ImplementNameSubRequirement extends AbstractSubRequirement {
 
     @Override
     public String getDescription() {
-        return "The class \"" + mainClass.getName() + "\" must implement interface \"" + implementTypeName + "\".";
+//        return "The class \"" + mainClass.getName() + "\" must implement interface \"" + implementTypeName + "\".";
+    	return NLS.bind(Messages.reqImplementName, new Object[] { mainClass.getName(), implementTypeName });
     }
 
     @Override

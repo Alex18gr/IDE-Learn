@@ -1,8 +1,11 @@
 package gr.alexc.idelearn.ui.classanalysis.exercise.domain.requirement;
 
+import org.eclipse.osgi.util.NLS;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import gr.alexc.idelearn.ui.classanalysis.parser.ClassEntity;
+import gr.alexc.idelearn.ui.messages.Messages;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -25,11 +28,13 @@ public class ContainsSubRequirement extends AbstractSubRequirement {
     public String getDescription() {
 
         if (relationType == RelationType.ONE_TO_ONE) {
-            return "The class \"" + mainClass.getName() + "\" must contain a reference of the class \""
-                    + containClass.getName() + "\".";
+        	return NLS.bind(Messages.reqContains, mainClass.getName(), containClass.getName());
+//            return "The class \"" + mainClass.getName() + "\" must contain a reference of the class \""
+//                    + containClass.getName() + "\".";
         } else if (relationType == RelationType.ONE_TO_MANY) {
-            return "The class \"" + mainClass.getName() + "\" must contain a collection of the class \""
-                    + containClass.getName() + "\".";
+        	return NLS.bind(Messages.reqContainsMany, mainClass.getName(), containClass.getName());
+//            return "The class \"" + mainClass.getName() + "\" must contain a collection of the class \""
+//                    + containClass.getName() + "\".";
         }
 
         return "";

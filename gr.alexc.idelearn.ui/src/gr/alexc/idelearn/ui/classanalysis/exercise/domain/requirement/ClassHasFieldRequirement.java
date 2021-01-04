@@ -3,11 +3,14 @@ package gr.alexc.idelearn.ui.classanalysis.exercise.domain.requirement;
 import java.util.Collections;
 import java.util.Locale;
 
+import org.eclipse.osgi.util.NLS;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import gr.alexc.idelearn.ui.classanalysis.parser.ClassEntity;
 import gr.alexc.idelearn.ui.classanalysis.parser.Field;
 import gr.alexc.idelearn.ui.classanalysis.parser.Method;
+import gr.alexc.idelearn.ui.messages.Messages;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -30,20 +33,34 @@ public class ClassHasFieldRequirement extends AbstractSubRequirement {
 
 	@Override
 	public String getDescription() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("Class \"").append(mainClass.getName()).append("\" has a field of type \"")
-				.append(field.getType()).append("\" and name \"").append(field.getName()).append("\"");
-		if (includeSetter || includeGetter) {
-			builder.append(" included");
-			if (includeSetter && includeGetter) {
-				builder.append(" setter and getter methods.");
-			} else if (includeSetter) {
-				builder.append(" setter method.");
-			} else {
-				builder.append(" getter method.");
-			}
+//		StringBuilder builder = new StringBuilder();
+//		builder.append("Class \"").append(mainClass.getName()).append("\" has a field of type \"")
+//				.append(field.getType()).append("\" and name \"").append(field.getName()).append("\"");
+//		if (includeSetter || includeGetter) {
+//			builder.append(" included");
+//			if (includeSetter && includeGetter) {
+//				builder.append(" setter and getter methods.");
+//			} else if (includeSetter) {
+//				builder.append(" setter method.");
+//			} else {
+//				builder.append(" getter method.");
+//			}
+//		}
+//		return builder.toString();
+
+		if (!includeGetter && !includeSetter) {
+			return NLS.bind(Messages.reqContainsField, new Object[] { mainClass.getName(),
+					Messages.getModifiersList(field.getModifiers(), "M"), field.getType(), field.getName() });
+		} else if (!includeGetter && includeSetter) {
+			return NLS.bind(Messages.reqContainsFieldSetter, new Object[] { mainClass.getName(),
+					Messages.getModifiersList(field.getModifiers(), "M"), field.getType(), field.getName() });
+		} else if (includeGetter && !includeSetter) {
+			return NLS.bind(Messages.reqContainsFieldGetter, new Object[] { mainClass.getName(),
+					Messages.getModifiersList(field.getModifiers(), "M"), field.getType(), field.getName() });
+		} else {
+			return NLS.bind(Messages.reqContainsFieldGetterSetter, new Object[] { mainClass.getName(),
+					Messages.getModifiersList(field.getModifiers(), "M"), field.getType(), field.getName() });
 		}
-		return builder.toString();
 	}
 
 	@Override

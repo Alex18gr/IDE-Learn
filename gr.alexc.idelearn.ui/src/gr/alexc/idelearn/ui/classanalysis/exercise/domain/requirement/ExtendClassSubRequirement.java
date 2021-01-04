@@ -1,8 +1,11 @@
 package gr.alexc.idelearn.ui.classanalysis.exercise.domain.requirement;
 
+import org.eclipse.osgi.util.NLS;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import gr.alexc.idelearn.ui.classanalysis.parser.ClassEntity;
+import gr.alexc.idelearn.ui.messages.Messages;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,22 +15,20 @@ import lombok.Setter;
 @NoArgsConstructor
 public class ExtendClassSubRequirement extends AbstractSubRequirement {
 
-    @JsonProperty("main_class_id")
-    private ClassRequirement mainClass;
+	@JsonProperty("main_class_id")
+	private ClassRequirement mainClass;
 
-    @JsonProperty("extend_class_id")
-    private ClassRequirement extendClass;
+	@JsonProperty("extend_class_id")
+	private ClassRequirement extendClass;
 
-    public String getDescription() {
-      return "Η κλάση \"" + mainClass.getName() + "\" πρέπει να επεκτείνει την κλάση \"" + extendClass.getName() + "\".";
-
+	public String getDescription() {
+		return NLS.bind(Messages.reqExtend, new Object[] { mainClass.getName(), extendClass.getName() });
 //        return "The class \"" + mainClass.getName() + "\" must extend class \"" + extendClass.getName() + "\".";
-    }
+	}
 
-    @Override
-    public boolean checkRequirement(ClassEntity classEntity) {
-        return classEntity.extendsA(extendClass.getName());
-    }
-
+	@Override
+	public boolean checkRequirement(ClassEntity classEntity) {
+		return classEntity.extendsA(extendClass.getName());
+	}
 
 }
