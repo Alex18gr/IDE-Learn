@@ -231,5 +231,14 @@
          </description>
       </wizard>
    </extension>
+   <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            class="gr.alexc.idelearn.ui.perspectives.IDELearnPerspective"
+            icon="icons/releng_gears.gif"
+            id="gr.alexc.idelearn.ui.perspectives.IDELearnPerspective"
+            name="IDE Learn">
+      </perspective>
+   </extension>
 
 </plugin>

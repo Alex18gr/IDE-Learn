@@ -19,7 +19,9 @@ public class ExtendClassSubRequirement extends AbstractSubRequirement {
     private ClassRequirement extendClass;
 
     public String getDescription() {
-        return "The class \"" + mainClass.getName() + "\" must extend class \"" + extendClass.getName() + "\".";
+      return "Η κλάση \"" + mainClass.getName() + "\" πρέπει να επεκτείνει την κλάση \"" + extendClass.getName() + "\".";
+
+//        return "The class \"" + mainClass.getName() + "\" must extend class \"" + extendClass.getName() + "\".";
     }
 
     @Override
