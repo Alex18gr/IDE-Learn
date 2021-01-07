@@ -207,7 +207,7 @@ public class ExerciseTaskStatusView extends ViewPart {
 		});
 
 		TableViewerColumn colDescription = new TableViewerColumn(viewer, SWT.NONE);
-		colDescription.getColumn().setWidth(400);
+		colDescription.getColumn().setWidth(1000);
 		colDescription.getColumn().setResizable(true);
 		colDescription.getColumn().setText("Description");
 		colDescription.setLabelProvider(new ColumnLabelProvider() {

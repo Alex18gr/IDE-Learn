@@ -49,7 +49,7 @@ public class IDELearnPerspective implements IPerspectiveFactory {
 //		bottom.addPlaceholder(IConsoleConstants.ID_CONSOLE_VIEW);
 
 		IFolderLayout topRight = factory.createFolder("topRight", // NON-NLS-1
-				IPageLayout.RIGHT, 0.80f, factory.getEditorArea());
+				IPageLayout.RIGHT, 0.75f, factory.getEditorArea());
 //		topLeft.addView(IPageLayout.ID_PROJECT_EXPLORER);
 //		topLeft.addView("org.eclipse.jdt.junit.ResultView"); // NON-NLS-1
 //		topRight.addView(IPageLayout.ID_PROBLEM_VIEW);

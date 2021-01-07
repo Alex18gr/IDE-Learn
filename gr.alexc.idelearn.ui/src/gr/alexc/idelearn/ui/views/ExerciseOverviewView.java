@@ -143,7 +143,6 @@ public class ExerciseOverviewView extends ViewPart {
 					selectedExercise = (Exercise) event.getStructuredSelection().getFirstElement();
 					DecimalFormat df = new DecimalFormat();
 					df.setMaximumFractionDigits(2);
-//					descriptionText.setText(selectedExercise.getRequirementsDescription());
 					descriptionText.setText(selectedExercise.getDescription());
 					Float percentage = selectedExercise.getExerciseCheckReport().getCompletedPercentage();
 					if (percentage == null) percentage = 0.0f;
@@ -177,6 +176,12 @@ public class ExerciseOverviewView extends ViewPart {
 		Composite statusComposite = createStatsComposite(parent);
 		GridData statusCompositeGridData = new GridData(SWT.FILL, SWT.FILL, true, false);
 		statusComposite.setLayoutData(statusCompositeGridData);
+		
+		// Initialize the data from the Learn plugin with the current exercises
+		// that opened before the creation of this view
+		LearnPlugin.getInstance().getWorkspaceExercises().forEach((e) -> {
+			comboViewer.add(e);
+		});
 
 		// add the resource listeners
 		LearnPlugin.getInstance().addSingleExerciseChangedListener(new SingleExerciseChangedListener() {
@@ -197,8 +202,6 @@ public class ExerciseOverviewView extends ViewPart {
 							if (event.getExercise().equals(selectedExercise)) {
 								DecimalFormat df = new DecimalFormat();
 								df.setMaximumFractionDigits(2);
-//								descriptionText.setText(selectedExercise.getRequirementsDescription());
-								descriptionText.setText(selectedExercise.getDescription());
 								statusLabel.setText(df.format(selectedExercise.getExerciseCheckReport().getCompletedPercentage())
 										+ "% of the exercise completed");
 								statusProgressBar.setSelection(
@@ -209,20 +212,6 @@ public class ExerciseOverviewView extends ViewPart {
 				});
 			}
 		});
-
-//		viewer = new TableViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
-//		
-//		viewer.setContentProvider(ArrayContentProvider.getInstance());
-//		viewer.setInput(new String[] { "One", "Two", "Three" });
-//	viewer.setLabelProvider(new ViewLabelProvider());
-//
-//		// Create the help context id for the viewer's control
-//		workbench.getHelpSystem().setHelp(viewer.getControl(), "gr.alexc.idelearn.viewer");
-//		getSite().setSelectionProvider(viewer);
-//		makeActions();
-//		hookContextMenu();
-//		hookDoubleClickAction();
-//		contributeToActionBars();
 	}
 
 	private Composite createStatsComposite(Composite parent) {
