@@ -143,7 +143,8 @@ public class ExerciseOverviewView extends ViewPart {
 					selectedExercise = (Exercise) event.getStructuredSelection().getFirstElement();
 					DecimalFormat df = new DecimalFormat();
 					df.setMaximumFractionDigits(2);
-					descriptionText.setText(selectedExercise.getRequirementsDescription());
+//					descriptionText.setText(selectedExercise.getRequirementsDescription());
+					descriptionText.setText(selectedExercise.getDescription());
 					Float percentage = selectedExercise.getExerciseCheckReport().getCompletedPercentage();
 					if (percentage == null) percentage = 0.0f;
 					statusLabel.setText(df.format(percentage)
@@ -174,7 +175,7 @@ public class ExerciseOverviewView extends ViewPart {
 		// Status Composite
 
 		Composite statusComposite = createStatsComposite(parent);
-		GridData statusCompositeGridData = new GridData(SWT.FILL, SWT.FILL, true, true);
+		GridData statusCompositeGridData = new GridData(SWT.FILL, SWT.FILL, true, false);
 		statusComposite.setLayoutData(statusCompositeGridData);
 
 		// add the resource listeners
@@ -196,7 +197,8 @@ public class ExerciseOverviewView extends ViewPart {
 							if (event.getExercise().equals(selectedExercise)) {
 								DecimalFormat df = new DecimalFormat();
 								df.setMaximumFractionDigits(2);
-								descriptionText.setText(selectedExercise.getRequirementsDescription());
+//								descriptionText.setText(selectedExercise.getRequirementsDescription());
+								descriptionText.setText(selectedExercise.getDescription());
 								statusLabel.setText(df.format(selectedExercise.getExerciseCheckReport().getCompletedPercentage())
 										+ "% of the exercise completed");
 								statusProgressBar.setSelection(

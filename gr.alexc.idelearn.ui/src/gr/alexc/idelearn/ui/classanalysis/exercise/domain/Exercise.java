@@ -28,6 +28,9 @@ public class Exercise {
 	@JsonProperty("exercise_project_info")
 	private ExerciseProjectInfo exerciseProjectInfo;
 	private List<AbstractRequirement> requirements;
+	
+	@JsonProperty("description")
+	private String description = "";
 
 	@JsonIgnore
 	private ExerciseCheckReport exerciseCheckReport;
