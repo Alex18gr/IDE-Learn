@@ -1,6 +1,7 @@
 package gr.alexc.idelearn.ui.views;
 
 import java.net.URL;
+import java.util.Collections;
 import java.util.Optional;
 
 import javax.inject.Inject;
@@ -156,6 +157,9 @@ public class ExerciseTaskStatusView extends ViewPart {
 						if (type.equals(SingleChangeType.AUDITED_EXERCISE) && event.getExercise().equals(selectedExercise)) {
 							// update array
 							viewer.setInput(selectedExercise.getAllRequirements());
+						}
+						if (type.equals(SingleChangeType.REMOVED_EXERCISE) && event.getExercise().equals(selectedExercise)) {
+							viewer.setInput(Collections.<Requirement>emptyList());
 						}
 						
 						viewer.refresh();

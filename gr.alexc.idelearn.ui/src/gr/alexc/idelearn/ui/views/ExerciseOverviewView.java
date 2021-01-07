@@ -98,7 +98,7 @@ public class ExerciseOverviewView extends ViewPart {
 
 		@Override
 		public Image getImage(Object obj) {
-			return workbench.getSharedImages().getImage(ISharedImages.IMG_OBJ_ELEMENT);
+			return workbench.getSharedImages().getImage(ISharedImages.IMG_DEF_VIEW);
 		}
 	}
 
@@ -310,7 +310,7 @@ public class ExerciseOverviewView extends ViewPart {
 	}
 
 	private void showMessage(String message) {
-		MessageDialog.openInformation(viewer.getControl().getShell(), "Exercise OverviewView", message);
+		MessageDialog.openInformation(viewer.getControl().getShell(), "Exercise Overview View", message);
 	}
 
 	@Override
