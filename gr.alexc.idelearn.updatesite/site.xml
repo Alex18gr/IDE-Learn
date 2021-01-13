@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <feature url="features/io.alexc.ide.feature_0.0.2.jar" id="io.alexc.ide.feature" version="0.0.2">
+   <feature url="features/io.alexc.ide.feature_0.0.3.jar" id="io.alexc.ide.feature" version="0.0.3">
+      <category name="idelearn"/>
+   </feature>
+   <feature url="features/io.alexc.ide.feature_0.0.4.jar" id="io.alexc.ide.feature" version="0.0.4">
+      <category name="idelearn"/>
+   </feature>
+   <feature url="features/io.alexc.ide.feature_0.0.5.jar" id="io.alexc.ide.feature" version="0.0.5">
+      <category name="idelearn"/>
+   </feature>
+   <feature url="features/io.alexc.ide.feature_0.0.5.1.jar" id="io.alexc.ide.feature" version="0.0.5.1">
+      <category name="idelearn"/>
+   </feature>
+   <feature url="features/io.alexc.ide.feature_0.0.5.2.jar" id="io.alexc.ide.feature" version="0.0.5.2">
       <category name="idelearn"/>
    </feature>
    <category-def name="idelearn" label="IDE Learn">

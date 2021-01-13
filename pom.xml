@@ -89,5 +89,7 @@
 		<module>gr.alexc.idelearn.ui</module>
 		<module>gr.alexc.idelearn.feature</module>
 		<module>gr.alexc.idelearn.updatesite</module>
+		<module>gr.alexc.idelearn.product</module>
+		<module>gr.alexc.idelearn.branding</module>
 	</modules>
 </project>

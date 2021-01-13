@@ -2,6 +2,7 @@ package gr.alexc.idelearn.ui;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.util.Scanner;
 
 import org.eclipse.core.resources.IContainer;
@@ -14,8 +15,10 @@ import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.ProjectScope;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.preferences.IScopeContext;
 import org.eclipse.e4.core.services.log.Logger;
+import org.eclipse.e4.ui.workbench.lifecycle.PostContextCreate;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
@@ -42,6 +45,21 @@ public class IDELearnPlugin extends AbstractUIPlugin {
 		super();
 		plugin = this;
 	}
+	
+	@PostContextCreate
+    public void postContextCreate() throws IllegalStateException, IOException {
+        
+        // check if the instance location is already set,
+        // otherwise setting another one will throw an IllegalStateException
+        if (!Platform.getInstanceLocation().isSet()) {
+            String defaultPath = System.getProperty("user.home");
+
+            // build the desired path for the workspace
+            String path = defaultPath + "/ide-learn-workspace/";
+            URL instanceLocationUrl = new URL("file", null, path);
+            Platform.getInstanceLocation().set(instanceLocationUrl, false);
+        }
+    }
 
 	@Override
 	public void start(BundleContext context) throws Exception {

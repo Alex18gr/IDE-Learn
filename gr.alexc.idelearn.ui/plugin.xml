@@ -237,8 +237,32 @@
             class="gr.alexc.idelearn.ui.perspectives.IDELearnPerspective"
             icon="icons/releng_gears.gif"
             id="gr.alexc.idelearn.ui.perspectives.IDELearnPerspective"
-            name="IDE Learn">
+            name="%perspective.name">
       </perspective>
+   </extension>
+   <extension
+         id="gr.alexc.idelearn.ui.idelearn"
+         point="org.eclipse.core.runtime.products">
+      <product
+            application="org.eclipse.ui.ide.workbench"
+            name="IDE Learn">
+         <property
+               name="appName"
+               value="IDE Learn">
+         </property>
+      </product>
+   </extension>
+   <extension
+         id="idelearn"
+         point="org.eclipse.core.runtime.products">
+      <product
+            application="org.eclipse.ui.ide.workbench"
+            name="IDE Learn">
+         <property
+               name="appName"
+               value="IDE Learn">
+         </property>
+      </product>
    </extension>
 
 </plugin>
