@@ -26,7 +26,7 @@ public class ClassOverridesObjectMethod extends AbstractSubRequirement {
 	@Override
 	public String getDescription() {
 //		return "Class \"" + mainClass.getName() + "\" overrides the Object method " + objectMethod.name() + ".";
-		return NLS.bind(Messages.reqOverrideObjectMethod, mainClass.getName(), getMethodName());
+		return NLS.bind(Messages.reqOverrideObjectMethod, new Object[] {Messages.getClassOrInterfaceText(mainClass), mainClass.getName(), getMethodName() });
 	}
 	
 	private String getMethodName() {

@@ -23,7 +23,7 @@ public class ExtendNameSubRequirement extends AbstractSubRequirement {
 
 	@Override
 	public String getDescription() {
-		return NLS.bind(Messages.reqExtend, new Object[] { mainClass.getName(), extendTypeName });
+		return NLS.bind(Messages.reqExtend, new Object[] { Messages.getClassOrInterfaceText(mainClass), mainClass.getName(), extendTypeName });
 	}
 
 	@Override

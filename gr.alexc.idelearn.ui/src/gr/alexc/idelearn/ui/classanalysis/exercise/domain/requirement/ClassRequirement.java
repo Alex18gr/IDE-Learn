@@ -28,6 +28,9 @@ public class ClassRequirement extends AbstractRequirement {
     
     @JsonProperty("is_abstract")
     private Boolean isAbstract = false;
+    
+    @JsonProperty("is_interface")
+    private Boolean isInterface = false;
 
     @JsonProperty("related_requirements")
     private List<AbstractSubRequirement> relatedRequirements;
@@ -46,7 +49,9 @@ public class ClassRequirement extends AbstractRequirement {
 
     @Override
     public String getDescription() {
-    	if (isAbstract) {
+    	if (isInterface) {
+    		return NLS.bind(Messages.reqInterface, name);
+    	} else if (isAbstract) {
             return NLS.bind(Messages.reqClassAbstract, name);
         } else {
         	return NLS.bind(Messages.reqClass, name);
@@ -55,7 +60,11 @@ public class ClassRequirement extends AbstractRequirement {
 
     @Override
     public boolean checkRequirement(ClassEntity classEntity) {
-        if (isAbstract) {
+    	if (isInterface) {
+            if (!classEntity.getIsInterface()) {
+                return false;
+            }
+        } else if (isAbstract) {
             if (!classEntity.getIsAbstract()) {
                 return false;
             }

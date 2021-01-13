@@ -27,11 +27,11 @@ public class ClassHasMethodRequirement extends AbstractSubRequirement {
 //        return "Class \"" + mainClass.getName() + "\" has a method of type \"" + method.getType() + "\" and name \"" + method.getName() + "\".";
 		if (method.getType().getName().equals("void")) {
 			return NLS.bind(Messages.reqMethodVoid,
-					new Object[] { mainClass.getName(), Messages.getModifiersList(method.getModifiers(), "F"),
+					new Object[] { Messages.getClassOrInterfaceText(mainClass), mainClass.getName(), Messages.getModifiersList(method.getModifiers(), "F"),
 							method.getName(), Messages.getMethodParametersString(method.getParameters()) });
 		} else {
 			return NLS.bind(Messages.reqMethod,
-					new Object[] { mainClass.getName(), Messages.getModifiersList(method.getModifiers(), "F"),
+					new Object[] { Messages.getClassOrInterfaceText(mainClass), mainClass.getName(), Messages.getModifiersList(method.getModifiers(), "F"),
 							method.getName(), Messages.getMethodParametersString(method.getParameters()), method.getType() });
 		}
 	}

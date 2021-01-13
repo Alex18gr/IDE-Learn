@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.eclipse.osgi.util.NLS;
 
+import gr.alexc.idelearn.ui.classanalysis.exercise.domain.requirement.ClassRequirement;
 import gr.alexc.idelearn.ui.classanalysis.exercise.domain.requirement.MethodRequirement;
 import gr.alexc.idelearn.ui.classanalysis.exercise.domain.requirement.ParameterRequirement;
 
@@ -86,8 +87,18 @@ public class Messages extends NLS {
 		builder.append(")");
 		return builder.toString();
 	}
+	
+	public static String getClassOrInterfaceText(ClassRequirement classRequirement) {
+		if (classRequirement.getIsInterface()) {
+			return reqInterfaceText;
+		} else {
+			return reqClassText;
+		}
+	}
 
 	public static String reqClass;
+	
+	public static String reqInterface;
 
 	public static String reqClassAbstract;
 
@@ -128,6 +139,10 @@ public class Messages extends NLS {
 	public static String reqStaticF;
 
 	public static String reqAbstractF;
+	
+	public static String reqClassText;
+	
+	public static String reqInterfaceText;
 
 	public static String reqMethod;
 

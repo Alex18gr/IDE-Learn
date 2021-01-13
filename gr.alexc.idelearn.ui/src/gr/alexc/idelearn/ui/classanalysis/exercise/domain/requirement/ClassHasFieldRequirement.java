@@ -49,17 +49,21 @@ public class ClassHasFieldRequirement extends AbstractSubRequirement {
 //		return builder.toString();
 
 		if (!includeGetter && !includeSetter) {
-			return NLS.bind(Messages.reqContainsField, new Object[] { mainClass.getName(),
-					Messages.getModifiersList(field.getModifiers(), "M"), field.getType(), field.getName() });
+			return NLS.bind(Messages.reqContainsField,
+					new Object[] { Messages.getClassOrInterfaceText(mainClass), mainClass.getName(),
+							Messages.getModifiersList(field.getModifiers(), "M"), field.getType(), field.getName() });
 		} else if (!includeGetter && includeSetter) {
-			return NLS.bind(Messages.reqContainsFieldSetter, new Object[] { mainClass.getName(),
-					Messages.getModifiersList(field.getModifiers(), "M"), field.getType(), field.getName() });
+			return NLS.bind(Messages.reqContainsFieldSetter,
+					new Object[] { Messages.getClassOrInterfaceText(mainClass), mainClass.getName(),
+							Messages.getModifiersList(field.getModifiers(), "M"), field.getType(), field.getName() });
 		} else if (includeGetter && !includeSetter) {
-			return NLS.bind(Messages.reqContainsFieldGetter, new Object[] { mainClass.getName(),
-					Messages.getModifiersList(field.getModifiers(), "M"), field.getType(), field.getName() });
+			return NLS.bind(Messages.reqContainsFieldGetter,
+					new Object[] { Messages.getClassOrInterfaceText(mainClass), mainClass.getName(),
+							Messages.getModifiersList(field.getModifiers(), "M"), field.getType(), field.getName() });
 		} else {
-			return NLS.bind(Messages.reqContainsFieldGetterSetter, new Object[] { mainClass.getName(),
-					Messages.getModifiersList(field.getModifiers(), "M"), field.getType(), field.getName() });
+			return NLS.bind(Messages.reqContainsFieldGetterSetter,
+					new Object[] { Messages.getClassOrInterfaceText(mainClass), mainClass.getName(),
+							Messages.getModifiersList(field.getModifiers(), "M"), field.getType(), field.getName() });
 		}
 	}
 

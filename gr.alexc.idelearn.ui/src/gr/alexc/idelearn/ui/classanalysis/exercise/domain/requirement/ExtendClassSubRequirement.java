@@ -22,7 +22,7 @@ public class ExtendClassSubRequirement extends AbstractSubRequirement {
 	private ClassRequirement extendClass;
 
 	public String getDescription() {
-		return NLS.bind(Messages.reqExtend, new Object[] { mainClass.getName(), extendClass.getName() });
+		return NLS.bind(Messages.reqExtend, new Object[] { Messages.getClassOrInterfaceText(mainClass), mainClass.getName(), extendClass.getName() });
 //        return "The class \"" + mainClass.getName() + "\" must extend class \"" + extendClass.getName() + "\".";
 	}
 

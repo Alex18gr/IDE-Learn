@@ -46,20 +46,20 @@ public class IDELearnPlugin extends AbstractUIPlugin {
 		plugin = this;
 	}
 	
-	@PostContextCreate
-    public void postContextCreate() throws IllegalStateException, IOException {
-        
-        // check if the instance location is already set,
-        // otherwise setting another one will throw an IllegalStateException
-        if (!Platform.getInstanceLocation().isSet()) {
-            String defaultPath = System.getProperty("user.home");
-
-            // build the desired path for the workspace
-            String path = defaultPath + "/ide-learn-workspace/";
-            URL instanceLocationUrl = new URL("file", null, path);
-            Platform.getInstanceLocation().set(instanceLocationUrl, false);
-        }
-    }
+//	@PostContextCreate
+//    public void postContextCreate() throws IllegalStateException, IOException {
+//        
+//        // check if the instance location is already set,
+//        // otherwise setting another one will throw an IllegalStateException
+//        if (!Platform.getInstanceLocation().isSet()) {
+//            String defaultPath = System.getProperty("user.home");
+//
+//            // build the desired path for the workspace
+//            String path = defaultPath + "/ide-learn-workspace/";
+//            URL instanceLocationUrl = new URL("file", null, path);
+//            Platform.getInstanceLocation().set(instanceLocationUrl, false);
+//        }
+//    }
 
 	@Override
 	public void start(BundleContext context) throws Exception {

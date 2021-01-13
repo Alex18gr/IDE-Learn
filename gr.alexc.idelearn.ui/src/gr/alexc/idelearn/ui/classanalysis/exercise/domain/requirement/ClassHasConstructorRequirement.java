@@ -29,10 +29,10 @@ public class ClassHasConstructorRequirement extends AbstractSubRequirement {
 //        return "Class \"" + mainClass.getName() + "\" has a constructor with arguments " + getArgumentsString() + ".";
 		if (constructor.getParameters().isEmpty()) {
 			return NLS.bind(Messages.reqConstructorVoid,
-					new Object[] { mainClass.getName(), Messages.getModifiersList(constructor.getModifiers(), "M") });
+					new Object[] { Messages.getClassOrInterfaceText(mainClass), mainClass.getName(), Messages.getModifiersList(constructor.getModifiers(), "M") });
 		} else {
 			return NLS.bind(Messages.reqConstructor,
-					new Object[] { mainClass.getName(), Messages.getModifiersList(constructor.getModifiers(), "M"),
+					new Object[] { Messages.getClassOrInterfaceText(mainClass), mainClass.getName(), Messages.getModifiersList(constructor.getModifiers(), "M"),
 							Messages.getMethodParametersString(constructor.getParameters()) });
 		}
 		

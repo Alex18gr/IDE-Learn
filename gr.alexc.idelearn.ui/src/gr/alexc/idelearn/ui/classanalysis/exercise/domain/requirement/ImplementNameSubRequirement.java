@@ -24,7 +24,7 @@ public class ImplementNameSubRequirement extends AbstractSubRequirement {
     @Override
     public String getDescription() {
 //        return "The class \"" + mainClass.getName() + "\" must implement interface \"" + implementTypeName + "\".";
-    	return NLS.bind(Messages.reqImplementName, new Object[] { mainClass.getName(), implementTypeName });
+    	return NLS.bind(Messages.reqImplementName, new Object[] { Messages.getClassOrInterfaceText(mainClass), mainClass.getName(), implementTypeName });
     }
 
     @Override
