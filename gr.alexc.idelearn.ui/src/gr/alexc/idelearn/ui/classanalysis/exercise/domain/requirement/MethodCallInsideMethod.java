@@ -36,11 +36,22 @@ public class MethodCallInsideMethod extends AbstractSubRequirement {
 	@JsonProperty("call_method_class_name")
 	private String callMethodClassName;
 
+	@JsonProperty("is_call_method_class_super_class")
+	private Boolean isCallMethodClassSuperClass = false;
+
 	@Override
 	public String getDescription() {
 //        return "Method \"" + method.getName() + "\" must have a method call to ...";
-		return NLS.bind(Messages.reqMethodCallMethod, new Object[] { Messages.getMethodSignature(method),
-				mainClass.getName(), Messages.getMethodSignature(callMethod), callMethodClassName });
+		if (isCallMethodClassSuperClass) {
+			return NLS.bind(Messages.reqMethodCallMethod,
+					new Object[] { Messages.getMethodSignature(method), mainClass.getName(),
+							Messages.getMethodSignature(callMethod), Messages.reqSuperClassesText, callMethodClassName });
+		} else {
+			return NLS.bind(Messages.reqMethodCallMethod,
+					new Object[] { Messages.getMethodSignature(method), mainClass.getName(),
+							Messages.getMethodSignature(callMethod), Messages.reqClassesText, callMethodClassName });
+		}
+
 	}
 
 	@Override

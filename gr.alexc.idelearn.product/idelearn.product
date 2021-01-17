@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
 
-<product name="IDE Learn" uid="gr.alexc.idelearn.ui.idelearn" id="gr.alexc.idelearn.ui.idelearn" application="org.eclipse.ui.ide.workbench" version="0.0.1" useFeatures="false" includeLaunchers="true">
+<product name="IDE Learn" uid="idelearn" id="gr.alexc.idelearn.ui.idelearn" application="org.eclipse.ui.ide.workbench" version="0.0.2" useFeatures="false" includeLaunchers="true">
+
 
    <configIni use="default">
    </configIni>
@@ -13,144 +14,67 @@
 
    <windowImages/>
 
+
    <launcher>
       <win useIco="false">
          <bmp/>
       </win>
    </launcher>
 
+
    <vm>
    </vm>
 
+
    <plugins>
-      <plugin id="com.fasterxml.jackson.core.jackson-annotations"/>
-      <plugin id="com.google.guava"/>
-      <plugin id="com.ibm.icu"/>
-      <plugin id="com.sun.jna"/>
-      <plugin id="com.sun.jna.platform"/>
-      <plugin id="gr.alexc.idelearn.ui"/>
-      <plugin id="javax.annotation"/>
-      <plugin id="javax.inject"/>
-      <plugin id="javax.xml"/>
-      <plugin id="org.apache.batik.constants"/>
-      <plugin id="org.apache.batik.css"/>
-      <plugin id="org.apache.batik.i18n"/>
-      <plugin id="org.apache.batik.util"/>
-      <plugin id="org.apache.commons.io"/>
-      <plugin id="org.apache.commons.jxpath"/>
-      <plugin id="org.apache.commons.logging"/>
-      <plugin id="org.apache.felix.scr"/>
-      <plugin id="org.apache.xmlgraphics"/>
-      <plugin id="org.eclipse.compare"/>
-      <plugin id="org.eclipse.compare.core"/>
-      <plugin id="org.eclipse.core.commands"/>
-      <plugin id="org.eclipse.core.contenttype"/>
-      <plugin id="org.eclipse.core.databinding"/>
-      <plugin id="org.eclipse.core.databinding.observable"/>
-      <plugin id="org.eclipse.core.databinding.property"/>
-      <plugin id="org.eclipse.core.expressions"/>
-      <plugin id="org.eclipse.core.filebuffers"/>
-      <plugin id="org.eclipse.core.filesystem"/>
-      <plugin id="org.eclipse.core.filesystem.win32.x86_64" fragment="true"/>
-      <plugin id="org.eclipse.core.jobs"/>
-      <plugin id="org.eclipse.core.net"/>
-      <plugin id="org.eclipse.core.net.win32.x86_64" fragment="true"/>
-      <plugin id="org.eclipse.core.resources"/>
-      <plugin id="org.eclipse.core.resources.win32.x86_64" fragment="true"/>
-      <plugin id="org.eclipse.core.runtime"/>
-      <plugin id="org.eclipse.core.variables"/>
-      <plugin id="org.eclipse.debug.core"/>
-      <plugin id="org.eclipse.debug.ui"/>
-      <plugin id="org.eclipse.e4.core.commands"/>
-      <plugin id="org.eclipse.e4.core.contexts"/>
-      <plugin id="org.eclipse.e4.core.di"/>
-      <plugin id="org.eclipse.e4.core.di.annotations"/>
-      <plugin id="org.eclipse.e4.core.di.extensions"/>
-      <plugin id="org.eclipse.e4.core.di.extensions.supplier"/>
-      <plugin id="org.eclipse.e4.core.services"/>
-      <plugin id="org.eclipse.e4.emf.xpath"/>
-      <plugin id="org.eclipse.e4.ui.bindings"/>
-      <plugin id="org.eclipse.e4.ui.css.core"/>
-      <plugin id="org.eclipse.e4.ui.css.swt"/>
-      <plugin id="org.eclipse.e4.ui.css.swt.theme"/>
-      <plugin id="org.eclipse.e4.ui.di"/>
-      <plugin id="org.eclipse.e4.ui.dialogs"/>
-      <plugin id="org.eclipse.e4.ui.ide"/>
-      <plugin id="org.eclipse.e4.ui.model.workbench"/>
-      <plugin id="org.eclipse.e4.ui.services"/>
-      <plugin id="org.eclipse.e4.ui.swt.win32" fragment="true"/>
-      <plugin id="org.eclipse.e4.ui.widgets"/>
-      <plugin id="org.eclipse.e4.ui.workbench"/>
-      <plugin id="org.eclipse.e4.ui.workbench.addons.swt"/>
-      <plugin id="org.eclipse.e4.ui.workbench.renderers.swt"/>
-      <plugin id="org.eclipse.e4.ui.workbench.swt"/>
-      <plugin id="org.eclipse.e4.ui.workbench3"/>
-      <plugin id="org.eclipse.emf.common"/>
-      <plugin id="org.eclipse.emf.ecore"/>
-      <plugin id="org.eclipse.emf.ecore.change"/>
-      <plugin id="org.eclipse.emf.ecore.xmi"/>
-      <plugin id="org.eclipse.equinox.app"/>
-      <plugin id="org.eclipse.equinox.bidi"/>
-      <plugin id="org.eclipse.equinox.common"/>
-      <plugin id="org.eclipse.equinox.event"/>
-      <plugin id="org.eclipse.equinox.p2.core"/>
-      <plugin id="org.eclipse.equinox.p2.engine"/>
-      <plugin id="org.eclipse.equinox.p2.metadata"/>
-      <plugin id="org.eclipse.equinox.p2.metadata.repository"/>
-      <plugin id="org.eclipse.equinox.p2.repository"/>
-      <plugin id="org.eclipse.equinox.preferences"/>
-      <plugin id="org.eclipse.equinox.registry"/>
-      <plugin id="org.eclipse.equinox.security"/>
-      <plugin id="org.eclipse.equinox.security.win32.x86_64" fragment="true"/>
-      <plugin id="org.eclipse.fx.osgi" fragment="true"/>
-      <plugin id="org.eclipse.help"/>
-      <plugin id="org.eclipse.jdt.compiler.apt" fragment="true"/>
-      <plugin id="org.eclipse.jdt.compiler.tool" fragment="true"/>
-      <plugin id="org.eclipse.jdt.core"/>
-      <plugin id="org.eclipse.jdt.core.manipulation"/>
-      <plugin id="org.eclipse.jdt.debug"/>
-      <plugin id="org.eclipse.jdt.launching"/>
-      <plugin id="org.eclipse.jdt.ui"/>
-      <plugin id="org.eclipse.jface"/>
-      <plugin id="org.eclipse.jface.databinding"/>
-      <plugin id="org.eclipse.jface.notifications"/>
-      <plugin id="org.eclipse.jface.text"/>
-      <plugin id="org.eclipse.ltk.core.refactoring"/>
-      <plugin id="org.eclipse.ltk.ui.refactoring"/>
-      <plugin id="org.eclipse.osgi"/>
-      <plugin id="org.eclipse.osgi.compatibility.state" fragment="true"/>
-      <plugin id="org.eclipse.osgi.services"/>
-      <plugin id="org.eclipse.osgi.util"/>
-      <plugin id="org.eclipse.search"/>
-      <plugin id="org.eclipse.swt"/>
-      <plugin id="org.eclipse.swt.browser.chromium.win32.win32.x86_64" fragment="true"/>
-      <plugin id="org.eclipse.swt.win32.win32.x86_64" fragment="true"/>
-      <plugin id="org.eclipse.team.core"/>
-      <plugin id="org.eclipse.team.ui"/>
-      <plugin id="org.eclipse.text"/>
-      <plugin id="org.eclipse.ui"/>
-      <plugin id="org.eclipse.ui.console"/>
-      <plugin id="org.eclipse.ui.editors"/>
-      <plugin id="org.eclipse.ui.forms"/>
-      <plugin id="org.eclipse.ui.ide"/>
-      <plugin id="org.eclipse.ui.ide.application"/>
-      <plugin id="org.eclipse.ui.navigator"/>
-      <plugin id="org.eclipse.ui.navigator.resources"/>
-      <plugin id="org.eclipse.ui.views"/>
-      <plugin id="org.eclipse.ui.views.properties.tabbed"/>
-      <plugin id="org.eclipse.ui.win32" fragment="true"/>
-      <plugin id="org.eclipse.ui.workbench"/>
-      <plugin id="org.eclipse.ui.workbench.texteditor"/>
-      <plugin id="org.eclipse.urischeme"/>
-      <plugin id="org.tukaani.xz"/>
-      <plugin id="org.w3c.css.sac"/>
-      <plugin id="org.w3c.dom.events"/>
-      <plugin id="org.w3c.dom.smil"/>
-      <plugin id="org.w3c.dom.svg"/>
    </plugins>
 
    <features>
       <feature id="io.alexc.ide.feature" installMode="root"/>
+      <feature id="org.eclipse.platform" installMode="root"/>
+      <feature id="org.eclipse.epp.package.common.feature" installMode="root"/>
+      <feature id="org.eclipse.epp.mpc" installMode="root"/>
+      <feature id="org.eclipse.buildship" installMode="root"/>
+      <feature id="org.eclipse.eclemma.feature" installMode="root"/>
+      <feature id="org.eclipse.egit" installMode="root"/>
+      <feature id="org.eclipse.jdt" installMode="root"/>
+      <feature id="org.eclipse.jgit" installMode="root"/>
+      <feature id="org.eclipse.m2e.feature" installMode="root"/>
+      <feature id="org.eclipse.m2e.lemminx.feature" installMode="root"/>
+      <feature id="org.eclipse.m2e.logback.feature" installMode="root"/>
+      <feature id="org.eclipse.mylyn.wikitext.editors_feature" installMode="root"/>
+      <feature id="org.eclipse.wildwebdeveloper.xml.feature" installMode="root"/>
+      <feature id="org.eclipse.tips.feature" installMode="root"/>
+      <feature id="org.eclipse.tm.terminal.feature" installMode="root"/>
+      <feature id="org.eclipse.help" installMode="root"/>
+      <feature id="org.eclipse.jgit.ssh.jsch" installMode="root"/>
+      <feature id="org.eclipse.tm.terminal.connector.ssh.feature" installMode="root"/>
+      <feature id="org.eclipse.jgit.ssh.apache" installMode="root"/>
+      <feature id="org.eclipse.emf.common" installMode="root"/>
+      <feature id="org.eclipse.equinox.p2.core.feature" installMode="root"/>
+      <feature id="org.eclipse.ecf.core.ssl.feature" installMode="root"/>
+      <feature id="org.eclipse.tm.terminal.connector.local.feature" installMode="root"/>
+      <feature id="org.eclipse.ecf.filetransfer.ssl.feature" installMode="root"/>
+      <feature id="org.eclipse.tm.terminal.connector.telnet.feature" installMode="root"/>
+      <feature id="org.eclipse.userstorage" installMode="root"/>
+      <feature id="org.eclipse.oomph.setup" installMode="root"/>
+      <feature id="org.eclipse.oomph.p2" installMode="root"/>
+      <feature id="org.eclipse.tm.terminal.control.feature" installMode="root"/>
+      <feature id="org.eclipse.emf.ecore" installMode="root"/>
+      <feature id="org.eclipse.equinox.p2.user.ui" installMode="root"/>
+      <feature id="org.eclipse.tm.terminal.view.feature" installMode="root"/>
+      <feature id="org.eclipse.jgit.http.apache" installMode="root"/>
+      <feature id="org.eclipse.equinox.p2.extras.feature" installMode="root"/>
+      <feature id="org.eclipse.m2e.sse.ui.feature" installMode="root"/>
+      <feature id="org.eclipse.rcp" installMode="root"/>
+      <feature id="org.eclipse.ecf.core.feature" installMode="root"/>
+      <feature id="org.eclipse.ecf.filetransfer.httpclient45.feature" installMode="root"/>
+      <feature id="org.eclipse.equinox.p2.rcp.feature" installMode="root"/>
+      <feature id="org.eclipse.equinox.p2.discovery.feature" installMode="root"/>
+      <feature id="org.eclipse.ecf.filetransfer.feature" installMode="root"/>
+      <feature id="org.eclipse.jgit.gpg.bc" installMode="root"/>
+      <feature id="org.eclipse.e4.rcp" installMode="root"/>
+      <feature id="org.eclipse.oomph.setup.core" installMode="root"/>
    </features>
 
    <configurations>

@@ -22,18 +22,33 @@ public class ClassHasMethodRequirement extends AbstractSubRequirement {
 	@JsonProperty("method")
 	private MethodRequirement method;
 
+	@JsonProperty("overriding_super_class_method")
+	private Boolean overridingSuperClassMethod = false;
+
+	@JsonProperty("overriding_super_class_method_name")
+	private String overridingSuperClassMethodName = "";
+
 	@Override
 	public String getDescription() {
 //        return "Class \"" + mainClass.getName() + "\" has a method of type \"" + method.getType() + "\" and name \"" + method.getName() + "\".";
-		if (method.getType().getName().equals("void")) {
-			return NLS.bind(Messages.reqMethodVoid,
-					new Object[] { Messages.getClassOrInterfaceText(mainClass), mainClass.getName(), Messages.getModifiersList(method.getModifiers(), "F"),
-							method.getName(), Messages.getMethodParametersString(method.getParameters()) });
+
+		if (overridingSuperClassMethod) {
+			return NLS.bind(Messages.reqMethodOverride, new Object[] { Messages.getClassOrInterfaceText(mainClass),
+					mainClass.getName(), Messages.getMethodSignature(method), overridingSuperClassMethodName });
 		} else {
-			return NLS.bind(Messages.reqMethod,
-					new Object[] { Messages.getClassOrInterfaceText(mainClass), mainClass.getName(), Messages.getModifiersList(method.getModifiers(), "F"),
-							method.getName(), Messages.getMethodParametersString(method.getParameters()), method.getType() });
+			if (method.getType().getName().equals("void")) {
+				return NLS.bind(Messages.reqMethodVoid,
+						new Object[] { Messages.getClassOrInterfaceText(mainClass), mainClass.getName(),
+								Messages.getModifiersList(method.getModifiers(), "F"), method.getName(),
+								Messages.getMethodParametersString(method.getParameters()) });
+			} else {
+				return NLS.bind(Messages.reqMethod,
+						new Object[] { Messages.getClassOrInterfaceText(mainClass), mainClass.getName(),
+								Messages.getModifiersList(method.getModifiers(), "F"), method.getName(),
+								Messages.getMethodParametersString(method.getParameters()), method.getType() });
+			}
 		}
+
 	}
 
 	@Override

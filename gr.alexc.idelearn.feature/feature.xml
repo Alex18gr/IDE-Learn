@@ -2,7 +2,7 @@
 <feature
       id="io.alexc.ide.feature"
       label="IDE Learn Eclipse Plugin"
-      version="0.0.6"
+      version="0.0.8"
       provider-name="alexc">
 
    <description url="http://www.example.com/description">
@@ -13,8 +13,8 @@
       [Enter Copyright Description here.]
    </copyright>
 
-   <license url="http://www.example.com/license">
-      [Enter License Description here.]
+   <license url="">
+      
    </license>
 
    <requires>
@@ -39,7 +39,7 @@
          id="gr.alexc.idelearn.ui"
          download-size="0"
          install-size="0"
-         version="0.0.6"
+         version="0.0.0"
          unpack="false"/>
 
 </feature>

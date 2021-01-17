@@ -142,6 +142,10 @@ public class Messages extends NLS {
 	
 	public static String reqClassText;
 	
+	public static String reqClassesText;
+	
+	public static String reqSuperClassesText;
+	
 	public static String reqInterfaceText;
 
 	public static String reqMethod;
@@ -151,6 +155,8 @@ public class Messages extends NLS {
 	public static String reqConstructor;
 	
 	public static String reqConstructorVoid;
+	
+	public static String reqMethodOverride;
 
 	public static String reqOverrideObjectMethod;
 

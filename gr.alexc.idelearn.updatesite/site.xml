@@ -15,6 +15,15 @@
    <feature url="features/io.alexc.ide.feature_0.0.5.2.jar" id="io.alexc.ide.feature" version="0.0.5.2">
       <category name="idelearn"/>
    </feature>
+   <feature url="features/io.alexc.ide.feature_0.0.6.jar" id="io.alexc.ide.feature" version="0.0.6">
+      <category name="idelearn"/>
+   </feature>
+   <feature url="features/io.alexc.ide.feature_0.0.7.jar" id="io.alexc.ide.feature" version="0.0.7">
+      <category name="idelearn"/>
+   </feature>
+   <feature url="features/io.alexc.ide.feature_0.0.8.jar" id="io.alexc.ide.feature" version="0.0.8">
+      <category name="idelearn"/>
+   </feature>
    <category-def name="idelearn" label="IDE Learn">
       <description>
          IDE Learn update sites
