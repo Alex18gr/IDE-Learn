@@ -5,7 +5,7 @@
     <artifactId>gr.alexc.idelearn.parent</artifactId>
     <version>0.0.8-SNAPSHOT</version>
   </parent>
-  <artifactId>gr.alexc.idelearn.updatesite</artifactId>
-  <name>IDELearn Update Site</name>
+  <groupId>gr.alexc.idelearn.target</groupId>
+  <artifactId>gr.alexc.idelearn.target</artifactId>
   <version>0.0.8-SNAPSHOT</version>
 </project>

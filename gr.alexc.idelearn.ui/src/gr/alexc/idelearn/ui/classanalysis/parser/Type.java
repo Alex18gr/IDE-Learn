@@ -10,15 +10,23 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
 public class Type {
     private String name;
     private List<Type> typeArguments;
+    
+    
 
-    public static Type getTypeFromClassOrInterfaceType(com.github.javaparser.ast.type.Type t) {
+    public Type() {
+		super();
+	}
+
+	public Type(String name, List<Type> typeArguments) {
+		super();
+		this.name = name;
+		this.typeArguments = typeArguments;
+	}
+
+	public static Type getTypeFromClassOrInterfaceType(com.github.javaparser.ast.type.Type t) {
         Type type = new Type();
         if (t.isClassOrInterfaceType()) {
             type.setName(t.asClassOrInterfaceType().getNameAsString());
@@ -59,4 +67,22 @@ public class Type {
             return builder.toString();
         }
     }
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public List<Type> getTypeArguments() {
+		return typeArguments;
+	}
+
+	public void setTypeArguments(List<Type> typeArguments) {
+		this.typeArguments = typeArguments;
+	}
+    
+    
 }

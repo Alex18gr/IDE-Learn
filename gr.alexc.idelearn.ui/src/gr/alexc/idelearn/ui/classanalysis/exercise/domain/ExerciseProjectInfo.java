@@ -9,14 +9,29 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
-@Setter
-@NoArgsConstructor
 public class ExerciseProjectInfo {
 	
 	private String title;
 	
 	@JsonProperty("starting_project")
 	private Boolean statingProjectExists;
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public Boolean getStatingProjectExists() {
+		return statingProjectExists;
+	}
+
+	public void setStatingProjectExists(Boolean statingProjectExists) {
+		this.statingProjectExists = statingProjectExists;
+	}
+	
+	
 
 }

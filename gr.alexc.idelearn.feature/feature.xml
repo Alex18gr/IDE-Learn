@@ -2,7 +2,7 @@
 <feature
       id="io.alexc.ide.feature"
       label="IDE Learn Eclipse Plugin"
-      version="0.0.8"
+      version="0.0.8.qualifier"
       provider-name="alexc">
 
    <description url="http://www.example.com/description">

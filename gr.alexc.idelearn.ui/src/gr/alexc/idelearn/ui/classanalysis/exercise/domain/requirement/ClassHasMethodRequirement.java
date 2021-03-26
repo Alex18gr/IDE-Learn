@@ -11,9 +11,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
-@Setter
-@NoArgsConstructor
 public class ClassHasMethodRequirement extends AbstractSubRequirement {
 
 	@JsonProperty("main_class_id")
@@ -60,4 +57,38 @@ public class ClassHasMethodRequirement extends AbstractSubRequirement {
 		}
 		return false;
 	}
+
+	public ClassRequirement getMainClass() {
+		return mainClass;
+	}
+
+	public void setMainClass(ClassRequirement mainClass) {
+		this.mainClass = mainClass;
+	}
+
+	public MethodRequirement getMethod() {
+		return method;
+	}
+
+	public void setMethod(MethodRequirement method) {
+		this.method = method;
+	}
+
+	public Boolean getOverridingSuperClassMethod() {
+		return overridingSuperClassMethod;
+	}
+
+	public void setOverridingSuperClassMethod(Boolean overridingSuperClassMethod) {
+		this.overridingSuperClassMethod = overridingSuperClassMethod;
+	}
+
+	public String getOverridingSuperClassMethodName() {
+		return overridingSuperClassMethodName;
+	}
+
+	public void setOverridingSuperClassMethodName(String overridingSuperClassMethodName) {
+		this.overridingSuperClassMethodName = overridingSuperClassMethodName;
+	}
+	
+	
 }

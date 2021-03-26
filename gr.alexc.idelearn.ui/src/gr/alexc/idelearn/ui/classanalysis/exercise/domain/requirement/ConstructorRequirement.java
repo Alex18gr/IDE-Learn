@@ -11,9 +11,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
-@Setter
-@AllArgsConstructor
 @NoArgsConstructor
 public class ConstructorRequirement {
 
@@ -61,4 +58,22 @@ public class ConstructorRequirement {
         // when everything is true
         return true;
     }
+
+	public List<String> getModifiers() {
+		return modifiers;
+	}
+
+	public void setModifiers(List<String> modifiers) {
+		this.modifiers = modifiers;
+	}
+
+	public List<ParameterRequirement> getParameters() {
+		return parameters;
+	}
+
+	public void setParameters(List<ParameterRequirement> parameters) {
+		this.parameters = parameters;
+	}
+    
+    
 }

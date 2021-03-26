@@ -19,9 +19,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
-@Setter
-@NoArgsConstructor
 public class SuperConstructorCallInsideConstructor extends AbstractSubRequirement {
 
 	@JsonProperty("main_class_id")
@@ -101,4 +98,30 @@ public class SuperConstructorCallInsideConstructor extends AbstractSubRequiremen
 			super.visit(n, arg);
 		}
 	}
+
+	public ClassRequirement getMainClass() {
+		return mainClass;
+	}
+
+	public void setMainClass(ClassRequirement mainClass) {
+		this.mainClass = mainClass;
+	}
+
+	public ConstructorRequirement getConstructor() {
+		return constructor;
+	}
+
+	public void setConstructor(ConstructorRequirement constructor) {
+		this.constructor = constructor;
+	}
+
+	public ConstructorRequirement getCallConstructor() {
+		return callConstructor;
+	}
+
+	public void setCallConstructor(ConstructorRequirement callConstructor) {
+		this.callConstructor = callConstructor;
+	}
+	
+	
 }

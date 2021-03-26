@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?pde version="3.8"?>
+<target name="gr.alexc.idelearn.target">
+	<locations>
+		<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
+			<repository location="http://download.eclipse.org/releases/latest"/>
+			<unit id="org.eclipse.platform.sdk" version="0.0.0"/>
+		</location>
+		<location id="io.alexc.ide.feature" path="C:\Users\alexc\eclipse-workspace\gr.alexc.idelearn.parent" type="Feature"/>
+		<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
+			<repository location="http://download.eclipse.org/releases/latest"/>
+			<unit id="org.eclipse.jdt.feature.group" version="0.0.0"/>
+		</location>
+	</locations>
+</target>

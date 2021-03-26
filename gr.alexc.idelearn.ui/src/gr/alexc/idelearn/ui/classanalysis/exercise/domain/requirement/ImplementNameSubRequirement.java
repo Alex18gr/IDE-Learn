@@ -10,9 +10,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
-@Setter
-@NoArgsConstructor
 public class ImplementNameSubRequirement extends AbstractSubRequirement {
 
     @JsonProperty("main_class_id")
@@ -31,4 +28,22 @@ public class ImplementNameSubRequirement extends AbstractSubRequirement {
     public boolean checkRequirement(ClassEntity classEntity) {
         return classEntity.getImplementClassesName().contains(implementTypeName);
     }
+
+	public ClassRequirement getMainClass() {
+		return mainClass;
+	}
+
+	public void setMainClass(ClassRequirement mainClass) {
+		this.mainClass = mainClass;
+	}
+
+	public String getImplementTypeName() {
+		return implementTypeName;
+	}
+
+	public void setImplementTypeName(String implementTypeName) {
+		this.implementTypeName = implementTypeName;
+	}
+    
+    
 }

@@ -12,9 +12,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
-@Setter
-@NoArgsConstructor
 public class ClassOverridesObjectMethod extends AbstractSubRequirement {
 
 	@JsonProperty("main_class_id")
@@ -200,4 +197,22 @@ public class ClassOverridesObjectMethod extends AbstractSubRequirement {
 	public enum ObjectMethod {
 		CLONE, EQUALS, HASH_CODE, TO_STRING, COMPARABLE_COMPARE_TO
 	}
+
+	public ClassRequirement getMainClass() {
+		return mainClass;
+	}
+
+	public void setMainClass(ClassRequirement mainClass) {
+		this.mainClass = mainClass;
+	}
+
+	public ObjectMethod getObjectMethod() {
+		return objectMethod;
+	}
+
+	public void setObjectMethod(ObjectMethod objectMethod) {
+		this.objectMethod = objectMethod;
+	}
+	
+	
 }

@@ -19,9 +19,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
-@Setter
-@NoArgsConstructor
 public class MethodCallInsideMethod extends AbstractSubRequirement {
 
 	@JsonProperty("main_class_id")
@@ -102,4 +99,46 @@ public class MethodCallInsideMethod extends AbstractSubRequirement {
 			super.visit(n, arg);
 		}
 	}
+
+	public ClassRequirement getMainClass() {
+		return mainClass;
+	}
+
+	public void setMainClass(ClassRequirement mainClass) {
+		this.mainClass = mainClass;
+	}
+
+	public MethodRequirement getMethod() {
+		return method;
+	}
+
+	public void setMethod(MethodRequirement method) {
+		this.method = method;
+	}
+
+	public MethodRequirement getCallMethod() {
+		return callMethod;
+	}
+
+	public void setCallMethod(MethodRequirement callMethod) {
+		this.callMethod = callMethod;
+	}
+
+	public String getCallMethodClassName() {
+		return callMethodClassName;
+	}
+
+	public void setCallMethodClassName(String callMethodClassName) {
+		this.callMethodClassName = callMethodClassName;
+	}
+
+	public Boolean getIsCallMethodClassSuperClass() {
+		return isCallMethodClassSuperClass;
+	}
+
+	public void setIsCallMethodClassSuperClass(Boolean isCallMethodClassSuperClass) {
+		this.isCallMethodClassSuperClass = isCallMethodClassSuperClass;
+	}
+	
+	
 }

@@ -10,9 +10,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
-@Setter
-@NoArgsConstructor
 public class ContainsSubRequirement extends AbstractSubRequirement {
 
 	@JsonProperty("main_class_id")
@@ -52,4 +49,30 @@ public class ContainsSubRequirement extends AbstractSubRequirement {
 		ONE_TO_ONE, @JsonProperty("one_to_many")
 		ONE_TO_MANY
 	}
+
+	public ClassRequirement getMainClass() {
+		return mainClass;
+	}
+
+	public void setMainClass(ClassRequirement mainClass) {
+		this.mainClass = mainClass;
+	}
+
+	public ClassRequirement getContainClass() {
+		return containClass;
+	}
+
+	public void setContainClass(ClassRequirement containClass) {
+		this.containClass = containClass;
+	}
+
+	public RelationType getRelationType() {
+		return relationType;
+	}
+
+	public void setRelationType(RelationType relationType) {
+		this.relationType = relationType;
+	}
+	
+	
 }
