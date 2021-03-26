@@ -31,12 +31,6 @@ matrix:
         - DESC="install (openjdk11)"
         - CMD="mvn install && git diff"
 
-    # JDK 14
-    - jdk: openjdk14
-      env:
-        - DESC="install (openjdk14)"
-        - CMD="mvn install && git diff"
-
 script:
   - |
     set -e
@@ -60,4 +54,4 @@ deploy:
   skip_cleanup: true
   draft: true
   on:
-    tags: true
+    branch: develop
