@@ -1,32 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <feature url="features/io.alexc.ide.feature_0.0.3.jar" id="io.alexc.ide.feature" version="0.0.3">
-      <category name="idelearn"/>
+   <feature url="features/io.alexc.idelearn.feature_0.0.8.202103261126.jar" id="io.alexc.idelearn.feature" version="0.0.8.202103261126">
+      <category name="gr.alexc.idelearn.update"/>
    </feature>
-   <feature url="features/io.alexc.ide.feature_0.0.4.jar" id="io.alexc.ide.feature" version="0.0.4">
-      <category name="idelearn"/>
-   </feature>
-   <feature url="features/io.alexc.ide.feature_0.0.5.jar" id="io.alexc.ide.feature" version="0.0.5">
-      <category name="idelearn"/>
-   </feature>
-   <feature url="features/io.alexc.ide.feature_0.0.5.1.jar" id="io.alexc.ide.feature" version="0.0.5.1">
-      <category name="idelearn"/>
-   </feature>
-   <feature url="features/io.alexc.ide.feature_0.0.5.2.jar" id="io.alexc.ide.feature" version="0.0.5.2">
-      <category name="idelearn"/>
-   </feature>
-   <feature url="features/io.alexc.ide.feature_0.0.6.jar" id="io.alexc.ide.feature" version="0.0.6">
-      <category name="idelearn"/>
-   </feature>
-   <feature url="features/io.alexc.ide.feature_0.0.7.jar" id="io.alexc.ide.feature" version="0.0.7">
-      <category name="idelearn"/>
-   </feature>
-   <feature url="features/io.alexc.ide.feature_0.0.8.jar" id="io.alexc.ide.feature" version="0.0.8">
-      <category name="idelearn"/>
-   </feature>
-   <category-def name="idelearn" label="IDE Learn">
+   <category-def name="gr.alexc.idelearn.update" label="IDE Learn">
       <description>
-         IDE Learn update sites
+         IDE Learn is a tool that helps students learn the OOP principles by solving exercises providing assistance and completion status tracking.
       </description>
    </category-def>
 </site>

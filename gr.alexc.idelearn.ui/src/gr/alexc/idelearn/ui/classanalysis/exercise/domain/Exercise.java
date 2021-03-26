@@ -18,8 +18,6 @@ import gr.alexc.idelearn.ui.classanalysis.parser.ClassEntity;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
-@Setter
 public class Exercise {
 
 	private String id;
@@ -91,5 +89,63 @@ public class Exercise {
         }
         return allRequirements;
     }
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public List<String> getTargets() {
+		return targets;
+	}
+
+	public void setTargets(List<String> targets) {
+		this.targets = targets;
+	}
+
+	public ExerciseProjectInfo getExerciseProjectInfo() {
+		return exerciseProjectInfo;
+	}
+
+	public void setExerciseProjectInfo(ExerciseProjectInfo exerciseProjectInfo) {
+		this.exerciseProjectInfo = exerciseProjectInfo;
+	}
+
+	public List<AbstractRequirement> getRequirements() {
+		return requirements;
+	}
+
+	public void setRequirements(List<AbstractRequirement> requirements) {
+		this.requirements = requirements;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public ExerciseCheckReport getExerciseCheckReport() {
+		return exerciseCheckReport;
+	}
+
+	public void setExerciseCheckReport(ExerciseCheckReport exerciseCheckReport) {
+		this.exerciseCheckReport = exerciseCheckReport;
+	}
+	
+	
 
 }

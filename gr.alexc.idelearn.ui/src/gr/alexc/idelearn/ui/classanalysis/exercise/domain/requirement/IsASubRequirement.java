@@ -7,9 +7,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
-@Setter
-@NoArgsConstructor
 public class IsASubRequirement extends AbstractSubRequirement {
 
     @JsonProperty("main_class_id")
@@ -27,4 +24,22 @@ public class IsASubRequirement extends AbstractSubRequirement {
     public boolean checkRequirement(ClassEntity classEntity) {
         return classEntity.isA(isAClass.getName());
     }
+
+	public ClassRequirement getMainClass() {
+		return mainClass;
+	}
+
+	public void setMainClass(ClassRequirement mainClass) {
+		this.mainClass = mainClass;
+	}
+
+	public ClassRequirement getIsAClass() {
+		return isAClass;
+	}
+
+	public void setIsAClass(ClassRequirement isAClass) {
+		this.isAClass = isAClass;
+	}
+    
+    
 }

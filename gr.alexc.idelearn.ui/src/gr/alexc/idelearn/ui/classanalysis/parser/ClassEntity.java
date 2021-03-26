@@ -10,7 +10,6 @@ import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter @Setter
 public class ClassEntity {
 
     private String className;
@@ -117,5 +116,111 @@ public class ClassEntity {
         }
         return false;
     }
+
+	public String getClassName() {
+		return className;
+	}
+
+	public void setClassName(String className) {
+		this.className = className;
+	}
+
+	public Set<ClassEntity> getExtendClasses() {
+		return extendClasses;
+	}
+
+	public void setExtendClasses(Set<ClassEntity> extendClasses) {
+		this.extendClasses = extendClasses;
+	}
+
+	public Set<ClassEntity> getImplementTypes() {
+		return implementTypes;
+	}
+
+	public void setImplementTypes(Set<ClassEntity> implementTypes) {
+		this.implementTypes = implementTypes;
+	}
+
+	public Set<ClassRelation> getRelations() {
+		return relations;
+	}
+
+	public void setRelations(Set<ClassRelation> relations) {
+		this.relations = relations;
+	}
+
+	public Boolean getIsInterface() {
+		return isInterface;
+	}
+
+	public void setIsInterface(Boolean isInterface) {
+		this.isInterface = isInterface;
+	}
+
+	public Boolean getIsAbstract() {
+		return isAbstract;
+	}
+
+	public void setIsAbstract(Boolean isAbstract) {
+		this.isAbstract = isAbstract;
+	}
+
+	public Boolean getIsStatic() {
+		return isStatic;
+	}
+
+	public void setIsStatic(Boolean isStatic) {
+		this.isStatic = isStatic;
+	}
+
+	public List<String> getExtendClassesName() {
+		return extendClassesName;
+	}
+
+	public void setExtendClassesName(List<String> extendClassesName) {
+		this.extendClassesName = extendClassesName;
+	}
+
+	public List<String> getImplementClassesName() {
+		return implementClassesName;
+	}
+
+	public void setImplementClassesName(List<String> implementClassesName) {
+		this.implementClassesName = implementClassesName;
+	}
+
+	public List<Field> getFields() {
+		return fields;
+	}
+
+	public void setFields(List<Field> fields) {
+		this.fields = fields;
+	}
+
+	public List<Method> getMethods() {
+		return methods;
+	}
+
+	public void setMethods(List<Method> methods) {
+		this.methods = methods;
+	}
+
+	public List<ConstructorMethod> getConstructors() {
+		return constructors;
+	}
+
+	public void setConstructors(List<ConstructorMethod> constructors) {
+		this.constructors = constructors;
+	}
+
+	public ClassOrInterfaceDeclaration getClassDeclaration() {
+		return classDeclaration;
+	}
+
+	public void setClassDeclaration(ClassOrInterfaceDeclaration classDeclaration) {
+		this.classDeclaration = classDeclaration;
+	}
+    
+    
 
 }

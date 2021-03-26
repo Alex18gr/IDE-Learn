@@ -20,9 +20,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
-@Setter
-@NoArgsConstructor
 public class MethodCallInsideConstructor extends AbstractSubRequirement {
 
 	@JsonProperty("main_class_id")
@@ -105,4 +102,38 @@ public class MethodCallInsideConstructor extends AbstractSubRequirement {
 			super.visit(n, arg);
 		}
 	}
+
+	public ClassRequirement getMainClass() {
+		return mainClass;
+	}
+
+	public void setMainClass(ClassRequirement mainClass) {
+		this.mainClass = mainClass;
+	}
+
+	public ConstructorRequirement getConstructor() {
+		return constructor;
+	}
+
+	public void setConstructor(ConstructorRequirement constructor) {
+		this.constructor = constructor;
+	}
+
+	public MethodRequirement getCallMethod() {
+		return callMethod;
+	}
+
+	public void setCallMethod(MethodRequirement callMethod) {
+		this.callMethod = callMethod;
+	}
+
+	public String getCallMethodClassName() {
+		return callMethodClassName;
+	}
+
+	public void setCallMethodClassName(String callMethodClassName) {
+		this.callMethodClassName = callMethodClassName;
+	}
+	
+	
 }

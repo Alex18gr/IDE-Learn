@@ -10,10 +10,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
 public class Method {
 
     protected String name;
@@ -21,8 +17,27 @@ public class Method {
     protected List<Parameter> parameters;
     protected Type type;
     protected BlockStmt blockStmt;
+    
+    
 
-    public List<String> getParameterTypeList() {
+    public Method() {
+		super();
+	}
+
+
+
+	public Method(String name, List<Modifier> modifiers, List<Parameter> parameters, Type type, BlockStmt blockStmt) {
+		super();
+		this.name = name;
+		this.modifiers = modifiers;
+		this.parameters = parameters;
+		this.type = type;
+		this.blockStmt = blockStmt;
+	}
+
+
+
+	public List<String> getParameterTypeList() {
         List<String> paramStrings = new ArrayList<>();
         for (Parameter p : parameters) {
             paramStrings.add(p.getType().toString());
@@ -30,6 +45,68 @@ public class Method {
         Collections.sort(paramStrings);
         return paramStrings;
     }
+
+
+
+	public String getName() {
+		return name;
+	}
+
+
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+
+
+	public List<Modifier> getModifiers() {
+		return modifiers;
+	}
+
+
+
+	public void setModifiers(List<Modifier> modifiers) {
+		this.modifiers = modifiers;
+	}
+
+
+
+	public List<Parameter> getParameters() {
+		return parameters;
+	}
+
+
+
+	public void setParameters(List<Parameter> parameters) {
+		this.parameters = parameters;
+	}
+
+
+
+	public Type getType() {
+		return type;
+	}
+
+
+
+	public void setType(Type type) {
+		this.type = type;
+	}
+
+
+
+	public BlockStmt getBlockStmt() {
+		return blockStmt;
+	}
+
+
+
+	public void setBlockStmt(BlockStmt blockStmt) {
+		this.blockStmt = blockStmt;
+	}
+	
+	
 
 
 }

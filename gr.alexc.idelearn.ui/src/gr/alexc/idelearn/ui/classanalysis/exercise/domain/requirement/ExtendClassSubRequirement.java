@@ -10,9 +10,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
-@Setter
-@NoArgsConstructor
 public class ExtendClassSubRequirement extends AbstractSubRequirement {
 
 	@JsonProperty("main_class_id")
@@ -30,5 +27,23 @@ public class ExtendClassSubRequirement extends AbstractSubRequirement {
 	public boolean checkRequirement(ClassEntity classEntity) {
 		return classEntity.extendsA(extendClass.getName());
 	}
+
+	public ClassRequirement getMainClass() {
+		return mainClass;
+	}
+
+	public void setMainClass(ClassRequirement mainClass) {
+		this.mainClass = mainClass;
+	}
+
+	public ClassRequirement getExtendClass() {
+		return extendClass;
+	}
+
+	public void setExtendClass(ClassRequirement extendClass) {
+		this.extendClass = extendClass;
+	}
+	
+	
 
 }

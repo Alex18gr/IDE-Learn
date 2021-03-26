@@ -15,9 +15,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
-@Setter
-@NoArgsConstructor
 public class ClassHasFieldRequirement extends AbstractSubRequirement {
 
 	@JsonProperty("main_class_id")
@@ -162,5 +159,39 @@ public class ClassHasFieldRequirement extends AbstractSubRequirement {
 			}
 		}
 	}
+
+	public ClassRequirement getMainClass() {
+		return mainClass;
+	}
+
+	public void setMainClass(ClassRequirement mainClass) {
+		this.mainClass = mainClass;
+	}
+
+	public FieldRequirement getField() {
+		return field;
+	}
+
+	public void setField(FieldRequirement field) {
+		this.field = field;
+	}
+
+	public Boolean getIncludeSetter() {
+		return includeSetter;
+	}
+
+	public void setIncludeSetter(Boolean includeSetter) {
+		this.includeSetter = includeSetter;
+	}
+
+	public Boolean getIncludeGetter() {
+		return includeGetter;
+	}
+
+	public void setIncludeGetter(Boolean includeGetter) {
+		this.includeGetter = includeGetter;
+	}
+	
+	
 
 }

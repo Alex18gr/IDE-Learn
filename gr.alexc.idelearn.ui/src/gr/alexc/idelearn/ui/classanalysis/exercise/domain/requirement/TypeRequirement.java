@@ -12,16 +12,24 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
 public class TypeRequirement {
     private String name;
     @JsonProperty("type_arguments")
     private List<TypeRequirement> typeArguments = new ArrayList<>();
+    
+    
 
-    public static boolean compareTypeRequirementWithType(TypeRequirement typeRequirement, Type type) {
+    public TypeRequirement() {
+		super();
+	}
+
+	public TypeRequirement(String name, List<TypeRequirement> typeArguments) {
+		super();
+		this.name = name;
+		this.typeArguments = typeArguments;
+	}
+
+	public static boolean compareTypeRequirementWithType(TypeRequirement typeRequirement, Type type) {
         return typeRequirement.toString().equals(type.toString());
     }
 
@@ -50,4 +58,22 @@ public class TypeRequirement {
             return builder.toString();
         }
     }
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public List<TypeRequirement> getTypeArguments() {
+		return typeArguments;
+	}
+
+	public void setTypeArguments(List<TypeRequirement> typeArguments) {
+		this.typeArguments = typeArguments;
+	}
+    
+    
 }

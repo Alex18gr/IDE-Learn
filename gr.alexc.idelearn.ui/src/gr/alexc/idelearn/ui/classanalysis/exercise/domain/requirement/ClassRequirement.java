@@ -14,9 +14,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
-@Setter
-@NoArgsConstructor
 @JsonIdentityInfo(scope=ClassRequirement.class, generator= ObjectIdGenerators.PropertyGenerator.class, property="class_id")
 public class ClassRequirement extends AbstractRequirement {
 
@@ -81,4 +78,56 @@ public class ClassRequirement extends AbstractRequirement {
 	public List<AbstractSubRequirement> getSubRequirements() {
 		return relatedRequirements;
 	}
+
+
+	public Integer getClassId() {
+		return classId;
+	}
+
+
+	public void setClassId(Integer classId) {
+		this.classId = classId;
+	}
+
+
+	public String getName() {
+		return name;
+	}
+
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+
+	public Boolean getIsAbstract() {
+		return isAbstract;
+	}
+
+
+	public void setIsAbstract(Boolean isAbstract) {
+		this.isAbstract = isAbstract;
+	}
+
+
+	public Boolean getIsInterface() {
+		return isInterface;
+	}
+
+
+	public void setIsInterface(Boolean isInterface) {
+		this.isInterface = isInterface;
+	}
+
+
+	public List<AbstractSubRequirement> getRelatedRequirements() {
+		return relatedRequirements;
+	}
+
+
+	public void setRelatedRequirements(List<AbstractSubRequirement> relatedRequirements) {
+		this.relatedRequirements = relatedRequirements;
+	}
+	
+	
 }
