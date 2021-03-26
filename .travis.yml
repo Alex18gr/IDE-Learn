@@ -48,15 +48,16 @@ script:
     echo "eval of CMD is completed";
 
 before_deploy:
-  - export RELEASE_PKG_FILE=$(ls *.zip)
+  - export RELEASE_PKG_FILE=$(ls gr.alexc.idelearn.updatesite/target/*.zip)
   - echo "deploying $RELEASE_PKG_FILE to GitHub releases"
 
 deploy:
   provider: releases
   api_key: "${GH_TOKEN}"
   file_glob: true
-  file: gr.alexc.idelearn.updatesite/target/${RELEASE_PKG_FILE}
+  file: ${RELEASE_PKG_FILE}
   skip_cleanup: true
   draft: true
   on:
     branch: develop
+    tag: true
