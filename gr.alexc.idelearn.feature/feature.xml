@@ -2,7 +2,7 @@
 <feature
       id="gr.alexc.idelearn.feature"
       label="IDE Learn Eclipse Plugin"
-      version="0.0.9.qualifier"
+      version="0.0.9"
       provider-name="alexc">
 
    <description url="http://www.example.com/description">
