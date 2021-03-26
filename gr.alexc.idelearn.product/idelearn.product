@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
 
-<product name="IDE Learn" uid="idelearn" id="gr.alexc.idelearn.ui.idelearn" application="org.eclipse.ui.ide.workbench" version="0.0.2" useFeatures="false" includeLaunchers="true">
-
+<product name="IDE Learn" uid="idelearn" id="gr.alexc.idelearn.ui.idelearn" application="org.eclipse.ui.ide.workbench" version="0.0.8.qualifier" useFeatures="false" includeLaunchers="true">
 
    <configIni use="default">
    </configIni>
@@ -14,17 +13,14 @@
 
    <windowImages/>
 
-
    <launcher>
       <win useIco="false">
          <bmp/>
       </win>
    </launcher>
 
-
    <vm>
    </vm>
-
 
    <plugins>
    </plugins>

@@ -3,7 +3,6 @@ IntelliJ IDEA
 *.class
 
 .metadata
-bin/
 tmp/
 *.tmp
 *.bak
@@ -13,4 +12,5 @@ local.properties
 .settings/
 .loadpath
 .recommenders
-/target/
+*/bin/
+*/target/

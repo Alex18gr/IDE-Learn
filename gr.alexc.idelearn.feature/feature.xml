@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="io.alexc.ide.feature"
+      id="gr.alexc.idelearn.feature"
       label="IDE Learn Eclipse Plugin"
       version="0.0.8.qualifier"
       provider-name="alexc">
@@ -21,18 +21,16 @@
       <import plugin="org.eclipse.core.resources"/>
       <import plugin="org.eclipse.core.runtime"/>
       <import plugin="org.eclipse.ui"/>
-      <import plugin="org.eclipse.jdt" version="3.18.500" match="greaterOrEqual"/>
       <import plugin="org.eclipse.jdt.core" version="3.23.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.jdt.ui" version="3.21.200" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.jface.text" version="3.16.400" match="greaterOrEqual"/>
       <import plugin="org.eclipse.e4.core.services"/>
       <import plugin="org.eclipse.ui.ide"/>
       <import plugin="com.fasterxml.jackson.core.jackson-annotations"/>
-      <import plugin="org.eclipse.osgi.util" version="3.5.300" match="greaterOrEqual"/>
       <import plugin="org.eclipse.jdt.launching" version="3.18.0" match="greaterOrEqual"/>
-      <import plugin="com.google.guava" version="27.1.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.ui.console"/>
+      <import plugin="com.google.guava" version="27.1.0" match="greaterOrEqual"/>
       <import plugin="javax.inject"/>
+      <import plugin="org.eclipse.e4.ui.workbench"/>
    </requires>
 
    <plugin

@@ -7,4 +7,5 @@
   </parent>
   <artifactId>gr.alexc.idelearn.feature</artifactId>
   <name>IDELearn Feature</name>
+  <packaging>eclipse-feature</packaging>
 </project>

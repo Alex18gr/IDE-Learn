@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature id="gr.alexc.idelearn.feature">
+      <category name="gr.alexc.idelearn.update"/>
+   </feature>
+   <category-def name="gr.alexc.idelearn.update" label="IDE Learn Upadate Site">
+      <description>
+         IDE Learn is a tool that helps students learn the OOP principles by solving exercises providing assistance and completion status tracking.
+      </description>
+   </category-def>
+</site>
