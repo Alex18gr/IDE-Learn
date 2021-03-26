@@ -3,7 +3,7 @@
    <feature url="features/io.alexc.idelearn.feature_0.0.8.202103261126.jar" id="io.alexc.idelearn.feature" version="0.0.8.202103261126">
       <category name="gr.alexc.idelearn.update"/>
    </feature>
-   <category-def name="gr.alexc.idelearn.update" label="IDE Learn Upadate Site">
+   <category-def name="gr.alexc.idelearn.update" label="IDE Learn">
       <description>
          IDE Learn is a tool that helps students learn the OOP principles by solving exercises providing assistance and completion status tracking.
       </description>

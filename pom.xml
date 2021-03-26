@@ -4,13 +4,14 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>gr.alexc.idelearn</groupId>
 	<artifactId>gr.alexc.idelearn.parent</artifactId>
-	<version>0.0.8-SNAPSHOT</version>
+	<version>0.0.9-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>idelearn Maven Parent</name>
 
 	<properties>
 		<tycho-version>2.2.0</tycho-version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<final-package-name>IDELearn</final-package-name>
 	</properties>
 
 	<dependencies>
@@ -62,6 +63,9 @@
 					<groupId>org.eclipse.tycho</groupId>
 					<artifactId>tycho-p2-repository-plugin</artifactId>
 					<version>${tycho-version}</version>
+					<configuration>
+						<finalName>${final-package-name}_${unqualifiedVersion}.${buildQualifier}</finalName>
+					</configuration>
 				</plugin>
 				<plugin>
 					<groupId>org.eclipse.tycho</groupId>
@@ -103,7 +107,7 @@
 						<phase>package</phase>
 						<id>package-feature</id>
 						<configuration>
-							<finalName>${project.artifactId}_${unqualifiedVersion}.${buildQualifier}</finalName>
+							<finalName>idelearn_${unqualifiedVersion}.${buildQualifier}</finalName>
 						</configuration>
 					</execution>
 				</executions>
