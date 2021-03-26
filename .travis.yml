@@ -1,0 +1,62 @@
+language: java
+sudo: false
+
+cache:
+  apt: true
+  directories:
+    - ~/.m2
+
+branches:
+  only:
+    - develop
+
+addons:
+  apt:
+    packages:
+      - xmlstarlet
+
+install:
+  - ""
+
+# JDKs used in builds must be supported by Tycho.
+# Check https://wiki.eclipse.org/Tycho/Release_Notes to find supported versions.
+matrix:
+  fast_finish: true
+  include:
+
+    # JDK 11 (Long Term Support version)
+    - jdk: openjdk11
+      env:
+        - DESC="install (openjdk11)"
+        - CMD="mvn install && git diff"
+
+    # JDK 14
+    - jdk: openjdk14
+      env:
+        - DESC="install (openjdk14)"
+        - CMD="mvn install && git diff"
+
+script:
+  - |
+    set -e
+    MVN_SETTINGS=${TRAVIS_HOME}/.m2/settings.xml
+    if [[ -f ${MVN_SETTINGS} ]]; then
+      if [[ $TRAVIS_OS_NAME == 'osx' ]]; then
+        sed -i'' -e "/<mirrors>/,/<\/mirrors>/ d" $MVN_SETTINGS
+      else
+        xmlstarlet ed --inplace -d "//mirrors" $MVN_SETTINGS
+      fi
+    fi
+    echo "eval of CMD is starting";
+    echo "CMD=$CMD";
+    eval $CMD;
+    echo "eval of CMD is completed";
+
+deploy:
+  provider: releases
+  api_key: "${GH_TOKEN}"
+  file: gr.alexc.idelearn.updatesite/target/*.zip
+  skip_cleanup: true
+  draft: true
+  on:
+    tags: true
