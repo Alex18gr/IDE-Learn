@@ -9,6 +9,7 @@ cache:
 branches:
   only:
     - develop
+    - /v\d+\.\d+[a-z]/
 
 addons:
   apt:
