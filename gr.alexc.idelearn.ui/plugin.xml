@@ -215,23 +215,6 @@
       </scope>
    </extension>
    <extension
-         point="org.eclipse.ui.importWizards">
-      <category
-            id="idelearn.importWizards.sampleCategory"
-            name="%category.name.2">
-      </category>
-      <wizard
-            category="idelearn.importWizards.sampleCategory"
-            class="idelearn.importWizards.ImportWizard"
-            icon="icons/sample.png"
-            id="idelearn.importWizards.ImportWizard"
-            name="%wizard.name">
-         <description>
-            %wizard.description
-         </description>
-      </wizard>
-   </extension>
-   <extension
          point="org.eclipse.ui.perspectives">
       <perspective
             class="gr.alexc.idelearn.ui.perspectives.IDELearnPerspective"

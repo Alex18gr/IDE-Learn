@@ -31,7 +31,6 @@ public class LearnPlugin {
 	}
 
 	private LearnPlugin() {
-		// support = new PropertyChangeSupport(this);
 	}
 
 	public void addExercise(Exercise exercise) {

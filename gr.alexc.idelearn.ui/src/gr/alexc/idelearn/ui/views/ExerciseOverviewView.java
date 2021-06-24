@@ -13,16 +13,12 @@ import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
-import org.eclipse.jface.viewers.DoubleClickEvent;
-import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -45,20 +41,6 @@ import gr.alexc.idelearn.ui.learn.listener.SingleChangeType;
 import gr.alexc.idelearn.ui.learn.listener.SingleExerciseChangeEvent;
 import gr.alexc.idelearn.ui.learn.listener.SingleExerciseChangedListener;
 
-/**
- * This sample class demonstrates how to plug-in a new workbench view. The view
- * shows data obtained from the model. The sample creates a dummy model on the
- * fly, but a real implementation would connect to the model available either in
- * this or another plug-in (e.g. the workspace). The view is connected to the
- * model using a content provider.
- * <p>
- * The view uses a label provider to define how model objects should be
- * presented in the view. Each view can present the same model objects using
- * different labels and icons, if needed. Alternatively, a single label provider
- * can be shared between views in order to ensure that objects of the same type
- * are presented in the same way everywhere.
- * <p>
- */
 
 public class ExerciseOverviewView extends ViewPart {
 
@@ -85,37 +67,11 @@ public class ExerciseOverviewView extends ViewPart {
 
 	private Exercise selectedExercise;
 
-	class ViewLabelProvider extends LabelProvider implements ITableLabelProvider {
-		@Override
-		public String getColumnText(Object obj, int index) {
-			return getText(obj);
-		}
-
-		@Override
-		public Image getColumnImage(Object obj, int index) {
-			return getImage(obj);
-		}
-
-		@Override
-		public Image getImage(Object obj) {
-			return workbench.getSharedImages().getImage(ISharedImages.IMG_DEF_VIEW);
-		}
-	}
-
 	@Override
 	public void createPartControl(Composite parent) {
 
 		GridLayout mainLayout = new GridLayout();
 		parent.setLayout(mainLayout);
-
-//		Composite mainComposite = new Composite(parent, SWT.BORDER);
-//		RowLayout rowLayout = new RowLayout();
-//		mainComposite.setLayout(rowLayout);
-//		rowLayout.fill = true;
-//		rowLayout.type = SWT.VERTICAL;
-
-//		GridLayout mainLayout = new GridLayout();
-//		parent.setLayout(mainLayout);
 
 		comboViewer = new ComboViewer(parent, SWT.READ_ONLY);
 
@@ -301,14 +257,6 @@ public class ExerciseOverviewView extends ViewPart {
 		};
 	}
 
-	private void hookDoubleClickAction() {
-		viewer.addDoubleClickListener(new IDoubleClickListener() {
-			public void doubleClick(DoubleClickEvent event) {
-				doubleClickAction.run();
-			}
-		});
-	}
-
 	private void showMessage(String message) {
 		MessageDialog.openInformation(viewer.getControl().getShell(), "Exercise Overview View", message);
 	}
@@ -318,7 +266,4 @@ public class ExerciseOverviewView extends ViewPart {
 		comboViewer.getControl().setFocus();
 	}
 
-	public void updateView() {
-		// get the exercises data and update the view accordingly
-	}
 }

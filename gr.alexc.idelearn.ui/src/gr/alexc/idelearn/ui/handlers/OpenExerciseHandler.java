@@ -25,13 +25,11 @@ public class OpenExerciseHandler extends AbstractHandler {
 		if (result != null) {
 			LoadExerciseJob loadExerciseJob = new LoadExerciseJob(result, "Open Exercise Job");
 
+			// start the import project job
 			loadExerciseJob.schedule();
 			
-//			MessageDialog.openInformation(window.getShell(), "IDELearn", result);
 		}
 		
-		// start the import project job
-
 		return null;
 	}
 }
