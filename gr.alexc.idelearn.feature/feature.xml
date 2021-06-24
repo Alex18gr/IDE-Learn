@@ -13,8 +13,8 @@
       [Enter Copyright Description here.]
    </copyright>
 
-   <license url="">
-      
+   <license url="https://www.example.com/license">
+      License
    </license>
 
    <requires>
@@ -25,12 +25,11 @@
       <import plugin="org.eclipse.jdt.ui" version="3.21.200" match="greaterOrEqual"/>
       <import plugin="org.eclipse.e4.core.services"/>
       <import plugin="org.eclipse.ui.ide"/>
-      <import plugin="com.fasterxml.jackson.core.jackson-annotations"/>
       <import plugin="org.eclipse.jdt.launching" version="3.18.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.ui.console"/>
       <import plugin="com.google.guava" version="27.1.0" match="greaterOrEqual"/>
-      <import plugin="javax.inject"/>
       <import plugin="org.eclipse.e4.ui.workbench"/>
+      <import plugin="javax.inject"/>
    </requires>
 
    <plugin

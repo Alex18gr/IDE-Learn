@@ -143,7 +143,6 @@ public class LoadExerciseJob extends WorkspaceJob {
 					try {
 						projectNode.flush();
 					} catch (BackingStoreException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}

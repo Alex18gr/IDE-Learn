@@ -51,39 +51,9 @@ public class ClassChecker {
 		// check the classes relations
 		this.checkClassRelations(classOrInterfaceDeclarations);
 
+		// check class contents
 		this.checkClassContents(classOrInterfaceDeclarations);
 
-		// print the related classes
-//        for (String className : visitedClasses.keySet()) {
-//            System.out.println("------------------------------------------------------------------");
-//            ClassEntity entity = visitedClasses.get(className);
-//
-//            System.out.println("Class \"" + entity.getClassName() + "\" extend Classes:");
-//            for (ClassEntity classEntity : entity.getExtendClasses()) {
-//                System.out.println("\t" + classEntity.getClassName());
-//            }
-//
-//            System.out.println("Class \"" + entity.getClassName() + "\" implements Interfaces:");
-//            for (ClassEntity classEntity : entity.getImplementTypes()) {
-//                System.out.println("\t" + classEntity.getClassName());
-//            }
-//
-//            System.out.println("Class \"" + entity.getClassName() + "\" is related to classes:");
-//            for (ClassRelation relation : entity.getRelations()) {
-//                System.out.println("\t" + relation.getRelatedClass().getClassName() + " with relation " + relation.getRelationType());
-//            }
-//            System.out.println("------------------------------------------------------------------");
-//        }
-
-//        if (this.visitedClasses.get("LabClassroom") != null) {
-//            System.out.println("Is LabClassroom a Classroom ? " + this.visitedClasses.get("LabClassroom").isA("Classroom"));
-//        }
-//        if (this.visitedClasses.get("LabClassroom") != null) {
-//            System.out.println("Is LabClassroom a Student ? " + this.visitedClasses.get("LabClassroom").isA("Student"));
-//        }
-//        if (this.visitedClasses.get("OOPComputerLabClassroom") != null) {
-//            System.out.println("Is LabClassroom a Student ? " + this.visitedClasses.get("OOPComputerLabClassroom").isA("Classroom"));
-//        }
 	}
 
 	private void createClassEntities(List<ClassOrInterfaceDeclaration> declarations) {
@@ -200,7 +170,6 @@ public class ClassChecker {
 			}
 
 			if (implementTypes.isNonEmpty()) {
-//                System.out.println("Implement Types:");
 				implementTypes.forEach(type -> {
 					ClassEntity implementClassEntity = this.visitedClasses.get(type.getNameAsString());
 					if (implementClassEntity != null) {
@@ -210,15 +179,11 @@ public class ClassChecker {
 			}
 
 			declaration.getFields().forEach(fieldDeclaration -> {
-//                System.out.println("Field Printed: " + fieldDeclaration.getElementType());
 				if (fieldDeclaration.getElementType().isClassOrInterfaceType()) {
 					String className = fieldDeclaration.getElementType().asClassOrInterfaceType().getName().asString();
-//                    System.out.println("Field Printed: " + className);
-
 					ClassEntity relatedClass = this.visitedClasses.get(className);
 
 					if (relatedClass != null) {
-						// if it is a known class we add it as a relation to the current checking class
 						this.visitedClasses.get(declaration.getNameAsString()).addRelationToClass(relatedClass,
 								ClassRelation.RelationType.ONE_TO_ONE);
 					}
@@ -226,9 +191,6 @@ public class ClassChecker {
 					if (fieldDeclaration.getElementType().asClassOrInterfaceType().getTypeArguments().isPresent()) {
 						NodeList<Type> arguments = fieldDeclaration.getElementType().asClassOrInterfaceType()
 								.getTypeArguments().get();
-//                        for (Type a : arguments) {
-//                            System.out.println("\tField Type Argument " + (arguments.indexOf(a) + 1) + ": " + a);
-//                        }
 						if (checkClassCollectionByName(className)) {
 							relatedClass = this.visitedClasses
 									.get(arguments.get(0).asClassOrInterfaceType().getNameAsString());
@@ -241,8 +203,6 @@ public class ClassChecker {
 							}
 						}
 					}
-				} else {
-//                    System.out.println("Field Printed: " + fieldDeclaration.getElementType());
 				}
 			});
 		}
@@ -261,44 +221,16 @@ public class ClassChecker {
 		public void visit(ClassOrInterfaceDeclaration n, List<ClassOrInterfaceDeclaration> declarations) {
 			super.visit(n, declarations);
 
-//            System.out.println("Class Name Printed: " + n.getName());
 			ClassEntity classEntity = new ClassEntity();
 			classEntity.setClassName(n.getName().asString());
 			classEntity.setClassDeclaration(n);
-//			if (n.isInterface()) {
-//				classEntity.setIsInterface(true);
-//			}
-//			if (n.isAbstract()) {
-//				n.isAbstract();
-//			}
-//            visitedClasses.put(n.getNameAsString(), classEntity);
 			declarations.add(n);
 
 			NodeList<ClassOrInterfaceType> extendTypes = n.getExtendedTypes();
 			NodeList<ClassOrInterfaceType> implementTypes = n.getImplementedTypes();
 
-//            if (extendTypes.isNonEmpty()) {
-////                System.out.println("Extend Types:");
-//                extendTypes.forEach(type -> {
-//                    System.out.println("\t" + (extendTypes.indexOf(type) + 1) + ": " + type.getName());
-//                });
-//            }
-
-//            if (implementTypes.isNonEmpty()) {
-////                System.out.println("Implement Types:");
-//                implementTypes.forEach(type -> {
-//                    System.out.println("\t" + (implementTypes.indexOf(type) + 1) + ": " + type.getName());
-//                });
-//            }
-
-//            n.getTypeParameters().forEach((typeParameter -> {
-//                System.out.println("Parameter Printed: " + typeParameter.getName());
-//            }));
 			n.getFields().forEach(fieldDeclaration -> {
-//                System.out.println("Field Printed: " + fieldDeclaration.getElementType());
 				if (fieldDeclaration.getElementType().isClassOrInterfaceType()) {
-//                    System.out.println("Field Printed: " + fieldDeclaration.getElementType().asClassOrInterfaceType().getName());
-					// if it is a known class we add it as a relation to
 					if (fieldDeclaration.getElementType().asClassOrInterfaceType().getTypeArguments().isPresent()) {
 						NodeList<Type> arguments = fieldDeclaration.getElementType().asClassOrInterfaceType()
 								.getTypeArguments().get();
@@ -306,11 +238,8 @@ public class ClassChecker {
 //                            System.out.println("\tField Type Argument " + (arguments.indexOf(a) + 1) + ": " + a);
 						}
 					}
-				} else {
-//                    System.out.println("Field Printed: " + fieldDeclaration.getElementType());
 				}
 			});
-//            System.out.println("-------------------------------------");
 		}
 
 	}

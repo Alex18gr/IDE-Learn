@@ -66,9 +66,7 @@ public class AuditExerciseJob extends WorkspaceJob {
 		if (exercise == null) {
 			return Status.CANCEL_STATUS;
 		}
-		
-		
-		
+
 		
 		// check if the exercise exists in the learn plugin from the .exercise file
 		project.getLocationURI();
@@ -80,13 +78,6 @@ public class AuditExerciseJob extends WorkspaceJob {
 			
 		}
 		
-		// if the .exercise doesen't exists create it
-		
-		
-			// if it exists continue
-		
-			// if it doesen't exist, check the .exercise file and create it
-		
 		try {
 			// get the project root
 			project.getLocationURI();
@@ -96,8 +87,7 @@ public class AuditExerciseJob extends WorkspaceJob {
 			IJavaProject javaProject = JavaCore.create(project);
 			IPackageFragmentRoot[] packageRoots = javaProject.getAllPackageFragmentRoots();
 
-			
-			
+
 			// configure the type resolver
 	        TypeSolver reflectionTypeSolver = new ReflectionTypeSolver();
 	        TypeSolver javaParserTypeSolver = new JavaParserTypeSolver(projectIPath.append("src").makeAbsolute().toFile().toPath());
@@ -128,8 +118,6 @@ public class AuditExerciseJob extends WorkspaceJob {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-		// 
 		
 		
 		return Status.CANCEL_STATUS;
