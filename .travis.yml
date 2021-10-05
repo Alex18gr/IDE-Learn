@@ -1,61 +1,56 @@
 language: java
 sudo: false
-
 cache:
   apt: true
   directories:
-    - ~/.m2
-
+  - "~/.m2"
 branches:
   only:
-    - master
-    - /v\d+\.\d+\.\d+/
-
+  - master
+  - "/v\\d+\\.\\d+\\.\\d+/"
+  - feature/sonarqube-integration
 addons:
+  sonarcloud:
+      organization: "alex18gr"
+      token:
+        secure: N74+CVB3fmVBwsRDXfP0uXEbIQzOnqiRdvkh7C9ej6k4QyotP7qHTSf6fTas9VjsmxsMwa/VJ3uOzrwXrz/fUI40gMxLTg9Ki6WEZpo1UIGSqsQSLPoM3JLdpclMFxcHgYUuX4dgxLaOeGnvidZL3nJQ8vBZ19sqrZnwL7d66rWC+T7SfX5RbOainQRgSzry4mnJtdCGbHi8Nv6O1xSQyOBcwfPi26c51Me3ib4oDSXwWEJUs57CyTxc7su5rXeaK58dU83yCWbLw3GAbFPf34iTBKK8AhKfQYrsIIGRTK/FiP+TnNHrQuAC+lQGzznfSyijpLlkfqEODxGMucQEf+vZ9jX4vqPGpgV/K9VM3hgbKk1z6qMe9G90ABhk9cdxSHzjoABsSpuKD8gfnraDlDBU3XRX/7ZwVm05p0FJqy1oNEUBvSvRk35fPO/FsmZHLofhRqvBVrRg5AIRW8NSpMEL2D4GcfmJadOrIVqOVXMHZig6ZqdA1x03p2wqaZd9DkEhf/Fk1Ht+l5hHVPI4M3/ceqhVCGSZNaLwAjydnyvXguD9S2CROMQk1N1sjmB3Gw6XnwZLYMaxINHr7x6gx0b/eon6qc6RVHtJNmJYdgHPyKYc83vVTXBTco+5BQTdeEe68/tuFqg7mvdThTMotzwI/BoR+0UOZHaL4e9onqY=
+
   apt:
     packages:
-      - xmlstarlet
-
+    - xmlstarlet
 install:
-  - ""
-
-# JDKs used in builds must be supported by Tycho.
-# Check https://wiki.eclipse.org/Tycho/Release_Notes to find supported versions.
+- ''
 matrix:
   fast_finish: true
   include:
-
-    # JDK 11 (Long Term Support version)
-    - jdk: openjdk11
-      env:
-        - DESC="install (openjdk11)"
-        - CMD="mvn install && git diff"
-
+  - jdk: openjdk11
+    env:
+    - DESC="install (openjdk11)"
+    - CMD="mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=Alex18gr_IDE-Learn && git diff"
 script:
-  - |
-    set -e
-    MVN_SETTINGS=${TRAVIS_HOME}/.m2/settings.xml
-    if [[ -f ${MVN_SETTINGS} ]]; then
-      if [[ $TRAVIS_OS_NAME == 'osx' ]]; then
-        sed -i'' -e "/<mirrors>/,/<\/mirrors>/ d" $MVN_SETTINGS
-      else
-        xmlstarlet ed --inplace -d "//mirrors" $MVN_SETTINGS
-      fi
+- |
+  set -e
+  MVN_SETTINGS=${TRAVIS_HOME}/.m2/settings.xml
+  if [[ -f ${MVN_SETTINGS} ]]; then
+    if [[ $TRAVIS_OS_NAME == 'osx' ]]; then
+      sed -i'' -e "/<mirrors>/,/<\/mirrors>/ d" $MVN_SETTINGS
+    else
+      xmlstarlet ed --inplace -d "//mirrors" $MVN_SETTINGS
     fi
-    echo "eval of CMD is starting";
-    echo "CMD=$CMD";
-    eval $CMD;
-    echo "eval of CMD is completed";
-
+  fi
+  echo "eval of CMD is starting";
+  echo "CMD=$CMD";
+  eval $CMD;
+  echo "eval of CMD is completed";
 before_deploy:
-  - export RELEASE_PKG_FILE=$(ls gr.alexc.idelearn.updatesite/target/*.zip)
-
+- export RELEASE_PKG_FILE=$(ls gr.alexc.idelearn.updatesite/target/*.zip)
 deploy:
   provider: releases
   api_key: "${GH_TOKEN}"
   file_glob: true
-  file: ${RELEASE_PKG_FILE}
+  file: "${RELEASE_PKG_FILE}"
   skip_cleanup: true
   draft: true
   on:
     tags: true
+

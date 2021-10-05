@@ -6,10 +6,10 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
-	<classpathentry exported="true" kind="lib" path="lib/jackson-annotations-2.11.3.jar"/>
 	<classpathentry kind="src" path="src/"/>
 	<classpathentry exported="true" kind="lib" path="lib/jackson-core-2.11.3.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jackson-databind-2.11.3.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jackson-annotations-2.11.3.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/lombok.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/javaparser-core-3.18.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/javaparser-symbol-solver-core-3.18.0.jar"/>
